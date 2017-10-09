@@ -1,2 +1,3 @@
-RewriteEngine on
-RewriteRule ^(.*)$ https://hasanfalizada.github.io/$1 [L,R=301,NC]
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^(www\.)?hasanalizada\.net [NC]
+RewriteRule ^(.*)$ https://hasanfalizada.github.io/$1 [R=301,NC,L]
