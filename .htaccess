@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^hasanalizada.net [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.hasanalizada.net [NC]
+RewriteRule ^(.*)$ https://hasanfalizada.github.io/$1 [L,R=301,NC]
