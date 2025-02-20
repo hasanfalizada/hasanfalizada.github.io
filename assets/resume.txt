@@ -1,0 +1,141 @@
+Hasan Alizada
+
+
+ha@hasanalizada.net
++994702011302
+Baku, Azerbaijan
+https://hasanfalizada.github.io
+https://www.linkedin.com/in/hasanalizada
+https://twitter.com/hasanfalizada
+alizadehasan
+https://github.com/hasanfalizada
+
+
+
+------------------------
+Enterprise Architect | TOGAF® 10, PMP®, OCP®, OCE®
+
+
+------------------------
+Enterprise architect with extensive experience in  <b>scalable and fault-tolerant architectures</b>. Passionate about  <b>optimizing enterprise IT landscapes, strengthening system resilience, and driving digital transformation</b>  to align technology with business goals.
+
+
+Skills
+------------------------
+-TOGAF® Framework & ADM
+-IT Strategy & Business Alignment
+-Enterprise IT Governance
+-Solution & Technology Architecture
+-IT Project & Program Management
+-Agile & Scrum Methodologies
+-Risk Management & Mitigation
+-Budgeting & Cost Optimization
+-Cross-Functional Team Leadership
+
+
+
+Work Experience
+------------------------
+Enterprise Architect
+Azerbaijan Railways CJSC
+09/2023 - Present
+Baku, Azerbaijan
+National rail transport operator in Azerbaijan
+Achievements/Tasks
+- Led cost-saving projects resulting in a 30% reduction in operational expenses through process optimization and technology implementation. 
+- Managed large-scale IT projects, delivering them on time and within budget, involving team coordination and resource management. 
+- Introduced mobile app new architecture to modernize and improve railway operations, resulting in increased efficiency and customer satisfaction. 
+- Ensured IT systems and processes adhered to industry standards, effectively managing risks and achieving compliance with government. 
+- Collaborated with various stakeholders (department heads, vendors, government agencies) to align IT strategies with the company’s objectives, leading to improved service delivery. 
+- Played a key role in digital transformation initiatives, including transitioning to cloud-based systems, resulting in enhanced operational agility. 
+
+
+
+Chapter Lead of Backend Development
+Kapital Bank OJSC
+04/2022 - 09/2023
+Baku, Azerbaijan
+Largest private bank in Azerbaijan
+Achievements/Tasks
+- Implemented Apache Kafka for real-time data processing, resulting in an increase in data throughput and reduced latency.  Optimized message queuing by incorporating RabbitMQ, improving system reliability and scalability. Implemented Redis for caching, reducing average response times by 20% and enhancing user experience. 
+- Enhanced system security by integrating Keycloak for identity and access management, reducing unauthorized access incidents. 
+- Developed and deployed microservices using Java and Spring, achieving a huge reduction in service downtime. 
+- Optimized Oracle database stored PL/SQL code performance, achieving faster response times. Also implemented MongoDB and PostgreSQL for specific use cases, enhancing data storage efficiency and cost savings. 
+- Successfully led a team of backend developers, fostering a collaborative environment and mentoring team members. 
+- Collaborated with cross-functional teams to align backend development with overall business goals, resulting in improved system alignment with business needs. 
+
+
+
+Chapter Lead of System Development
+Kapital Bank OJSC
+06/2016 - 04/2022
+Baku, Azerbaijan
+Largest private bank in Azerbaijan
+Achievements/Tasks
+- Led the successful development of Compass Plus's CMS and TWO platforms enhancing card management capabilities and improving operational efficiency. 
+- Spearheaded the integration of the internal systems with the cards processing platform, facilitating seamless transaction processing and bolstering system reliability. 
+- Oversaw the optimization of Oracle databases stored PL/SQL software for card processing, resulting in a significant reduction in processing time by 20% and improved data integrity. 
+- Managed regular system upgrades and maintenance, ensuring high system availability and compliance with the standards. 
+- Led a team of system developers fostering a collaborative environment and driving successful project outcomes. 
+
+
+
+Various technical positions
+Azerfon LLC / British American Tobacco / Bank Standard OJSC
+03/2008 - 06/2016
+Baku, Azerbaijan
+Achievements/Tasks
+- Successfully managed and monitored IT operations, ensuring 99.9% uptime. 
+- Run incident management, reducing the average resolution time for critical issues. 
+- Contributed to major system upgrades, ensuring seamless integration and minimal downtime during the transition phases. 
+- Acted as a liaison between IT, network, and database teams, fostering collaboration and efficient problem-solving. 
+- Developed comprehensive reports and documentation on IT infrastructure performance, assisting in strategic decision-making and process improvements. 
+
+
+
+
+
+
+Education
+------------------------
+Applied Mathematics and Cybernetics
+Baku State University
+09/2007 - 06/2011
+Baku, Azerbaijan
+Courses
+
+
+
+
+
+Certificates
+------------------------
+Project Management Professional (PMP)®
+02/2025 - 02/2028
+
+
+The Open Group Certified: TOGAF® Enterprise Architecture Practitioner
+03/2024 - Present
+
+
+Oracle Cloud Infrastructure 2021 Certified Architect Professional
+02/2022 - Present
+
+
+IBM Enterprise Design Thinking Practitioner
+01/2019 - Present
+
+
+
+
+
+Languages
+------------------------
+-Azerbaijani- (100/100)
+-Russian- (100/100)
+-English- (60/100)
+-Turkish- (40/100)
+-German- (20/100)
+
+
+
