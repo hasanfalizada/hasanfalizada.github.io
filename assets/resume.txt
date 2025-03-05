@@ -13,7 +13,7 @@ https://github.com/hasanfalizada
 
 
 ------------------------
-Enterprise Architect | TOGAF® 10, PMP®, OCP®, OCE®
+Enterprise Architect | TOGAF® 10, PMP®, ITIL®, OCP®
 
 
 ------------------------
@@ -110,12 +110,16 @@ Courses
 
 Certificates
 ------------------------
+The Open Group Certified: TOGAF® Enterprise Architecture Practitioner
+03/2024 - Present
+
+
 Project Management Professional (PMP)®
 02/2025 - 02/2028
 
 
-The Open Group Certified: TOGAF® Enterprise Architecture Practitioner
-03/2024 - Present
+ITIL® Foundation Certificate in IT Service Management
+02/2025 - 02/2028
 
 
 Oracle Cloud Infrastructure 2021 Certified Architect Professional
