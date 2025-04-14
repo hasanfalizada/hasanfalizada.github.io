@@ -34,6 +34,43 @@ Skills
 
 
 
+Technical Skills
+------------------------
+Languages:
+Java (8–17), PL/SQL, SQL, a bit of C# and Rust
+
+
+Backend & Frameworks:
+Spring Boot, Spring Security, Spring Data, Maven, Gradle
+
+
+Architecture & Design:
+TOGAF, ArchiMate, C4 model, Microservices, Event-driven architecture, REST, SOAP, gRPC
+
+
+Databases:
+Oracle DB (PL/SQL), PostgreSQL, MongoDB, Redis, MS SQL
+
+
+Messaging & APIs:
+Apache Kafka, RabbitMQ, REST APIs, OpenAPI/Swagger, gRPC
+
+
+DevOps & CI/CD:
+Git, GitLab CI/CD, Jenkins, Docker, Kubernetes, Helm, Keycloak
+
+
+Cloud & Infrastructure:
+Oracle Cloud, AWS
+
+
+Monitoring & Observability:
+Dynatrace, Nagios, Zabbix, Prometheus, Grafana, ELK Stack
+
+
+
+
+
 Work Experience
 ------------------------
 Enterprise Architect
