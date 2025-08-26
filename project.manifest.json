@@ -1,0 +1,130 @@
+{
+    "project": "hasan-alizada-portfolio",
+    "version": "1.0.0",
+    "description": "Personal portfolio website with resume and blog functionality",
+    "architecture": "atomic-modular",
+    "hosting": "github-pages",
+    "atoms": {
+        "resume-data-loader": {
+            "id": "atom_001",
+            "purpose": "Loads and manages resume data from JSON storage",
+            "contract": "contracts/resume-data-loader.json",
+            "capabilities": [
+                "loadResumeData",
+                "validateResumeStructure",
+                "getPersonalInfo",
+                "getExperience",
+                "getSkills"
+            ],
+            "deps": [],
+            "impl_ref": "atoms/resume-data-loader/impl.js",
+            "tests_ref": "atoms/resume-data-loader/tests.js",
+            "hash": "b3:001a",
+            "notes": "Pure static data loading, no external dependencies"
+        },
+        "pdf-generator": {
+            "id": "atom_002",
+            "purpose": "Generates PDF resume from loaded data using client-side library",
+            "contract": "contracts/pdf-generator.json",
+            "capabilities": [
+                "generatePDF",
+                "formatResumeLayout",
+                "downloadPDF"
+            ],
+            "deps": [
+                "resume-data-loader"
+            ],
+            "impl_ref": "atoms/pdf-generator/impl.js",
+            "tests_ref": "atoms/pdf-generator/tests.js",
+            "hash": "b3:002a",
+            "notes": "Uses jsPDF library, works entirely in browser"
+        },
+        "blog-renderer": {
+            "id": "atom_003",
+            "purpose": "Renders blog articles from markdown files in articles folder",
+            "contract": "contracts/blog-renderer.json",
+            "capabilities": [
+                "loadArticleList",
+                "renderMarkdown",
+                "generateArticleLinks",
+                "openArticleInNewTab"
+            ],
+            "deps": [],
+            "impl_ref": "atoms/blog-renderer/impl.js",
+            "tests_ref": "atoms/blog-renderer/tests.js",
+            "hash": "b3:003a",
+            "notes": "Static markdown processing, permanent URLs for articles"
+        },
+        "seo-optimizer": {
+            "id": "atom_004",
+            "purpose": "Manages SEO metadata, structured data, and social media tags",
+            "contract": "contracts/seo-optimizer.json",
+            "capabilities": [
+                "generateMetaTags",
+                "createStructuredData",
+                "setSocialMediaTags",
+                "optimizePageTitles"
+            ],
+            "deps": [
+                "resume-data-loader"
+            ],
+            "impl_ref": "atoms/seo-optimizer/impl.js",
+            "tests_ref": "atoms/seo-optimizer/tests.js",
+            "hash": "b3:004a",
+            "notes": "Schema.org markup for professional profile, Open Graph tags"
+        },
+        "ui-components": {
+            "id": "atom_005",
+            "purpose": "Provides reusable UI components with modern minimalistic design",
+            "contract": "contracts/ui-components.json",
+            "capabilities": [
+                "renderHeader",
+                "renderFooter",
+                "renderSocialLinks",
+                "renderSkillTags",
+                "renderExperienceCard"
+            ],
+            "deps": [],
+            "impl_ref": "atoms/ui-components/impl.js",
+            "tests_ref": "atoms/ui-components/tests.js",
+            "hash": "b3:005a",
+            "notes": "Apple-inspired minimalistic design, white background, black fonts"
+        },
+        "navigation-handler": {
+            "id": "atom_006",
+            "purpose": "Handles page navigation and URL routing for single-page application",
+            "contract": "contracts/navigation-handler.json",
+            "capabilities": [
+                "routeToSection",
+                "updateURL",
+                "handleBrowserNavigation",
+                "scrollToSection"
+            ],
+            "deps": [],
+            "impl_ref": "atoms/navigation-handler/impl.js",
+            "tests_ref": "atoms/navigation-handler/tests.js",
+            "hash": "b3:006a",
+            "notes": "Hash-based routing for GitHub Pages compatibility"
+        }
+    },
+    "data_storage": {
+        "resume_data": "data/resume.json",
+        "blog_articles": "articles/",
+        "assets": "assets/"
+    },
+    "dependencies": {
+        "external_libs": [
+            "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"
+        ]
+    },
+    "build_targets": {
+        "main": "index.html",
+        "styles": "assets/css/main.css",
+        "scripts": "assets/js/main.js"
+    },
+    "contracts_dir": "contracts/",
+    "atoms_dir": "atoms/",
+    "tests_dir": "tests/",
+    "notes": "+++===+++ 2025-08-26 15:30 UTC — Hasan Alizada — Initial project manifest with atomic architecture for personal portfolio website"
+}

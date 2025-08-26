@@ -1,0 +1,615 @@
+{
+    "contract": {
+        "id": "ui-components.v1",
+        "name": "UI Components",
+        "version": "1.0.0",
+        "description": "Atomic module providing reusable UI components with modern minimalistic Apple-inspired design",
+        "interface": {
+            "renderHeader": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "personalInfo": {
+                            "$ref": "#/schemas/PersonalInfo"
+                        },
+                        "navigationItems": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/schemas/NavigationItem"
+                            }
+                        },
+                        "options": {
+                            "$ref": "#/schemas/HeaderOptions"
+                        }
+                    },
+                    "required": [
+                        "personalInfo",
+                        "navigationItems"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "htmlContent": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "htmlContent"
+                    ]
+                },
+                "description": "Renders main header with personal branding and navigation"
+            },
+            "renderFooter": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "socialLinks": {
+                            "$ref": "#/schemas/SocialLinks"
+                        },
+                        "footerText": {
+                            "type": "string"
+                        },
+                        "options": {
+                            "$ref": "#/schemas/FooterOptions"
+                        }
+                    },
+                    "required": [
+                        "socialLinks"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "htmlContent": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "htmlContent"
+                    ]
+                },
+                "description": "Renders footer with social media links and copyright info"
+            },
+            "renderSocialLinks": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "socialData": {
+                            "$ref": "#/schemas/SocialLinks"
+                        },
+                        "style": {
+                            "type": "string",
+                            "enum": [
+                                "horizontal",
+                                "vertical",
+                                "grid"
+                            ],
+                            "default": "horizontal"
+                        },
+                        "showLabels": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    "required": [
+                        "socialData"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "htmlContent": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "htmlContent"
+                    ]
+                },
+                "description": "Renders social media links with icons and proper styling"
+            },
+            "renderSkillTags": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "skills": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "category": {
+                            "type": "string"
+                        },
+                        "options": {
+                            "$ref": "#/schemas/SkillTagOptions"
+                        }
+                    },
+                    "required": [
+                        "skills",
+                        "category"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "htmlContent": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "htmlContent"
+                    ]
+                },
+                "description": "Renders skill tags with minimalistic design and proper spacing"
+            },
+            "renderExperienceCard": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "experience": {
+                            "$ref": "#/schemas/WorkExperience"
+                        },
+                        "options": {
+                            "$ref": "#/schemas/ExperienceCardOptions"
+                        }
+                    },
+                    "required": [
+                        "experience"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "htmlContent": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "htmlContent"
+                    ]
+                },
+                "description": "Renders work experience card with clean typography and layout"
+            },
+            "renderResumeSection": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "sectionType": {
+                            "type": "string",
+                            "enum": [
+                                "personal",
+                                "experience",
+                                "skills",
+                                "education",
+                                "certificates",
+                                "languages"
+                            ]
+                        },
+                        "sectionData": {
+                            "type": "object"
+                        },
+                        "options": {
+                            "$ref": "#/schemas/SectionOptions"
+                        }
+                    },
+                    "required": [
+                        "sectionType",
+                        "sectionData"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "htmlContent": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "htmlContent"
+                    ]
+                },
+                "description": "Renders complete resume section with proper formatting"
+            }
+        },
+        "schemas": {
+            "PersonalInfo": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "summary": {
+                        "type": "string"
+                    },
+                    "contact": {
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "name",
+                    "title"
+                ]
+            },
+            "NavigationItem": {
+                "type": "object",
+                "properties": {
+                    "label": {
+                        "type": "string"
+                    },
+                    "href": {
+                        "type": "string"
+                    },
+                    "active": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "external": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                },
+                "required": [
+                    "label",
+                    "href"
+                ]
+            },
+            "SocialLinks": {
+                "type": "object",
+                "properties": {
+                    "linkedin": {
+                        "type": "string"
+                    },
+                    "twitter": {
+                        "type": "string"
+                    },
+                    "github": {
+                        "type": "string"
+                    },
+                    "facebook": {
+                        "type": "string"
+                    },
+                    "youtube": {
+                        "type": "string"
+                    },
+                    "instagram": {
+                        "type": "string"
+                    },
+                    "xing": {
+                        "type": "string"
+                    }
+                }
+            },
+            "WorkExperience": {
+                "type": "object",
+                "properties": {
+                    "position": {
+                        "type": "string"
+                    },
+                    "company": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "period": {
+                        "type": "string"
+                    },
+                    "company_description": {
+                        "type": "string"
+                    },
+                    "achievements": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "position",
+                    "company",
+                    "period",
+                    "achievements"
+                ]
+            },
+            "HeaderOptions": {
+                "type": "object",
+                "properties": {
+                    "showNavigation": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "stickyHeader": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "showProfileImage": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "theme": {
+                        "type": "string",
+                        "enum": [
+                            "light",
+                            "dark"
+                        ],
+                        "default": "light"
+                    }
+                }
+            },
+            "FooterOptions": {
+                "type": "object",
+                "properties": {
+                    "showSocialIcons": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "showCopyright": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "compactMode": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            },
+            "SkillTagOptions": {
+                "type": "object",
+                "properties": {
+                    "style": {
+                        "type": "string",
+                        "enum": [
+                            "pill",
+                            "badge",
+                            "outlined"
+                        ],
+                        "default": "pill"
+                    },
+                    "size": {
+                        "type": "string",
+                        "enum": [
+                            "small",
+                            "medium",
+                            "large"
+                        ],
+                        "default": "medium"
+                    },
+                    "colorScheme": {
+                        "type": "string",
+                        "enum": [
+                            "minimal",
+                            "accent",
+                            "category"
+                        ],
+                        "default": "minimal"
+                    },
+                    "maxPerRow": {
+                        "type": "number",
+                        "default": null
+                    }
+                }
+            },
+            "ExperienceCardOptions": {
+                "type": "object",
+                "properties": {
+                    "showCompanyDescription": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "maxAchievements": {
+                        "type": "number",
+                        "default": null
+                    },
+                    "expandable": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "highlightKeywords": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "SectionOptions": {
+                "type": "object",
+                "properties": {
+                    "showTitle": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "collapsible": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "animateOnLoad": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "customCssClass": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DesignSystem": {
+                "type": "object",
+                "properties": {
+                    "colors": {
+                        "type": "object",
+                        "properties": {
+                            "primary": {
+                                "type": "string",
+                                "default": "#000000"
+                            },
+                            "secondary": {
+                                "type": "string",
+                                "default": "#666666"
+                            },
+                            "accent": {
+                                "type": "string",
+                                "default": "#333333"
+                            },
+                            "background": {
+                                "type": "string",
+                                "default": "#ffffff"
+                            },
+                            "surface": {
+                                "type": "string",
+                                "default": "#fafafa"
+                            },
+                            "border": {
+                                "type": "string",
+                                "default": "#e0e0e0"
+                            }
+                        }
+                    },
+                    "typography": {
+                        "type": "object",
+                        "properties": {
+                            "fontFamily": {
+                                "type": "string",
+                                "default": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+                            },
+                            "headingWeight": {
+                                "type": "number",
+                                "default": 600
+                            },
+                            "bodyWeight": {
+                                "type": "number",
+                                "default": 400
+                            },
+                            "lineHeight": {
+                                "type": "number",
+                                "default": 1.6
+                            }
+                        }
+                    },
+                    "spacing": {
+                        "type": "object",
+                        "properties": {
+                            "xs": {
+                                "type": "string",
+                                "default": "0.25rem"
+                            },
+                            "sm": {
+                                "type": "string",
+                                "default": "0.5rem"
+                            },
+                            "md": {
+                                "type": "string",
+                                "default": "1rem"
+                            },
+                            "lg": {
+                                "type": "string",
+                                "default": "1.5rem"
+                            },
+                            "xl": {
+                                "type": "string",
+                                "default": "2rem"
+                            },
+                            "xxl": {
+                                "type": "string",
+                                "default": "3rem"
+                            }
+                        }
+                    },
+                    "borderRadius": {
+                        "type": "object",
+                        "properties": {
+                            "sm": {
+                                "type": "string",
+                                "default": "0.25rem"
+                            },
+                            "md": {
+                                "type": "string",
+                                "default": "0.5rem"
+                            },
+                            "lg": {
+                                "type": "string",
+                                "default": "0.75rem"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "capabilities": [
+            "renderHeader",
+            "renderFooter",
+            "renderSocialLinks",
+            "renderSkillTags",
+            "renderExperienceCard",
+            "renderResumeSection"
+        ],
+        "dependencies": [],
+        "constraints": {
+            "design_philosophy": "Apple-inspired minimalism with white background and black typography",
+            "accessibility": "WCAG 2.1 AA compliance",
+            "responsive_design": "Mobile-first approach",
+            "browser_support": "Modern browsers with CSS Grid and Flexbox support",
+            "no_external_css_frameworks": true
+        },
+        "design_principles": {
+            "minimalism": "Clean, uncluttered layouts with ample white space",
+            "typography": "Beautiful, readable fonts with proper hierarchy",
+            "consistency": "Consistent spacing, colors, and component behavior",
+            "accessibility": "High contrast, semantic HTML, keyboard navigation",
+            "performance": "Lightweight CSS, optimized for fast loading"
+        },
+        "notes": "+++===+++ 2025-08-26 15:35 UTC — Hasan Alizada — Contract for UI components atom with Apple-inspired minimalistic design system"
+    }
+}

@@ -1,0 +1,322 @@
+{
+    "contract": {
+        "id": "pdf-generator.v1",
+        "name": "PDF Generator",
+        "version": "1.0.0",
+        "description": "Atomic module for generating PDF resume from loaded data using client-side jsPDF library",
+        "interface": {
+            "generatePDF": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "resumeData": {
+                            "$ref": "#/schemas/ResumeData"
+                        },
+                        "options": {
+                            "$ref": "#/schemas/PDFOptions"
+                        }
+                    },
+                    "required": [
+                        "resumeData"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "pdfBlob": {
+                            "type": "object",
+                            "description": "PDF Blob object"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success"
+                    ]
+                },
+                "description": "Generates PDF from resume data with professional formatting"
+            },
+            "formatResumeLayout": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "resumeData": {
+                            "$ref": "#/schemas/ResumeData"
+                        },
+                        "layoutOptions": {
+                            "$ref": "#/schemas/LayoutOptions"
+                        }
+                    },
+                    "required": [
+                        "resumeData"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "formattedSections": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/schemas/FormattedSection"
+                            }
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "formattedSections"
+                    ]
+                },
+                "description": "Formats resume data into PDF-ready sections with proper spacing and typography"
+            },
+            "downloadPDF": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "pdfBlob": {
+                            "type": "object",
+                            "description": "PDF Blob object"
+                        },
+                        "filename": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "pdfBlob"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success"
+                    ]
+                },
+                "description": "Triggers PDF download in browser with specified filename"
+            }
+        },
+        "schemas": {
+            "ResumeData": {
+                "type": "object",
+                "description": "Complete resume data structure from resume-data-loader"
+            },
+            "PDFOptions": {
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "enum": [
+                            "a4",
+                            "letter"
+                        ],
+                        "default": "a4"
+                    },
+                    "orientation": {
+                        "type": "string",
+                        "enum": [
+                            "portrait",
+                            "landscape"
+                        ],
+                        "default": "portrait"
+                    },
+                    "margins": {
+                        "$ref": "#/schemas/Margins"
+                    },
+                    "fonts": {
+                        "$ref": "#/schemas/FontOptions"
+                    },
+                    "colors": {
+                        "$ref": "#/schemas/ColorOptions"
+                    }
+                }
+            },
+            "LayoutOptions": {
+                "type": "object",
+                "properties": {
+                    "showPhoto": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "sectionsOrder": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "compactMode": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            },
+            "Margins": {
+                "type": "object",
+                "properties": {
+                    "top": {
+                        "type": "number",
+                        "default": 20
+                    },
+                    "right": {
+                        "type": "number",
+                        "default": 20
+                    },
+                    "bottom": {
+                        "type": "number",
+                        "default": 20
+                    },
+                    "left": {
+                        "type": "number",
+                        "default": 20
+                    }
+                }
+            },
+            "FontOptions": {
+                "type": "object",
+                "properties": {
+                    "primary": {
+                        "type": "string",
+                        "default": "helvetica"
+                    },
+                    "secondary": {
+                        "type": "string",
+                        "default": "helvetica"
+                    },
+                    "headerSize": {
+                        "type": "number",
+                        "default": 18
+                    },
+                    "bodySize": {
+                        "type": "number",
+                        "default": 11
+                    },
+                    "smallSize": {
+                        "type": "number",
+                        "default": 9
+                    }
+                }
+            },
+            "ColorOptions": {
+                "type": "object",
+                "properties": {
+                    "primary": {
+                        "type": "string",
+                        "default": "#000000"
+                    },
+                    "secondary": {
+                        "type": "string",
+                        "default": "#666666"
+                    },
+                    "accent": {
+                        "type": "string",
+                        "default": "#333333"
+                    }
+                }
+            },
+            "FormattedSection": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "header",
+                            "section",
+                            "list",
+                            "text"
+                        ]
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "style": {
+                        "$ref": "#/schemas/TextStyle"
+                    },
+                    "position": {
+                        "$ref": "#/schemas/Position"
+                    }
+                },
+                "required": [
+                    "type",
+                    "content"
+                ]
+            },
+            "TextStyle": {
+                "type": "object",
+                "properties": {
+                    "font": {
+                        "type": "string"
+                    },
+                    "size": {
+                        "type": "number"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "bold": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "italic": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            },
+            "Position": {
+                "type": "object",
+                "properties": {
+                    "x": {
+                        "type": "number"
+                    },
+                    "y": {
+                        "type": "number"
+                    },
+                    "width": {
+                        "type": "number"
+                    },
+                    "height": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
+        "capabilities": [
+            "generatePDF",
+            "formatResumeLayout",
+            "downloadPDF"
+        ],
+        "dependencies": [
+            "resume-data-loader"
+        ],
+        "external_dependencies": [
+            "jsPDF"
+        ],
+        "constraints": {
+            "browser_compatibility": "ES6+",
+            "max_file_size": "5MB",
+            "supported_formats": [
+                "PDF"
+            ],
+            "client_side_only": true
+        },
+        "notes": "+++===+++ 2025-08-26 15:35 UTC — Hasan Alizada — Contract for PDF generator atom using jsPDF library for client-side PDF generation"
+    }
+}

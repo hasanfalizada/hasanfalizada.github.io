@@ -1,0 +1,387 @@
+{
+    "contract": {
+        "id": "navigation-handler.v1",
+        "name": "Navigation Handler",
+        "version": "1.0.0",
+        "description": "Atomic module for handling page navigation and URL routing for single-page application with GitHub Pages compatibility",
+        "interface": {
+            "routeToSection": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "sectionId": {
+                            "type": "string"
+                        },
+                        "updateHistory": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "smoothScroll": {
+                            "type": "boolean",
+                            "default": true
+                        }
+                    },
+                    "required": [
+                        "sectionId"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "currentSection": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "currentSection"
+                    ]
+                },
+                "description": "Navigates to specific section and updates URL hash"
+            },
+            "updateURL": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "hash": {
+                            "type": "string"
+                        },
+                        "title": {
+                            "type": "string"
+                        },
+                        "replaceState": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    "required": [
+                        "hash"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "currentUrl": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "currentUrl"
+                    ]
+                },
+                "description": "Updates browser URL and history state"
+            },
+            "handleBrowserNavigation": {
+                "input": {},
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "currentHash": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "currentHash"
+                    ]
+                },
+                "description": "Handles browser back/forward navigation events"
+            },
+            "scrollToSection": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "targetId": {
+                            "type": "string"
+                        },
+                        "offset": {
+                            "type": "number",
+                            "default": 0
+                        },
+                        "behavior": {
+                            "type": "string",
+                            "enum": [
+                                "smooth",
+                                "instant",
+                                "auto"
+                            ],
+                            "default": "smooth"
+                        },
+                        "duration": {
+                            "type": "number",
+                            "default": 800
+                        }
+                    },
+                    "required": [
+                        "targetId"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "scrollPosition": {
+                            "type": "number"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "scrollPosition"
+                    ]
+                },
+                "description": "Smoothly scrolls to target section with custom offset and animation"
+            },
+            "initializeRouting": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "routes": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/schemas/Route"
+                            }
+                        },
+                        "defaultRoute": {
+                            "type": "string",
+                            "default": "home"
+                        }
+                    },
+                    "required": [
+                        "routes"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "activeRoute": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "activeRoute"
+                    ]
+                },
+                "description": "Initializes routing system and sets up event listeners"
+            },
+            "updateActiveNavigation": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "activeSection": {
+                            "type": "string"
+                        },
+                        "navigationSelector": {
+                            "type": "string",
+                            "default": "nav a[href^='#']"
+                        }
+                    },
+                    "required": [
+                        "activeSection"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "updatedElements": {
+                            "type": "number"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "updatedElements"
+                    ]
+                },
+                "description": "Updates navigation UI to reflect current active section"
+            }
+        },
+        "schemas": {
+            "Route": {
+                "type": "object",
+                "properties": {
+                    "hash": {
+                        "type": "string"
+                    },
+                    "sectionId": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "scrollOffset": {
+                        "type": "number",
+                        "default": 0
+                    },
+                    "onEnter": {
+                        "type": "string",
+                        "description": "Callback function name"
+                    },
+                    "onLeave": {
+                        "type": "string",
+                        "description": "Callback function name"
+                    }
+                },
+                "required": [
+                    "hash",
+                    "sectionId",
+                    "title"
+                ]
+            },
+            "NavigationState": {
+                "type": "object",
+                "properties": {
+                    "currentHash": {
+                        "type": "string"
+                    },
+                    "currentSection": {
+                        "type": "string"
+                    },
+                    "previousHash": {
+                        "type": "string"
+                    },
+                    "scrollPosition": {
+                        "type": "number"
+                    },
+                    "lastNavigationTime": {
+                        "type": "number"
+                    }
+                }
+            },
+            "ScrollOptions": {
+                "type": "object",
+                "properties": {
+                    "behavior": {
+                        "type": "string",
+                        "enum": [
+                            "smooth",
+                            "instant",
+                            "auto"
+                        ],
+                        "default": "smooth"
+                    },
+                    "block": {
+                        "type": "string",
+                        "enum": [
+                            "start",
+                            "center",
+                            "end",
+                            "nearest"
+                        ],
+                        "default": "start"
+                    },
+                    "inline": {
+                        "type": "string",
+                        "enum": [
+                            "start",
+                            "center",
+                            "end",
+                            "nearest"
+                        ],
+                        "default": "nearest"
+                    },
+                    "offset": {
+                        "type": "number",
+                        "default": 0
+                    }
+                }
+            },
+            "RouteConfig": {
+                "type": "object",
+                "properties": {
+                    "enableHistory": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "enableScrollMemory": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "scrollOffset": {
+                        "type": "number",
+                        "default": 80
+                    },
+                    "animationDuration": {
+                        "type": "number",
+                        "default": 800
+                    },
+                    "debounceDelay": {
+                        "type": "number",
+                        "default": 100
+                    }
+                }
+            }
+        },
+        "capabilities": [
+            "routeToSection",
+            "updateURL",
+            "handleBrowserNavigation",
+            "scrollToSection",
+            "initializeRouting",
+            "updateActiveNavigation"
+        ],
+        "dependencies": [],
+        "constraints": {
+            "github_pages_compatible": true,
+            "hash_based_routing": true,
+            "no_server_side_routing": true,
+            "single_page_application": true,
+            "browser_history_support": true
+        },
+        "url_patterns": {
+            "home": "#",
+            "resume": "#resume",
+            "blog": "#blog",
+            "article": "#article/{slug}",
+            "section": "#{section-id}"
+        },
+        "event_handlers": {
+            "hashchange": "Handle URL hash changes",
+            "popstate": "Handle browser back/forward navigation",
+            "load": "Initialize routing on page load",
+            "scroll": "Update active navigation on scroll"
+        },
+        "notes": "+++===+++ 2025-08-26 15:35 UTC — Hasan Alizada — Contract for navigation handler atom with hash-based routing for GitHub Pages compatibility"
+    }
+}

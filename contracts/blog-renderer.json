@@ -1,0 +1,330 @@
+{
+    "contract": {
+        "id": "blog-renderer.v1",
+        "name": "Blog Renderer",
+        "version": "1.0.0",
+        "description": "Atomic module for rendering blog articles from markdown files with permanent links and new tab opening",
+        "interface": {
+            "loadArticleList": {
+                "input": {},
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "articles": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/schemas/ArticleMetadata"
+                            }
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "articles"
+                    ]
+                },
+                "description": "Loads list of available articles from articles directory"
+            },
+            "renderMarkdown": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "markdownContent": {
+                            "type": "string"
+                        },
+                        "options": {
+                            "$ref": "#/schemas/MarkdownOptions"
+                        }
+                    },
+                    "required": [
+                        "markdownContent"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "htmlContent": {
+                            "type": "string"
+                        },
+                        "metadata": {
+                            "$ref": "#/schemas/ArticleMetadata"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "htmlContent"
+                    ]
+                },
+                "description": "Converts markdown content to HTML with metadata extraction"
+            },
+            "generateArticleLinks": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "articles": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/schemas/ArticleMetadata"
+                            }
+                        },
+                        "sortOptions": {
+                            "$ref": "#/schemas/SortOptions"
+                        }
+                    },
+                    "required": [
+                        "articles"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "htmlLinks": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "htmlLinks"
+                    ]
+                },
+                "description": "Generates HTML links for article list with proper styling"
+            },
+            "openArticleInNewTab": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "articleUrl": {
+                            "type": "string"
+                        },
+                        "articleSlug": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "articleUrl"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success"
+                    ]
+                },
+                "description": "Opens article in new tab with permanent URL"
+            },
+            "loadArticleContent": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "articlePath": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "articlePath"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "content": {
+                            "type": "string"
+                        },
+                        "metadata": {
+                            "$ref": "#/schemas/ArticleMetadata"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "content"
+                    ]
+                },
+                "description": "Loads markdown content from specific article file"
+            }
+        },
+        "schemas": {
+            "ArticleMetadata": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "filename": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "author": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "readingTime": {
+                        "type": "number"
+                    },
+                    "wordCount": {
+                        "type": "number"
+                    },
+                    "permalink": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "title",
+                    "slug",
+                    "filename",
+                    "path",
+                    "permalink"
+                ]
+            },
+            "MarkdownOptions": {
+                "type": "object",
+                "properties": {
+                    "sanitize": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "highlightCode": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "breaks": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "linkify": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "typographer": {
+                        "type": "boolean",
+                        "default": true
+                    }
+                }
+            },
+            "SortOptions": {
+                "type": "object",
+                "properties": {
+                    "sortBy": {
+                        "type": "string",
+                        "enum": [
+                            "date",
+                            "title",
+                            "readingTime"
+                        ],
+                        "default": "date"
+                    },
+                    "sortOrder": {
+                        "type": "string",
+                        "enum": [
+                            "asc",
+                            "desc"
+                        ],
+                        "default": "desc"
+                    },
+                    "filterTags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "ArticleListConfig": {
+                "type": "object",
+                "properties": {
+                    "articlesDirectory": {
+                        "type": "string",
+                        "default": "articles/"
+                    },
+                    "articleExtension": {
+                        "type": "string",
+                        "default": ".md"
+                    },
+                    "maxExcerptLength": {
+                        "type": "number",
+                        "default": 150
+                    },
+                    "dateFormat": {
+                        "type": "string",
+                        "default": "YYYY-MM-DD"
+                    }
+                }
+            }
+        },
+        "capabilities": [
+            "loadArticleList",
+            "renderMarkdown",
+            "generateArticleLinks",
+            "openArticleInNewTab",
+            "loadArticleContent"
+        ],
+        "dependencies": [],
+        "external_dependencies": [
+            "marked"
+        ],
+        "constraints": {
+            "static_site_only": true,
+            "no_backend_required": true,
+            "permanent_urls": true,
+            "new_tab_opening": true,
+            "github_pages_compatible": true
+        },
+        "url_structure": {
+            "article_pattern": "articles/{slug}.html",
+            "permanent_link_format": "https://hasanfalizada.github.io/articles/{slug}.html"
+        },
+        "notes": "+++===+++ 2025-08-26 15:35 UTC — Hasan Alizada — Contract for blog renderer atom with markdown processing and permanent URL support"
+    }
+}

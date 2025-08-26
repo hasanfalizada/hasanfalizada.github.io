@@ -1,0 +1,473 @@
+{
+    "contract": {
+        "id": "seo-optimizer.v1",
+        "name": "SEO Optimizer",
+        "version": "1.0.0",
+        "description": "Atomic module for managing SEO metadata, structured data, and social media optimization",
+        "interface": {
+            "generateMetaTags": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "pageType": {
+                            "type": "string",
+                            "enum": [
+                                "home",
+                                "resume",
+                                "blog",
+                                "article"
+                            ]
+                        },
+                        "pageData": {
+                            "type": "object"
+                        },
+                        "siteConfig": {
+                            "$ref": "#/schemas/SiteConfig"
+                        }
+                    },
+                    "required": [
+                        "pageType",
+                        "pageData",
+                        "siteConfig"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "metaTags": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "metaTags"
+                    ]
+                },
+                "description": "Generates HTML meta tags for specific page type with SEO optimization"
+            },
+            "createStructuredData": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "schemaType": {
+                            "type": "string",
+                            "enum": [
+                                "Person",
+                                "Article",
+                                "WebSite",
+                                "Organization"
+                            ]
+                        },
+                        "data": {
+                            "type": "object"
+                        },
+                        "context": {
+                            "type": "string",
+                            "default": "https://schema.org"
+                        }
+                    },
+                    "required": [
+                        "schemaType",
+                        "data"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "structuredData": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "structuredData"
+                    ]
+                },
+                "description": "Creates JSON-LD structured data markup for search engines"
+            },
+            "setSocialMediaTags": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "pageData": {
+                            "type": "object"
+                        },
+                        "socialConfig": {
+                            "$ref": "#/schemas/SocialConfig"
+                        }
+                    },
+                    "required": [
+                        "pageData",
+                        "socialConfig"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "socialTags": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "socialTags"
+                    ]
+                },
+                "description": "Generates Open Graph and Twitter Card meta tags for social media sharing"
+            },
+            "optimizePageTitles": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "baseTitle": {
+                            "type": "string"
+                        },
+                        "pageType": {
+                            "type": "string"
+                        },
+                        "additionalContext": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "baseTitle",
+                        "pageType"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "optimizedTitle": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "optimizedTitle"
+                    ]
+                },
+                "description": "Creates SEO-optimized page titles with proper length and keywords"
+            },
+            "generateSitemap": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "pages": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/schemas/SitemapPage"
+                            }
+                        },
+                        "siteUrl": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "pages",
+                        "siteUrl"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "sitemapXml": {
+                            "type": "string"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "sitemapXml"
+                    ]
+                },
+                "description": "Generates XML sitemap for search engine crawling"
+            }
+        },
+        "schemas": {
+            "SiteConfig": {
+                "type": "object",
+                "properties": {
+                    "siteName": {
+                        "type": "string"
+                    },
+                    "siteUrl": {
+                        "type": "string"
+                    },
+                    "siteDescription": {
+                        "type": "string"
+                    },
+                    "author": {
+                        "type": "string"
+                    },
+                    "keywords": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "language": {
+                        "type": "string",
+                        "default": "en"
+                    },
+                    "favicon": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "siteName",
+                    "siteUrl",
+                    "siteDescription",
+                    "author"
+                ]
+            },
+            "SocialConfig": {
+                "type": "object",
+                "properties": {
+                    "defaultImage": {
+                        "type": "string"
+                    },
+                    "twitterHandle": {
+                        "type": "string"
+                    },
+                    "facebookAppId": {
+                        "type": "string"
+                    },
+                    "linkedinProfile": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SitemapPage": {
+                "type": "object",
+                "properties": {
+                    "url": {
+                        "type": "string"
+                    },
+                    "lastModified": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "changeFrequency": {
+                        "type": "string",
+                        "enum": [
+                            "always",
+                            "hourly",
+                            "daily",
+                            "weekly",
+                            "monthly",
+                            "yearly",
+                            "never"
+                        ]
+                    },
+                    "priority": {
+                        "type": "number",
+                        "minimum": 0.0,
+                        "maximum": 1.0
+                    }
+                },
+                "required": [
+                    "url"
+                ]
+            },
+            "PersonSchema": {
+                "type": "object",
+                "properties": {
+                    "@context": {
+                        "type": "string",
+                        "default": "https://schema.org"
+                    },
+                    "@type": {
+                        "type": "string",
+                        "default": "Person"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "jobTitle": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "telephone": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "$ref": "#/schemas/Address"
+                    },
+                    "sameAs": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "worksFor": {
+                        "$ref": "#/schemas/Organization"
+                    },
+                    "alumniOf": {
+                        "type": "string"
+                    },
+                    "knowsAbout": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "jobTitle",
+                    "description"
+                ]
+            },
+            "Address": {
+                "type": "object",
+                "properties": {
+                    "@type": {
+                        "type": "string",
+                        "default": "PostalAddress"
+                    },
+                    "addressLocality": {
+                        "type": "string"
+                    },
+                    "addressCountry": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Organization": {
+                "type": "object",
+                "properties": {
+                    "@type": {
+                        "type": "string",
+                        "default": "Organization"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ArticleSchema": {
+                "type": "object",
+                "properties": {
+                    "@context": {
+                        "type": "string",
+                        "default": "https://schema.org"
+                    },
+                    "@type": {
+                        "type": "string",
+                        "default": "Article"
+                    },
+                    "headline": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "author": {
+                        "$ref": "#/schemas/PersonSchema"
+                    },
+                    "datePublished": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "dateModified": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "wordCount": {
+                        "type": "number"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "mainEntityOfPage": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "capabilities": [
+            "generateMetaTags",
+            "createStructuredData",
+            "setSocialMediaTags",
+            "optimizePageTitles",
+            "generateSitemap"
+        ],
+        "dependencies": [
+            "resume-data-loader"
+        ],
+        "constraints": {
+            "schema_org_compliance": true,
+            "open_graph_support": true,
+            "twitter_cards_support": true,
+            "google_search_optimization": true,
+            "static_generation": true
+        },
+        "seo_targets": {
+            "primary_keywords": [
+                "enterprise architect",
+                "TOGAF",
+                "hasan alizada",
+                "IT architecture",
+                "system design"
+            ],
+            "secondary_keywords": [
+                "java developer",
+                "spring boot",
+                "microservices",
+                "cloud architecture",
+                "digital transformation"
+            ],
+            "target_pages": {
+                "home": "Personal brand and professional overview",
+                "resume": "Professional experience and skills",
+                "blog": "Technical articles and insights"
+            }
+        },
+        "notes": "+++===+++ 2025-08-26 15:35 UTC — Hasan Alizada — Contract for SEO optimizer atom with comprehensive metadata and structured data support"
+    }
+}

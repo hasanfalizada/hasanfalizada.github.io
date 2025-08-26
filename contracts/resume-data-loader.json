@@ -1,0 +1,447 @@
+{
+    "contract": {
+        "id": "resume-data-loader.v1",
+        "name": "Resume Data Loader",
+        "version": "1.0.0",
+        "description": "Atomic module for loading and managing resume data from JSON storage",
+        "interface": {
+            "loadResumeData": {
+                "input": {},
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "data": {
+                            "$ref": "#/schemas/ResumeData"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "data"
+                    ]
+                },
+                "description": "Loads complete resume data from JSON file"
+            },
+            "validateResumeStructure": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "data": {
+                            "$ref": "#/schemas/ResumeData"
+                        }
+                    },
+                    "required": [
+                        "data"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "valid": {
+                            "type": "boolean"
+                        },
+                        "errors": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "required": [
+                        "valid",
+                        "errors"
+                    ]
+                },
+                "description": "Validates resume data structure integrity"
+            },
+            "getPersonalInfo": {
+                "input": {},
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "data": {
+                            "$ref": "#/schemas/PersonalInfo"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "data"
+                    ]
+                },
+                "description": "Returns personal information section"
+            },
+            "getExperience": {
+                "input": {},
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "data": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/schemas/WorkExperience"
+                            }
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "data"
+                    ]
+                },
+                "description": "Returns work experience array"
+            },
+            "getSkills": {
+                "input": {},
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "data": {
+                            "$ref": "#/schemas/Skills"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success",
+                        "data"
+                    ]
+                },
+                "description": "Returns skills section"
+            }
+        },
+        "schemas": {
+            "ResumeData": {
+                "type": "object",
+                "properties": {
+                    "personal_info": {
+                        "$ref": "#/schemas/PersonalInfo"
+                    },
+                    "skills": {
+                        "$ref": "#/schemas/Skills"
+                    },
+                    "work_experience": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/schemas/WorkExperience"
+                        }
+                    },
+                    "education": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/schemas/Education"
+                        }
+                    },
+                    "certificates": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/schemas/Certificate"
+                        }
+                    },
+                    "languages": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/schemas/Language"
+                        }
+                    },
+                    "metadata": {
+                        "$ref": "#/schemas/Metadata"
+                    }
+                },
+                "required": [
+                    "personal_info",
+                    "skills",
+                    "work_experience",
+                    "education",
+                    "certificates",
+                    "languages"
+                ]
+            },
+            "PersonalInfo": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "summary": {
+                        "type": "string"
+                    },
+                    "contact": {
+                        "$ref": "#/schemas/Contact"
+                    },
+                    "social_links": {
+                        "$ref": "#/schemas/SocialLinks"
+                    }
+                },
+                "required": [
+                    "name",
+                    "title",
+                    "summary",
+                    "contact",
+                    "social_links"
+                ]
+            },
+            "Contact": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "website": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "phone",
+                    "location",
+                    "website"
+                ]
+            },
+            "SocialLinks": {
+                "type": "object",
+                "properties": {
+                    "linkedin": {
+                        "type": "string"
+                    },
+                    "twitter": {
+                        "type": "string"
+                    },
+                    "github": {
+                        "type": "string"
+                    },
+                    "skype": {
+                        "type": "string"
+                    },
+                    "facebook": {
+                        "type": "string"
+                    },
+                    "youtube": {
+                        "type": "string"
+                    },
+                    "instagram": {
+                        "type": "string"
+                    },
+                    "xing": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Skills": {
+                "type": "object",
+                "properties": {
+                    "professional": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "technical": {
+                        "$ref": "#/schemas/TechnicalSkills"
+                    }
+                },
+                "required": [
+                    "professional",
+                    "technical"
+                ]
+            },
+            "TechnicalSkills": {
+                "type": "object",
+                "properties": {
+                    "languages": {
+                        "type": "object"
+                    },
+                    "backend_frameworks": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "architecture_design": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "databases": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "messaging_apis": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "devops_cicd": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "cloud_infrastructure": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "monitoring_observability": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "WorkExperience": {
+                "type": "object",
+                "properties": {
+                    "position": {
+                        "type": "string"
+                    },
+                    "company": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "period": {
+                        "type": "string"
+                    },
+                    "company_description": {
+                        "type": "string"
+                    },
+                    "achievements": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "position",
+                    "company",
+                    "location",
+                    "period",
+                    "achievements"
+                ]
+            },
+            "Education": {
+                "type": "object",
+                "properties": {
+                    "degree": {
+                        "type": "string"
+                    },
+                    "institution": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "period": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "degree",
+                    "institution",
+                    "location",
+                    "period"
+                ]
+            },
+            "Certificate": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "period": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "period"
+                ]
+            },
+            "Language": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "level": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "level"
+                ]
+            },
+            "Metadata": {
+                "type": "object",
+                "properties": {
+                    "last_updated": {
+                        "type": "string"
+                    },
+                    "version": {
+                        "type": "string"
+                    },
+                    "notes": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "capabilities": [
+            "loadResumeData",
+            "validateResumeStructure",
+            "getPersonalInfo",
+            "getExperience",
+            "getSkills"
+        ],
+        "dependencies": [],
+        "constraints": {
+            "data_source": "static JSON file",
+            "browser_compatibility": "ES6+",
+            "no_external_apis": true
+        },
+        "notes": "+++===+++ 2025-08-26 15:30 UTC — Hasan Alizada — Contract for resume data loader atom with complete JSON schema validation"
+    }
+}
