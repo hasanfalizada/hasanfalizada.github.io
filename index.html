@@ -1,0 +1,2094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasan Alizada - Enterprise Architect | TOGAF®, PMP®, ITIL®</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Enterprise Architect with extensive experience in scalable and fault-tolerant architectures. TOGAF® 10, PMP®, ITIL® certified professional specializing in digital transformation and IT governance.">
+    <meta name="keywords" content="Enterprise Architect, TOGAF, PMP, ITIL, Digital Transformation, IT Strategy, Solution Architecture, Azerbaijan">
+    <meta name="author" content="Hasan Alizada">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hasanfalizada.github.io/">
+    <meta property="og:title" content="Hasan Alizada - Enterprise Architect">
+    <meta property="og:description" content="Enterprise architect with extensive experience in scalable and fault-tolerant architectures.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://hasanfalizada.github.io/">
+    <meta property="twitter:title" content="Hasan Alizada - Enterprise Architect">
+    <meta property="twitter:description" content="Enterprise architect with extensive experience in scalable and fault-tolerant architectures.">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Hasan Alizada",
+        "jobTitle": "Enterprise Architect",
+        "description": "Enterprise architect with extensive experience in scalable and fault-tolerant architectures",
+        "url": "https://hasanfalizada.github.io/",
+        "sameAs": [
+            "https://www.linkedin.com/in/hasanalizada",
+            "https://twitter.com/hasanfalizada",
+            "https://github.com/hasanfalizada"
+        ],
+        "alumniOf": "Baku State University",
+        "knowsAbout": ["TOGAF", "Enterprise Architecture", "Digital Transformation", "IT Strategy"]
+    }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* +++===+++ 2025-01-27 16:00 UTC — Hasan Alizada — Original design system with architectural mindset */
+        
+        /* CSS Variables - Architectural Color Palette */
+        :root {
+            --primary-black: #0a0a0a;
+            --secondary-black: #1a1a1a;
+            --accent-gray: #2a2a2a;
+            --light-gray: #666666;
+            --border-gray: #e0e0e0;
+            --soft-gray: #f8f9fa;
+            --pure-white: #ffffff;
+            --accent-blue: #2563eb;
+            --accent-orange: #ea580c;
+            --accent-green: #059669;
+            --text-primary: #0a0a0a;
+            --text-secondary: #4a4a4a;
+            --text-muted: #666666;
+            --bg-primary: #ffffff;
+            --bg-secondary: #fafafa;
+            --shadow-light: rgba(0, 0, 0, 0.03);
+            --shadow-medium: rgba(0, 0, 0, 0.08);
+            --shadow-heavy: rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+        
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Architectural Grid System */
+        .architectural-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.02;
+        }
+        
+        .architectural-grid::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(90deg, var(--border-gray) 1px, transparent 1px),
+                linear-gradient(180deg, var(--border-gray) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridPulse 20s ease-in-out infinite;
+        }
+        
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.02; }
+            50% { opacity: 0.05; }
+        }
+        
+        /* Header - Floating Architecture */
+        .header {
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--border-gray);
+            border-radius: 60px;
+            padding: 1rem 2rem;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 8px 32px var(--shadow-medium);
+        }
+        
+        .header:hover {
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 12px 48px var(--shadow-heavy);
+        }
+        
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+        
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section - Architectural Thinking */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: var(--bg-primary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Floating Architecture Elements */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .floating-element {
+            position: absolute;
+            opacity: 0.03;
+            animation: float 25s ease-in-out infinite;
+        }
+        
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: -8s;
+        }
+        
+        .floating-element:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: -15s;
+        }
+        
+        .floating-element:nth-child(4) {
+            top: 30%;
+            right: 30%;
+            animation-delay: -5s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.03;
+            }
+            25% {
+                transform: translateY(-20px) rotate(2deg);
+                opacity: 0.05;
+            }
+            50% {
+                transform: translateY(-15px) rotate(-1deg);
+                opacity: 0.04;
+            }
+            75% {
+                transform: translateY(-25px) rotate(1deg);
+                opacity: 0.06;
+            }
+        }
+        
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        /* Animated Badge */
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--soft-gray);
+            border: 1px solid var(--border-gray);
+            color: var(--text-secondary);
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .hero-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.1), transparent);
+            transition: left 2s ease;
+        }
+        
+        .hero-badge:hover::before {
+            left: 100%;
+        }
+        
+        .badge-icon {
+            animation: badgePulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Hero Title with Architectural Typography */
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            letter-spacing: -0.03em;
+            position: relative;
+        }
+        
+        .hero-title .word {
+            display: inline-block;
+            position: relative;
+            margin-right: 1rem;
+        }
+        
+        .hero-title .word.highlight {
+            color: var(--accent-blue);
+            position: relative;
+        }
+        
+        .hero-title .word.highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-orange));
+            opacity: 0.2;
+            border-radius: 4px;
+            animation: underlineGlow 4s ease-in-out infinite;
+        }
+        
+        @keyframes underlineGlow {
+            0%, 100% { opacity: 0.2; transform: scaleX(1); }
+            50% { opacity: 0.4; transform: scaleX(1.05); }
+        }
+        
+        .hero-subtitle {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-style: italic;
+        }
+        
+        /* Unique CTA Buttons */
+        .cta-container {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.2rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--pure-white);
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .social-link:hover::before {
+            left: 100%;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .footer-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        /* Responsive Design - Architectural Breakpoints */
+        @media (max-width: 768px) {
+            .architectural-grid { display: none; }
+            
+            .header {
+                top: 1rem;
+                left: 1rem;
+                right: 1rem;
+                transform: none;
+                padding: 1rem;
+                border-radius: 16px;
+            }
+            
+            .nav-links { display: none; }
+            
+            .hero-container { padding: 2rem; }
+            
+            .hero-title { font-size: 3rem; }
+            
+            .cta-container { 
+                flex-direction: column; 
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .timeline::before { left: 1rem; }
+            
+            .timeline-item {
+                margin-left: 3rem;
+                padding: 2rem;
+            }
+            
+            .timeline-item::before {
+                left: -3.75rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .architecture-diagram {
+                height: 400px;
+                padding: 2rem;
+            }
+            
+            .architecture-node {
+                min-width: 90px;
+                padding: 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .architecture-center {
+                width: 120px;
+                height: 120px;
+                font-size: 1rem;
+            }
+        }
+        
+        /* Loading States and Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-up {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .slide-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Scroll Progress Indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-orange));
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+        
+        /* Cursor Enhancements */
+        .interactive-cursor {
+            cursor: none;
+        }
+        
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transition: all 0.1s ease;
+            opacity: 0;
+        }
+        
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--accent-blue);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+        
+        /* PDF Generation Optimizations */
+        .pdf-ready {
+            background: var(--pure-white) !important;
+            color: var(--text-primary) !important;
+        }
+        
+        .pdf-ready .floating-elements,
+        .pdf-ready .architectural-grid {
+            display: none !important;
+        }
+        
+        @media print {
+            .header,
+            .floating-elements,
+            .architectural-grid {
+                display: none !important;
+            }
+            
+            .hero {
+                min-height: auto;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Architectural Grid Background -->
+    <div class="architectural-grid"></div>
+    
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+    
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="customCursor"></div>
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#" class="logo">Hasan Alizada</a>
+            <ul class="nav-links">
+                <li><a href="#experience">Journey</a></li>
+                <li><a href="#skills">Expertise</a></li>
+                <li><a href="#blog">Insights</a></li>
+                <li><a href="#contact">Connect</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <!-- Floating Architectural Elements -->
+        <div class="floating-elements">
+            <svg class="floating-element" width="120" height="120" viewBox="0 0 120 120">
+                <rect x="20" y="20" width="80" height="80" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                <line x1="20" y1="40" x2="100" y2="40" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                <line x1="20" y1="60" x2="100" y2="60" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                <line x1="20" y1="80" x2="100" y2="80" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                <line x1="40" y1="20" x2="40" y2="100" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                <line x1="60" y1="20" x2="60" y2="100" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                <line x1="80" y1="20" x2="80" y2="100" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+            </svg>
+            
+            <svg class="floating-element" width="100" height="100" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                <circle cx="50" cy="50" r="10" fill="currentColor" opacity="0.3"/>
+                <line x1="10" y1="50" x2="90" y2="50" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                <line x1="50" y1="10" x2="50" y2="90" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+            </svg>
+            
+            <svg class="floating-element" width="80" height="80" viewBox="0 0 80 80">
+                <polygon points="40,10 70,30 70,50 40,70 10,50 10,30" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                <polygon points="40,25 55,35 55,45 40,55 25,45 25,35" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+            </svg>
+            
+            <svg class="floating-element" width="90" height="90" viewBox="0 0 90 90">
+                <path d="M10,45 L30,15 L60,15 L80,45 L60,75 L30,75 Z" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                <circle cx="45" cy="45" r="15" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+            </svg>
+        </div>
+        
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge fade-in">
+                    <i class="fas fa-certificate badge-icon"></i>
+                    <span>TOGAF® Enterprise Architecture Practitioner</span>
+                </div>
+                
+                <h1 class="hero-title slide-up">
+                    <span class="word">Enterprise</span>
+                    <span class="word highlight">Architect</span>
+                </h1>
+                
+                <p class="hero-subtitle fade-in">
+                    Crafting digital architectures that bridge the gap between business vision and technological reality, 
+                    one system at a time.
+                </p>
+                
+                <div class="cta-container fade-in">
+                    <button class="btn btn-primary" onclick="generatePDF()">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>Download Resume</span>
+                    </button>
+                    <a href="#experience" class="btn btn-secondary">
+                        <i class="fas fa-route"></i>
+                        <span>Explore Journey</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Architecture Showcase -->
+    <section class="architecture-showcase">
+        <div class="architecture-container">
+            <h2 class="architecture-title fade-in">Enterprise Architecture Framework</h2>
+            <div class="architecture-diagram fade-in" id="architectureDiagram">
+                <div class="architecture-node enterprise" data-layer="enterprise">
+                    <div>Enterprise<br/>Architecture</div>
+                </div>
+                <div class="architecture-node solution" data-layer="solution">
+                    <div>Solution<br/>Architecture</div>
+                </div>
+                <div class="architecture-node technology" data-layer="technology">
+                    <div>Technology<br/>Architecture</div>
+                </div>
+                <div class="architecture-node data" data-layer="data">
+                    <div>Data<br/>Architecture</div>
+                </div>
+                <div class="architecture-center" id="centerNode">
+                    <div>TOGAF<br/>ADM</div>
+                </div>
+                
+                <!-- Connection lines will be drawn dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Showcase -->
+    <section class="stats-showcase">
+        <div class="stats-container">
+            <div class="stat-item fade-in" data-delay="0">
+                <div class="stat-number" data-target="15">0</div>
+                <div class="stat-label">Years of Excellence</div>
+            </div>
+            <div class="stat-item fade-in" data-delay="200">
+                <div class="stat-number" data-target="30">0</div>
+                <div class="stat-label">% Cost Optimization</div>
+            </div>
+            <div class="stat-item fade-in" data-delay="400">
+                <div class="stat-number" data-target="99.9">0</div>
+                <div class="stat-label">% System Uptime</div>
+            </div>
+            <div class="stat-item fade-in" data-delay="600">
+                <div class="stat-number" data-target="4">0</div>
+                <div class="stat-label">Professional Certifications</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Timeline -->
+    <section class="experience" id="experience">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title fade-in">Professional Journey</h2>
+                <p class="section-subtitle fade-in">
+                    Each role has been a deliberate step in mastering the art and science of enterprise architecture.
+                </p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item fade-in" data-year="2023">
+                    <div class="job-header">
+                        <h3 class="job-title">Enterprise Architect</h3>
+                        <div class="job-company">Azerbaijan Railways CJSC</div>
+                        <div class="job-period">September 2023 - Present</div>
+                    </div>
+                    <ul class="job-achievements">
+                        <li>Orchestrated cost-saving initiatives that delivered a 30% reduction in operational expenses through strategic process optimization and intelligent technology implementation</li>
+                        <li>Led large-scale digital transformation projects from conception to delivery, ensuring on-time and within-budget execution while coordinating cross-functional teams</li>
+                        <li>Architected and introduced next-generation mobile platform infrastructure that revolutionized railway operations, significantly boosting efficiency and customer satisfaction</li>
+                        <li>Established comprehensive compliance frameworks ensuring adherence to industry standards while effectively managing enterprise-wide risks</li>
+                        <li>Spearheaded cloud migration strategies that enhanced operational agility and positioned the organization for future growth</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item fade-in" data-year="2022">
+                    <div class="job-header">
+                        <h3 class="job-title">Chapter Lead of Backend Development</h3>
+                        <div class="job-company">Kapital Bank OJSC</div>
+                        <div class="job-period">April 2022 - September 2023</div>
+                    </div>
+                    <ul class="job-achievements">
+                        <li>Implemented Apache Kafka ecosystem for real-time data streaming, dramatically increasing data throughput while reducing system latency across critical banking operations</li>
+                        <li>Architected message queuing solutions with RabbitMQ, enhancing system reliability and scalability for high-volume transaction processing</li>
+                        <li>Deployed Redis caching strategies that achieved 20% reduction in average response times, directly improving customer experience metrics</li>
+                        <li>Strengthened security posture through Keycloak integration for identity and access management, significantly reducing unauthorized access incidents</li>
+                        <li>Built and led high-performing backend development teams while establishing mentoring programs that accelerated team member growth</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item fade-in" data-year="2016">
+                    <div class="job-header">
+                        <h3 class="job-title">Chapter Lead of System Development</h3>
+                        <div class="job-company">Kapital Bank OJSC</div>
+                        <div class="job-period">June 2016 - April 2022</div>
+                    </div>
+                    <ul class="job-achievements">
+                        <li>Successfully architected and delivered Compass Plus CMS and TWO platforms, transforming card management capabilities and operational efficiency</li>
+                        <li>Designed seamless integration patterns between internal banking systems and card processing platforms, ensuring reliable transaction processing</li>
+                        <li>Optimized Oracle database performance through advanced PL/SQL refactoring, achieving 20% faster processing times and improved data integrity</li>
+                        <li>Managed critical system upgrades and maintenance cycles, maintaining 99.9% availability while ensuring regulatory compliance</li>
+                        <li>Cultivated collaborative development environments that consistently delivered successful project outcomes</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item fade-in" data-year="2008">
+                    <div class="job-header">
+                        <h3 class="job-title">Technical Leadership Roles</h3>
+                        <div class="job-company">Multiple Organizations</div>
+                        <div class="job-period">March 2008 - June 2016</div>
+                    </div>
+                    <ul class="job-achievements">
+                        <li>Managed enterprise IT operations across diverse industries including telecommunications, manufacturing, and banking, maintaining exceptional 99.9% uptime</li>
+                        <li>Implemented incident management frameworks that significantly reduced average resolution time for critical business issues</li>
+                        <li>Led major system upgrade initiatives with meticulous planning, ensuring seamless integration and minimal business disruption</li>
+                        <li>Fostered cross-functional collaboration between IT, network, and database teams, creating more efficient problem-solving processes</li>
+                        <li>Developed comprehensive reporting and documentation systems that enhanced strategic decision-making capabilities</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Architecture -->
+    <section class="skills" id="skills">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title fade-in">Technical Architecture</h2>
+                <p class="section-subtitle fade-in">
+                    A comprehensive foundation built through years of hands-on experience and continuous learning.
+                </p>
+            </div>
+            
+            <div class="skills-grid">
+                <div class="skill-category slide-up">
+                    <h3><i class="fas fa-chess-king"></i>Strategic Architecture</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">TOGAF® Framework & ADM</span>
+                        <span class="skill-tag">ArchiMate Modeling</span>
+                        <span class="skill-tag">Enterprise IT Governance</span>
+                        <span class="skill-tag">Digital Transformation Strategy</span>
+                        <span class="skill-tag">Business-IT Alignment</span>
+                        <span class="skill-tag">Risk Architecture</span>
+                    </div>
+                </div>
+
+                <div class="skill-category slide-up">
+                    <h3><i class="fas fa-project-diagram"></i>Solution Design</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Microservices Architecture</span>
+                        <span class="skill-tag">Event-Driven Design</span>
+                        <span class="skill-tag">Domain-Driven Design</span>
+                        <span class="skill-tag">API Strategy & Design</span>
+                        <span class="skill-tag">Cloud-Native Patterns</span>
+                        <span class="skill-tag">Integration Patterns</span>
+                    </div>
+                </div>
+
+                <div class="skill-category slide-up">
+                    <h3><i class="fas fa-code-branch"></i>Development Ecosystem</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Java 8-17</span>
+                        <span class="skill-tag">Spring Ecosystem</span>
+                        <span class="skill-tag">Advanced PL/SQL</span>
+                        <span class="skill-tag">Maven & Gradle</span>
+                        <span class="skill-tag">C# & .NET</span>
+                        <span class="skill-tag">Rust Systems</span>
+                    </div>
+                </div>
+
+                <div class="skill-category slide-up">
+                    <h3><i class="fas fa-database"></i>Data Architecture</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Oracle Database</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">Redis Caching</span>
+                        <span class="skill-tag">Data Modeling</span>
+                        <span class="skill-tag">ETL Pipelines</span>
+                    </div>
+                </div>
+
+                <div class="skill-category slide-up">
+                    <h3><i class="fas fa-cloud"></i>Cloud & DevOps</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Oracle Cloud</span>
+                        <span class="skill-tag">AWS Architecture</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">Docker Containerization</span>
+                        <span class="skill-tag">GitLab CI/CD</span>
+                        <span class="skill-tag">Infrastructure as Code</span>
+                    </div>
+                </div>
+
+                <div class="skill-category slide-up">
+                    <h3><i class="fas fa-users-cog"></i>Leadership & Management</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">PMP® Methodology</span>
+                        <span class="skill-tag">ITIL® Service Management</span>
+                        <span class="skill-tag">Agile & Scrum</span>
+                        <span class="skill-tag">Team Leadership</span>
+                        <span class="skill-tag">Stakeholder Management</span>
+                        <span class="skill-tag">Budget Optimization</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact" style="padding: 8rem 0; background: var(--bg-secondary);">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title fade-in">Let's Architect Something Together</h2>
+                <p class="section-subtitle fade-in">
+                    Ready to transform your enterprise architecture vision into reality?
+                </p>
+            </div>
+            
+            <div style="max-width: 600px; margin: 4rem auto; text-align: center;">
+                <div style="background: var(--pure-white); padding: 4rem; border-radius: 24px; border: 1px solid var(--border-gray); box-shadow: 0 16px 48px var(--shadow-light);" class="fade-in">
+                    <div style="margin-bottom: 3rem;">
+                        <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--text-primary), var(--accent-gray)); border-radius: 50%; margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-handshake" style="font-size: 2.5rem; color: var(--pure-white);"></i>
+                        </div>
+                        <h3 style="color: var(--text-primary); font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem;">Ready to Connect</h3>
+                        <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6;">Let's discuss how enterprise architecture can drive your business forward</p>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 3rem;">
+                        <a href="mailto:ha@hasanalizada.net" class="btn btn-primary" style="justify-content: center; font-size: 1.1rem;">
+                            <i class="fas fa-envelope"></i>
+                            <span>ha@hasanalizada.net</span>
+                        </a>
+                        <a href="tel:+994702011302" class="btn btn-secondary" style="justify-content: center; font-size: 1.1rem;">
+                            <i class="fas fa-phone"></i>
+                            <span>+994 70 201 13 02</span>
+                        </a>
+                    </div>
+                    
+                    <div style="padding-top: 2rem; border-top: 1px solid var(--border-gray);">
+                        <div style="color: var(--text-muted); font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Baku, Azerbaijan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/hasanalizada" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn Professional Profile">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://twitter.com/hasanfalizada" class="social-link" target="_blank" rel="noopener" aria-label="Twitter Insights">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.facebook.com/alizadehasan" class="social-link" target="_blank" rel="noopener" aria-label="Facebook Connection">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.youtube.com/@hasanalizada" class="social-link" target="_blank" rel="noopener" aria-label="YouTube Channel">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.instagram.com/hasanalizada" class="social-link" target="_blank" rel="noopener" aria-label="Instagram Stories">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.xing.com/profile/Hasan_Alizada" class="social-link" target="_blank" rel="noopener" aria-label="XING Professional Network">
+                    <i class="fab fa-xing"></i>
+                </a>
+                <a href="https://github.com/hasanfalizada" class="social-link" target="_blank" rel="noopener" aria-label="GitHub Repositories">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+            
+            <div class="footer-text">
+                <p style="margin-bottom: 0.5rem;">© 2025 Hasan Alizada — Enterprise Architect</p>
+                <p style="font-size: 0.8rem; opacity: 0.8;">Crafting digital futures through architectural excellence</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <script>
+        // +++===+++ 2025-01-27 16:30 UTC — Hasan Alizada — Living, breathing architectural website with personality
+        
+        class ArchitecturalWebsite {
+            constructor() {
+                this.init();
+                this.setupAnimations();
+                this.setupInteractions();
+                this.setupArchitectureDiagram();
+                this.setupCustomCursor();
+            }
+            
+            init() {
+                console.log('+++===+++ 2025-01-27 16:30 UTC — Hasan Alizada — Initializing architectural experience');
+                this.setupScrollProgress();
+                this.setupIntersectionObserver();
+                this.animateStats();
+            }
+            
+            setupScrollProgress() {
+                const progressBar = document.getElementById('scrollProgress');
+                
+                window.addEventListener('scroll', () => {
+                    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                    const scrolled = (winScroll / height) * 100;
+                    progressBar.style.width = scrolled + '%';
+                });
+            }
+            
+            setupIntersectionObserver() {
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => {
+                                entry.target.classList.add('visible');
+                            }, index * 100);
+                        }
+                    });
+                }, observerOptions);
+
+                document.querySelectorAll('.fade-in, .slide-up, .timeline-item').forEach(el => {
+                    observer.observe(el);
+                });
+            }
+            
+            setupAnimations() {
+                // Animate hero title words
+                const titleWords = document.querySelectorAll('.hero-title .word');
+                titleWords.forEach((word, index) => {
+                    setTimeout(() => {
+                        word.style.opacity = '1';
+                        word.style.transform = 'translateY(0)';
+                    }, index * 300);
+                });
+                
+                // Floating elements animation enhancement
+                const floatingElements = document.querySelectorAll('.floating-element');
+                floatingElements.forEach((element, index) => {
+                    element.style.animationDelay = `${index * 3}s`;
+                    element.style.animationDuration = `${20 + (index * 5)}s`;
+                });
+            }
+            
+            animateStats() {
+                const animateCounter = (element, target, duration = 2000) => {
+                    let start = 0;
+                    const increment = target / (duration / 16);
+                    
+                    const updateCounter = () => {
+                        start += increment;
+                        if (start < target) {
+                            element.textContent = Math.floor(start);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            element.textContent = target;
+                        }
+                    };
+                    
+                    updateCounter();
+                };
+                
+                const statObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const numberElement = entry.target.querySelector('.stat-number');
+                            const target = parseInt(numberElement.getAttribute('data-target'));
+                            animateCounter(numberElement, target, 2000);
+                            statObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                
+                document.querySelectorAll('.stat-item').forEach(item => {
+                    statObserver.observe(item);
+                });
+            }
+            
+            setupInteractions() {
+                // Enhanced button interactions
+                document.querySelectorAll('.btn').forEach(btn => {
+                    btn.addEventListener('mouseenter', function() {
+                        this.style.transform = 'translateY(-3px) scale(1.02)';
+                    });
+                    
+                    btn.addEventListener('mouseleave', function() {
+                        this.style.transform = 'translateY(0) scale(1)';
+                    });
+                });
+                
+                // Skill tag interactions
+                document.querySelectorAll('.skill-tag').forEach(tag => {
+                    tag.addEventListener('click', function() {
+                        this.classList.toggle('active');
+                        if (this.classList.contains('active')) {
+                            this.style.background = 'var(--accent-blue)';
+                            this.style.color = 'var(--pure-white)';
+                        } else {
+                            this.style.background = 'var(--soft-gray)';
+                            this.style.color = 'var(--text-primary)';
+                        }
+                    });
+                });
+                
+                // Timeline item hover effects
+                document.querySelectorAll('.timeline-item').forEach(item => {
+                    item.addEventListener('mouseenter', function() {
+                        this.style.transform = 'translateX(-12px) scale(1.02)';
+                        this.style.boxShadow = '0 20px 60px var(--shadow-heavy)';
+                    });
+                    
+                    item.addEventListener('mouseleave', function() {
+                        this.style.transform = 'translateX(0) scale(1)';
+                        this.style.boxShadow = '0 16px 48px var(--shadow-medium)';
+                    });
+                });
+            }
+            
+            setupArchitectureDiagram() {
+                const diagram = document.getElementById('architectureDiagram');
+                const centerNode = document.getElementById('centerNode');
+                const nodes = document.querySelectorAll('.architecture-node');
+                
+                // Create dynamic connections
+                this.createConnections();
+                
+                // Interactive node system
+                nodes.forEach(node => {
+                    node.addEventListener('mouseenter', () => {
+                        this.highlightConnections(node.getAttribute('data-layer'));
+                        node.style.transform = 'translateY(-12px) scale(1.08)';
+                        node.style.zIndex = '10';
+                    });
+                    
+                    node.addEventListener('mouseleave', () => {
+                        this.resetConnections();
+                        node.style.transform = 'translateY(0) scale(1)';
+                        node.style.zIndex = '1';
+                    });
+                });
+                
+                centerNode.addEventListener('mouseenter', () => {
+                    this.highlightAllConnections();
+                    centerNode.style.transform = 'translate(-50%, -50%) scale(1.15)';
+                });
+                
+                centerNode.addEventListener('mouseleave', () => {
+                    this.resetConnections();
+                    centerNode.style.transform = 'translate(-50%, -50%) scale(1)';
+                });
+                
+                // Auto-rotation animation
+                setInterval(() => {
+                    this.rotateHighlight();
+                }, 4000);
+            }
+            
+            createConnections() {
+                const diagram = document.getElementById('architectureDiagram');
+                const center = { x: 250, y: 250 };
+                const positions = {
+                    enterprise: { x: 115, y: 70 },
+                    solution: { x: 350, y: 70 },
+                    technology: { x: 115, y: 270 },
+                    data: { x: 350, y: 270 }
+                };
+                
+                Object.keys(positions).forEach(key => {
+                    const connection = document.createElement('div');
+                    connection.className = 'architecture-connection';
+                    connection.setAttribute('data-connection', key);
+                    
+                    const pos = positions[key];
+                    const angle = Math.atan2(center.y - pos.y, center.x - pos.x);
+                    const length = Math.sqrt(Math.pow(center.x - pos.x, 2) + Math.pow(center.y - pos.y, 2)) - 75;
+                    
+                    connection.style.left = `${pos.x}px`;
+                    connection.style.top = `${pos.y + 20}px`;
+                    connection.style.width = `${length}px`;
+                    connection.style.transform = `rotate(${angle}rad)`;
+                    
+                    diagram.appendChild(connection);
+                });
+            }
+            
+            highlightConnections(layer) {
+                const connection = document.querySelector(`[data-connection="${layer}"]`);
+                if (connection) {
+                    connection.classList.add('active');
+                }
+            }
+            
+            highlightAllConnections() {
+                document.querySelectorAll('.architecture-connection').forEach(conn => {
+                    conn.classList.add('active');
+                });
+            }
+            
+            resetConnections() {
+                document.querySelectorAll('.architecture-connection').forEach(conn => {
+                    conn.classList.remove('active');
+                });
+            }
+            
+            rotateHighlight() {
+                const layers = ['enterprise', 'solution', 'technology', 'data'];
+                const randomLayer = layers[Math.floor(Math.random() * layers.length)];
+                
+                this.resetConnections();
+                setTimeout(() => {
+                    this.highlightConnections(randomLayer);
+                }, 100);
+                
+                setTimeout(() => {
+                    this.resetConnections();
+                }, 2000);
+            }
+            
+            setupCustomCursor() {
+                if (window.innerWidth > 768) { // Only on desktop
+                    const cursor = document.getElementById('customCursor');
+                    const follower = document.getElementById('cursorFollower');
+                    
+                    let mouseX = 0, mouseY = 0;
+                    let cursorX = 0, cursorY = 0;
+                    let followerX = 0, followerY = 0;
+                    
+                    document.addEventListener('mousemove', (e) => {
+                        mouseX = e.clientX;
+                        mouseY = e.clientY;
+                        
+                        cursor.style.opacity = '1';
+                        follower.style.opacity = '0.5';
+                    });
+                    
+                    document.addEventListener('mouseleave', () => {
+                        cursor.style.opacity = '0';
+                        follower.style.opacity = '0';
+                    });
+                    
+                    // Smooth cursor animation
+                    const updateCursor = () => {
+                        cursorX += (mouseX - cursorX) * 0.15;
+                        cursorY += (mouseY - cursorY) * 0.15;
+                        
+                        followerX += (mouseX - followerX) * 0.08;
+                        followerY += (mouseY - followerY) * 0.08;
+                        
+                        cursor.style.transform = `translate3d(${cursorX - 10}px, ${cursorY - 10}px, 0)`;
+                        follower.style.transform = `translate3d(${followerX - 20}px, ${followerY - 20}px, 0)`;
+                        
+                        requestAnimationFrame(updateCursor);
+                    };
+                    
+                    updateCursor();
+                    
+                    // Interactive elements cursor effects
+                    document.querySelectorAll('a, button, .skill-tag, .timeline-item, .architecture-node').forEach(el => {
+                        el.addEventListener('mouseenter', () => {
+                            cursor.style.transform += ' scale(1.5)';
+                            follower.style.transform += ' scale(1.3)';
+                            follower.style.borderColor = 'var(--accent-orange)';
+                        });
+                        
+                        el.addEventListener('mouseleave', () => {
+                            cursor.style.transform = cursor.style.transform.replace(' scale(1.5)', '');
+                            follower.style.transform = follower.style.transform.replace(' scale(1.3)', '');
+                            follower.style.borderColor = 'var(--accent-blue)';
+                        });
+                    });
+                }
+            }
+        }
+
+        // PDF Generation with Enhanced Styling
+        async function generatePDF() {
+            console.log('+++===+++ 2025-01-27 16:45 UTC — Hasan Alizada — Generating architectural resume PDF');
+            
+            const button = document.querySelector('button[onclick="generatePDF()"]');
+            const originalHTML = button.innerHTML;
+            
+            try {
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Crafting PDF...</span>';
+                button.disabled = true;
+                
+                const resumeContent = createEnhancedResumeContent();
+                
+                const tempContainer = document.createElement('div');
+                tempContainer.style.cssText = `
+                    position: absolute;
+                    left: -9999px;
+                    top: 0;
+                    width: 210mm;
+                    min-height: 297mm;
+                    background: white;
+                    color: #0a0a0a;
+                    font-family: 'Inter', Arial, sans-serif;
+                    padding: 15mm;
+                    box-sizing: border-box;
+                    line-height: 1.6;
+                `;
+                tempContainer.innerHTML = resumeContent;
+                document.body.appendChild(tempContainer);
+                
+                await new Promise(resolve => setTimeout(resolve, 500)); // Let content render
+                
+                const canvas = await html2canvas(tempContainer, {
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: '#ffffff',
+                    logging: false
+                });
+                
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 210;
+                const pageHeight = 295;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+                
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+                
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+                
+                document.body.removeChild(tempContainer);
+                pdf.save('Hasan-Alizada-Enterprise-Architect.pdf');
+                
+                console.log('+++===+++ 2025-01-27 16:45 UTC — Hasan Alizada — PDF generation completed successfully');
+                
+            } catch (error) {
+                console.error('+++===+++ 2025-01-27 16:45 UTC — Hasan Alizada — PDF generation failed:', error);
+                alert('PDF generation encountered an issue. Please try again.');
+            } finally {
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+            }
+        }
+
+        function createEnhancedResumeContent() {
+            const currentDate = new Date().toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            return `
+                <div style="color: #0a0a0a; font-size: 14px; line-height: 1.6;">
+                    <!-- Header with modern design -->
+                    <div style="text-align: center; margin-bottom: 40px; position: relative;">
+                        <div style="background: linear-gradient(135deg, #0a0a0a, #2a2a2a); color: white; padding: 30px; margin: -15mm -15mm 30px -15mm; position: relative;">
+                            <h1 style="font-size: 42px; font-weight: 900; margin: 0; letter-spacing: -1px;">HASAN ALIZADA</h1>
+                            <p style="font-size: 20px; margin: 10px 0 0 0; opacity: 0.9; font-weight: 300;">Enterprise Architect</p>
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #2563eb, #ea580c);"></div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 25px; font-size: 13px;">
+                            <div style="text-align: left;">
+                                <div style="margin-bottom: 8px;"><strong>📧</strong> ha@hasanalizada.net</div>
+                                <div style="margin-bottom: 8px;"><strong>📱</strong> +994 70 201 13 02</div>
+                                <div><strong>📍</strong> Baku, Azerbaijan</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="margin-bottom: 8px;"><strong>🔗</strong> linkedin.com/in/hasanalizada</div>
+                                <div style="margin-bottom: 8px;"><strong>🐦</strong> twitter.com/hasanfalizada</div>
+                                <div><strong>💻</strong> github.com/hasanfalizada</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Professional Summary -->
+                    <div style="margin-bottom: 35px;">
+                        <h2 style="color: #0a0a0a; font-size: 18px; font-weight: 700; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #2563eb;">PROFESSIONAL SUMMARY</h2>
+                        <p style="text-align: justify; margin: 0; font-size: 14px; color: #2a2a2a;">
+                            Enterprise architect with extensive experience in scalable and fault-tolerant architectures. Passionate about optimizing enterprise IT landscapes, strengthening system resilience, and driving digital transformation to align technology with business goals. Proven track record of delivering 30% cost reductions and maintaining 99.9% system uptime across diverse industries.
+                        </p>
+                    </div>
+
+                    <!-- Core Competencies -->
+                    <div style="margin-bottom: 35px;">
+                        <h2 style="color: #0a0a0a; font-size: 18px; font-weight: 700; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #2563eb;">CORE COMPETENCIES</h2>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 13px;">
+                            <ul style="margin: 0; padding-left: 18px; color: #2a2a2a;">
+                                <li style="margin-bottom: 6px;">TOGAF® Framework & ADM</li>
+                                <li style="margin-bottom: 6px;">Enterprise IT Governance</li>
+                                <li style="margin-bottom: 6px;">Digital Transformation Strategy</li>
+                                <li style="margin-bottom: 6px;">Solution & Technology Architecture</li>
+                                <li style="margin-bottom: 6px;">Microservices & Cloud-Native Design</li>
+                            </ul>
+                            <ul style="margin: 0; padding-left: 18px; color: #2a2a2a;">
+                                <li style="margin-bottom: 6px;">IT Project & Program Management</li>
+                                <li style="margin-bottom: 6px;">Agile & Scrum Methodologies</li>
+                                <li style="margin-bottom: 6px;">Risk Management & Mitigation</li>
+                                <li style="margin-bottom: 6px;">Cross-Functional Team Leadership</li>
+                                <li style="margin-bottom: 6px;">Budget Optimization & Cost Control</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Professional Experience -->
+                    <div style="margin-bottom: 35px;">
+                        <h2 style="color: #0a0a0a; font-size: 18px; font-weight: 700; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #2563eb;">PROFESSIONAL EXPERIENCE</h2>
+                        
+                        <div style="margin-bottom: 25px; page-break-inside: avoid;">
+                            <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid #2563eb; margin-bottom: 10px;">
+                                <h3 style="color: #0a0a0a; font-size: 15px; font-weight: 700; margin: 0;">Enterprise Architect</h3>
+                                <p style="color: #2563eb; margin: 5px 0; font-weight: 600; font-size: 14px;">Azerbaijan Railways CJSC</p>
+                                <p style="color: #666; margin: 5px 0; font-size: 12px; font-style: italic;">September 2023 - Present</p>
+                            </div>
+                            <ul style="margin: 10px 0; padding-left: 18px; font-size: 13px; color: #2a2a2a;">
+                                <li style="margin-bottom: 8px;">Led cost-saving initiatives delivering 30% reduction in operational expenses through strategic process optimization</li>
+                                <li style="margin-bottom: 8px;">Managed large-scale digital transformation projects with on-time, within-budget delivery</li>
+                                <li style="margin-bottom: 8px;">Architected next-generation mobile platform infrastructure revolutionizing railway operations</li>
+                                <li style="margin-bottom: 8px;">Established compliance frameworks ensuring industry standard adherence and risk management</li>
+                                <li style="margin-bottom: 8px;">Spearheaded cloud migration strategies enhancing operational agility</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-bottom: 25px; page-break-inside: avoid;">
+                            <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid #ea580c; margin-bottom: 10px;">
+                                <h3 style="color: #0a0a0a; font-size: 15px; font-weight: 700; margin: 0;">Chapter Lead of Backend Development</h3>
+                                <p style="color: #ea580c; margin: 5px 0; font-weight: 600; font-size: 14px;">Kapital Bank OJSC</p>
+                                <p style="color: #666; margin: 5px 0; font-size: 12px; font-style: italic;">April 2022 - September 2023</p>
+                            </div>
+                            <ul style="margin: 10px 0; padding-left: 18px; font-size: 13px; color: #2a2a2a;">
+                                <li style="margin-bottom: 8px;">Implemented Apache Kafka ecosystem for real-time data processing with increased throughput</li>
+                                <li style="margin-bottom: 8px;">Deployed Redis caching strategies achieving 20% response time reduction</li>
+                                <li style="margin-bottom: 8px;">Enhanced security posture through Keycloak identity and access management integration</li>
+                                <li style="margin-bottom: 8px;">Led high-performing backend development teams with comprehensive mentoring programs</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-bottom: 25px; page-break-inside: avoid;">
+                            <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid #059669; margin-bottom: 10px;">
+                                <h3 style="color: #0a0a0a; font-size: 15px; font-weight: 700; margin: 0;">Chapter Lead of System Development</h3>
+                                <p style="color: #059669; margin: 5px 0; font-weight: 600; font-size: 14px;">Kapital Bank OJSC</p>
+                                <p style="color: #666; margin: 5px 0; font-size: 12px; font-style: italic;">June 2016 - April 2022</p>
+                            </div>
+                            <ul style="margin: 10px 0; padding-left: 18px; font-size: 13px; color: #2a2a2a;">
+                                <li style="margin-bottom: 8px;">Architected Compass Plus CMS and TWO platforms enhancing card management capabilities</li>
+                                <li style="margin-bottom: 8px;">Optimized Oracle database performance achieving 20% faster processing times</li>
+                                <li style="margin-bottom: 8px;">Managed critical system upgrades maintaining 99.9% availability</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Technical Skills -->
+                    <div style="margin-bottom: 35px;">
+                        <h2 style="color: #0a0a0a; font-size: 18px; font-weight: 700; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #2563eb;">TECHNICAL EXPERTISE</h2>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; font-size: 13px;">
+                            <div>
+                                <h4 style="color: #0a0a0a; margin-bottom: 8px; font-size: 14px;">Architecture & Strategy:</h4>
+                                <p style="color: #2a2a2a; margin: 0; line-height: 1.4;">TOGAF® Framework, ArchiMate, Enterprise Governance, Digital Transformation</p>
+                            </div>
+                            <div>
+                                <h4 style="color: #0a0a0a; margin-bottom: 8px; font-size: 14px;">Development:</h4>
+                                <p style="color: #2a2a2a; margin: 0; line-height: 1.4;">Java 8-17, Spring Ecosystem, PL/SQL, C#, Rust, Maven, Gradle</p>
+                            </div>
+                            <div>
+                                <h4 style="color: #0a0a0a; margin-bottom: 8px; font-size: 14px;">Data & Integration:</h4>
+                                <p style="color: #2a2a2a; margin: 0; line-height: 1.4;">Oracle DB, PostgreSQL, MongoDB, Redis, Kafka, RabbitMQ</p>
+                            </div>
+                            <div>
+                                <h4 style="color: #0a0a0a; margin-bottom: 8px; font-size: 14px;">Cloud & DevOps:</h4>
+                                <p style="color: #2a2a2a; margin: 0; line-height: 1.4;">Oracle Cloud, AWS, Kubernetes, Docker, GitLab CI/CD</p>
+                            </div>
+                            <div>
+                                <h4 style="color: #0a0a0a; margin-bottom: 8px; font-size: 14px;">Management:</h4>
+                                <p style="color: #2a2a2a; margin: 0; line-height: 1.4;">PMP® Methodology, ITIL®, Agile, Scrum, Team Leadership</p>
+                            </div>
+                            <div>
+                                <h4 style="color: #0a0a0a; margin-bottom: 8px; font-size: 14px;">APIs & Protocols:</h4>
+                                <p style="color: #2a2a2a; margin: 0; line-height: 1.4;">REST, gRPC, SOAP, OpenAPI, Microservices Patterns</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Professional Certifications -->
+                    <div style="margin-bottom: 35px;">
+                        <h2 style="color: #0a0a0a; font-size: 18px; font-weight: 700; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #2563eb;">PROFESSIONAL CERTIFICATIONS</h2>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 13px;">
+                            <div>
+                                <h4 style="color: #0a0a0a; margin-bottom: 5px;">🏆 TOGAF® Enterprise Architecture Practitioner</h4>
+                                <p style="margin: 0; color: #666; font-size: 12px;">The Open Group Certified (March 2024 - Present)</p>
+                            </div>
+                            <div>
+                                <h4 style="color: #0a0a0a; margin-bottom: 5px;">📊 Project Management Professional (PMP)®</h4>
+                                <p style="margin: 0; color: #666; font-size: 12px;">PMI Certified (February 2025 - February 2028)</p>
+                            </div>
+                            <div>
+                                <h4 style="color: #0a0a0a; margin-bottom: 5px;">⚙️ ITIL® Foundation Certificate</h4>
+                                <p style="margin: 0; color: #666; font-size: 12px;">IT Service Management (February 2025 - February 2028)</p>
+                            </div>
+                            <div>
+                                <h4 style="color: #0a0a0a; margin-bottom: 5px;">☁️ Oracle Cloud Infrastructure Architect Professional</h4>
+                                <p style="margin: 0; color: #666; font-size: 12px;">Oracle Certified (February 2022 - Present)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education -->
+                    <div style="margin-bottom: 35px;">
+                        <h2 style="color: #0a0a0a; font-size: 18px; font-weight: 700; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #2563eb;">EDUCATION</h2>
+                        <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid #666;">
+                            <h3 style="color: #0a0a0a; font-size: 15px; font-weight: 700; margin: 0;">Bachelor's Degree in Applied Mathematics and Cybernetics</h3>
+                            <p style="color: #666; margin: 5px 0; font-weight: 600;">Baku State University</p>
+                            <p style="color: #666; margin: 5px 0; font-size: 12px;">September 2007 - June 2011 | Baku, Azerbaijan</p>
+                        </div>
+                    </div>
+
+                    <!-- Languages -->
+                    <div style="margin-bottom: 20px;">
+                        <h2 style="color: #0a0a0a; font-size: 18px; font-weight: 700; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #2563eb;">LANGUAGES</h2>
+                        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; font-size: 13px; text-align: center;">
+                            <div><strong>Azerbaijani:</strong><br/>Native</div>
+                            <div><strong>Russian:</strong><br/>Native</div>
+                            <div><strong>English:</strong><br/>Professional</div>
+                            <div><strong>Turkish:</strong><br/>Intermediate</div>
+                            <div><strong>German:</strong><br/>Basic</div>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #e5e5e5; text-align: center; font-size: 11px; color: #666;">
+                        <p style="margin: 0;">This resume was generated on ${currentDate} from hasanfalizada.github.io</p>
+                        <p style="margin: 5px 0 0 0; font-style: italic;">Crafting digital futures through architectural excellence</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Initialize the architectural experience
+        document.addEventListener('DOMContentLoaded', () => {
+            new ArchitecturalWebsite();
+            
+            // Add smooth scrolling for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Error handling
+        window.addEventListener('error', (e) => {
+            console.error('+++===+++ 2025-01-27 16:45 UTC — Hasan Alizada — Global error:', e.error);
+        });
+
+        console.log('+++===+++ 2025-01-27 16:30 UTC — Hasan Alizada — Architectural website loaded with personality and life');
+    </script>
+
+    <!-- Google Analytics placeholder -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'YOUR_GA_ID');
+    </script>
+    -->
+</body>
+</html>-white);
+            box-shadow: 0 4px 20px var(--shadow-medium);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px var(--shadow-heavy);
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--border-gray);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--soft-gray);
+            transform: translateY(-3px);
+            border-color: var(--text-primary);
+        }
+        
+        /* Interactive Architecture Visualization */
+        .architecture-showcase {
+            margin: 6rem 0;
+            padding: 4rem 0;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-gray);
+            border-bottom: 1px solid var(--border-gray);
+        }
+        
+        .architecture-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .architecture-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 3rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .architecture-diagram {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            background: var(--pure-white);
+            border-radius: 20px;
+            border: 1px solid var(--border-gray);
+            padding: 3rem;
+            box-shadow: 0 8px 32px var(--shadow-light);
+            overflow: hidden;
+        }
+        
+        .architecture-node {
+            position: absolute;
+            background: var(--pure-white);
+            border: 2px solid var(--border-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            min-width: 120px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 4px 12px var(--shadow-light);
+        }
+        
+        .architecture-node:hover {
+            transform: translateY(-8px) scale(1.05);
+            border-color: var(--accent-blue);
+            box-shadow: 0 12px 32px var(--shadow-medium);
+        }
+        
+        .architecture-node.enterprise {
+            top: 50px;
+            left: 50px;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        }
+        
+        .architecture-node.solution {
+            top: 50px;
+            right: 50px;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+        }
+        
+        .architecture-node.technology {
+            bottom: 50px;
+            left: 50px;
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        }
+        
+        .architecture-node.data {
+            bottom: 50px;
+            right: 50px;
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+        }
+        
+        .architecture-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-gray));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--pure-white);
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 32px var(--shadow-medium);
+        }
+        
+        .architecture-center:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 16px 48px var(--shadow-heavy);
+        }
+        
+        .architecture-connection {
+            position: absolute;
+            background: var(--border-gray);
+            height: 2px;
+            transform-origin: left center;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        
+        .architecture-connection.active {
+            background: var(--accent-blue);
+            height: 3px;
+            opacity: 1;
+            animation: connectionPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes connectionPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        /* Stats with Personality */
+        .stats-showcase {
+            padding: 6rem 0;
+            background: var(--bg-primary);
+        }
+        
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--pure-white);
+            border-radius: 16px;
+            border: 1px solid var(--border-gray);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-orange), var(--accent-green));
+            transition: left 0.6s ease;
+        }
+        
+        .stat-item:hover::before {
+            left: 100%;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px var(--shadow-medium);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+            animation: countUp 2s ease-out forwards;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Experience Timeline - Architectural Flow */
+        .experience {
+            padding: 8rem 0;
+            background: var(--bg-secondary);
+            position: relative;
+        }
+        
+        .section-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 6rem;
+        }
+        
+        .section-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-orange));
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-style: italic;
+        }
+        
+        /* Living Timeline */
+        .timeline {
+            position: relative;
+            margin-top: 4rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--accent-blue), var(--accent-orange), var(--accent-green));
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+            background: var(--pure-white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-gray);
+            margin-left: 5rem;
+            box-shadow: 0 8px 32px var(--shadow-light);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .timeline-item:hover {
+            transform: translateX(-8px);
+            box-shadow: 0 16px 48px var(--shadow-medium);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -5.75rem;
+            top: 2.5rem;
+            width: 16px;
+            height: 16px;
+            background: var(--pure-white);
+            border: 4px solid var(--accent-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px var(--pure-white);
+        }
+        
+        .job-header {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .job-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        
+        .job-company {
+            color: var(--accent-blue);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .job-period {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            background: var(--soft-gray);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .job-achievements {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+        
+        .job-achievements li {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            position: relative;
+            padding-left: 2rem;
+            line-height: 1.7;
+        }
+        
+        .job-achievements li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .job-achievements li:hover {
+            color: var(--text-primary);
+            transform: translateX(4px);
+            transition: all 0.3s ease;
+        }
+        
+        /* Skills Grid - Architectural Sections */
+        .skills {
+            padding: 8rem 0;
+            background: var(--bg-primary);
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+        
+        .skill-category {
+            background: var(--pure-white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-gray);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 32px var(--shadow-light);
+        }
+        
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-orange));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        
+        .skill-category:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .skill-category:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px var(--shadow-medium);
+        }
+        
+        .skill-category h3 {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .skill-category h3 i {
+            font-size: 1.4rem;
+            color: var(--accent-blue);
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        
+        .skill-tag {
+            background: var(--soft-gray);
+            color: var(--text-primary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid var(--border-gray);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .skill-tag:hover {
+            background: var(--text-primary);
+            color: var(--pure-white);
+            transform: translateY(-2px);
+        }
+        
+        /* Footer - Clean Architecture */
+        .footer {
+            background: var(--text-primary);
+            color: var(--pure-white);
+            padding: 4rem 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--pure-white), transparent);
+            opacity: 0.2;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: var(--pure
