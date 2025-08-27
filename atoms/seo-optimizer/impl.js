@@ -117,13 +117,13 @@ class SEOOptimizer {
     generatePageTitle(pageType, pageData, config) {
         switch (pageType) {
             case 'resume':
-                return `${config.author} - Technology Principal | TOGAF®, PMP®, ITIL®, OCP®`;
+                return `${config.author} - Technology Principal | AWS® SA, TOGAF®, PMP®, ITIL®, OCP®`;
             case 'blog':
                 return `Technical Blog - ${config.author}`;
             case 'article':
                 return pageData.title ? `${pageData.title} - ${config.author}` : `Article - ${config.author}`;
             default:
-                return `${config.author} - Technology Principal | TOGAF®, PMP®, ITIL®, OCP®`; // Default to resume
+                return `${config.author} - Technology Principal | AWS® SA, TOGAF®, PMP®, ITIL®, OCP®`; // Default to resume
         }
     }
 

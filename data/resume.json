@@ -1,8 +1,9 @@
 {
   "personal_info": {
     "name": "Hasan Alizada",
-    "title": "Technology Principal | TOGAF® 10, PMP®, ITIL®, OCP®",
-    "summary": "Technology Principal with extensive experience in scalable and fault-tolerant architectures. Passionate about optimizing enterprise IT landscapes, strengthening system resilience, and driving digital transformation to align technology with business goals.",
+    "title": "AWS® SA, TOGAF® 10, PMP®, ITIL®, OCP®",
+    "summary": "Technology principal with extensive experience in scalable and fault–tolerant architectures. Passionate about optimizing enterprise IT landscapes, strengthening system resilience, and driving digital transformation to align technology with business goals.",
+    "summary_html": "Technology principal with extensive experience in <strong>scalable and fault–tolerant architectures</strong>. Passionate about <strong>optimizing enterprise IT landscapes</strong>, <strong>strengthening system resilience</strong>, and <strong>driving digital transformation</strong> to align technology with business goals.",
     "contact": {
       "email": "ha@hasanalizada.net",
       "phone": "+994702011302",
@@ -11,14 +12,14 @@
     },
     "social_links": {
       "linkedin": "linkedin.com/in/hasanalizada",
-      "twitter": "twitter.com/hasanfalizada",
-      "github": "github.com/hasanfalizada",
-      "skype": "alizadehasan",
-      "facebook": "",
-      "youtube": "",
-      "instagram": "",
-      "xing": ""
-    }
+      "twitter": "twitter.com/hasanalizada",
+      "github": "github.com/hasanalizada",
+      "facebook": "facebook.com/hasanfalizada",
+      "youtube": "youtube.com/@HasanAlizada",
+      "instagram": "instagram.com/hasanfalizada/",
+      "xing": "xing.com/profile/Hasan_Alizada/"
+    },
+    "photo_url": "assets/img/profile.jpg"
   },
   "skills": {
     "professional": [
@@ -35,7 +36,7 @@
     "technical": {
       "languages": {
         "primary": [
-          "Java (8—17)",
+          "Java (8–17)",
           "PL/SQL",
           "SQL"
         ],
@@ -100,64 +101,67 @@
   },
   "work_experience": [
     {
-      "position": "Technology Principal",
+      "position": "Enterprise Architect",
       "company": "Azerbaijan Railways CJSC",
       "location": "Baku, Azerbaijan",
-      "period": "09/2023 - Present",
+      "period": "09/2023 – Present",
       "company_description": "National rail transport operator in Azerbaijan",
+      "company_logo": "assets/img/logos/ady.png",
       "achievements": [
-        "Led cost-saving projects resulting in a 30% reduction in operational expenses through process optimization and technology implementation",
-        "Managed large-scale IT projects, delivering them on time and within budget, involving team coordination and resource management",
-        "Introduced mobile app new architecture to modernize and improve railway operations, resulting in increased efficiency and customer satisfaction",
-        "Ensured IT systems and processes adhered to industry standards, effectively managing risks and achieving compliance with government",
-        "Collaborated with various stakeholders (department heads, vendors, government agencies) to align IT strategies with the company's objectives, leading to improved service delivery",
-        "Played a key role in digital transformation initiatives, including transitioning to cloud-based systems, resulting in enhanced operational agility"
+        "Led cost-saving projects resulting in a 30% reduction in operational expenses through process optimization and technology implementation.",
+        "Managed large-scale IT projects, delivering them on time and within budget, involving team coordination and resource management.",
+        "Introduced mobile app new architecture to modernize and improve railway operations, resulting in increased efficiency and customer satisfaction.",
+        "Ensured IT systems and processes adhered to industry standards, effectively managing risks and achieving compliance with government.",
+        "Collaborated with various stakeholders (department heads, vendors, government agencies) to align IT strategies with the company’s objectives, leading to improved service delivery.",
+        "Played a key role in digital transformation initiatives, including transitioning to cloud-based systems, resulting in enhanced operational agility."
       ]
     },
     {
       "position": "Chapter Lead of Backend Development",
       "company": "Kapital Bank OJSC",
       "location": "Baku, Azerbaijan",
-      "period": "04/2022 - 09/2023",
+      "period": "04/2022 – 09/2023",
       "company_description": "Largest private bank in Azerbaijan",
+      "company_logo": "assets/img/logos/kb.png",
       "achievements": [
-        "Implemented Apache Kafka for real-time data processing, resulting in an increase in data throughput and reduced latency",
-        "Optimized message queuing by incorporating RabbitMQ, improving system reliability and scalability",
-        "Implemented Redis for caching, reducing average response times by 20% and enhancing user experience",
-        "Enhanced system security by integrating Keycloak for identity and access management, reducing unauthorized access incidents",
-        "Developed and deployed microservices using Java and Spring, achieving a huge reduction in service downtime",
-        "Optimized Oracle database stored PL/SQL code performance, achieving faster response times",
-        "Implemented MongoDB and PostgreSQL for specific use cases, enhancing data storage efficiency and cost savings",
-        "Successfully led a team of backend developers, fostering a collaborative environment and mentoring team members",
-        "Collaborated with cross-functional teams to align backend development with overall business goals, resulting in improved system alignment with business needs"
+        "Implemented Apache Kafka for real-time data processing, increasing throughput and reducing latency.",
+        "Optimized message queuing by incorporating RabbitMQ, improving reliability and scalability.",
+        "Implemented Redis for caching, reducing average response times by 20% and enhancing user experience.",
+        "Enhanced security by integrating Keycloak for IAM, reducing unauthorized access incidents.",
+        "Developed and deployed microservices using Java and Spring, significantly reducing service downtime.",
+        "Optimized Oracle PL/SQL performance; introduced MongoDB and PostgreSQL for targeted use cases, cutting costs and improving efficiency.",
+        "Led and mentored a backend team, fostering collaboration and delivery quality.",
+        "Aligned backend development with business goals through cross-functional collaboration."
       ]
     },
     {
       "position": "Chapter Lead of System Development",
       "company": "Kapital Bank OJSC",
       "location": "Baku, Azerbaijan",
-      "period": "06/2016 - 04/2022",
+      "period": "06/2016 – 04/2022",
       "company_description": "Largest private bank in Azerbaijan",
+      "company_logo": "assets/img/logos/kb.png",
       "achievements": [
-        "Led the successful development of Compass Plus's CMS and TWO platforms enhancing card management capabilities and improving operational efficiency",
-        "Spearheaded the integration of the internal systems with the cards processing platform, facilitating seamless transaction processing and bolstering system reliability",
-        "Oversaw the optimization of Oracle databases stored PL/SQL software for card processing, resulting in a significant reduction in processing time by 20% and improved data integrity",
-        "Managed regular system upgrades and maintenance, ensuring high system availability and compliance with the standards",
-        "Led a team of system developers fostering a collaborative environment and driving successful project outcomes"
+        "Led development of Compass Plus CMS and TWO platforms, improving card management capabilities.",
+        "Integrated internal systems with the cards processing platform, enabling reliable transactions.",
+        "Optimized Oracle PL/SQL for card processing, reducing processing time by ~20% and improving data integrity.",
+        "Managed upgrades and maintenance, ensuring high availability and standards compliance.",
+        "Led a system development team, driving successful outcomes and collaboration."
       ]
     },
     {
       "position": "Various technical positions",
       "company": "Azerfon LLC / British American Tobacco / Bank Standard OJSC",
       "location": "Baku, Azerbaijan",
-      "period": "03/2008 - 06/2016",
+      "period": "03/2008 – 06/2016",
       "company_description": "",
+      "company_logo": "assets/img/logos/vp.webp",
       "achievements": [
-        "Successfully managed and monitored IT operations, ensuring 99.9% uptime",
-        "Run incident management, reducing the average resolution time for critical issues",
-        "Contributed to major system upgrades, ensuring seamless integration and minimal downtime during the transition phases",
-        "Acted as a liaison between IT, network, and database teams, fostering collaboration and efficient problem-solving",
-        "Developed comprehensive reports and documentation on IT infrastructure performance, assisting in strategic decision-making and process improvements"
+        "Managed and monitored IT operations, ensuring 99.9% uptime.",
+        "Ran incident management, reducing average resolution time for critical issues.",
+        "Contributed to major system upgrades with minimal downtime during transitions.",
+        "Acted as liaison between IT, network, and database teams for efficient problem-solving.",
+        "Prepared reports on infrastructure performance to support strategic decisions."
       ]
     }
   ],
@@ -166,29 +170,29 @@
       "degree": "Applied Mathematics and Cybernetics",
       "institution": "Baku State University",
       "location": "Baku, Azerbaijan",
-      "period": "09/2007 - 06/2011"
+      "period": "09/2007 – 06/2011"
     }
   ],
   "certificates": [
     {
       "name": "The Open Group Certified: TOGAF® Enterprise Architecture Practitioner",
-      "period": "03/2024 - Present"
+      "period": "03/2024 – Present"
     },
     {
       "name": "Project Management Professional (PMP)®",
-      "period": "02/2025 - 02/2028"
+      "period": "02/2025 – 02/2028"
     },
     {
       "name": "ITIL® Foundation Certificate in IT Service Management",
-      "period": "02/2025 - 02/2028"
+      "period": "02/2025 – 02/2028"
     },
     {
       "name": "Oracle Cloud Infrastructure 2021 Certified Architect Professional",
-      "period": "02/2022 - Present"
+      "period": "02/2022 – Present"
     },
     {
       "name": "IBM Enterprise Design Thinking Practitioner",
-      "period": "01/2019 - Present"
+      "period": "01/2019 – Present"
     }
   ],
   "languages": [
@@ -202,7 +206,7 @@
     },
     {
       "name": "English",
-      "level": "Advanced"
+      "level": "Fluent"
     },
     {
       "name": "Turkish",
@@ -215,7 +219,7 @@
   ],
   "metadata": {
     "last_updated": "2025-08-27",
-    "version": "1.0.1",
-    "notes": "+++===+++ 2025-08-27 08:45 UTC — Hasan Alizada — Updated title from Enterprise Architect to Technology Principal"
+    "version": "1.2.0",
+    "notes": "+++===+++ 2025-08-27 16:20 Asia/Baku — Hasan Alizada — Filled work_experience, education, certificates, languages; preserved existing header/socials/skills"
   }
 }

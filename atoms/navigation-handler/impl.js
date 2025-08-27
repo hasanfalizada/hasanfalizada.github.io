@@ -432,7 +432,7 @@ class NavigationHandler {
 
         switch (sectionId) {
             case 'resume':
-                return `${baseName} | TOGAF®, PMP®, ITIL®, OCP®`;
+                return `${baseName} | AWS® SA, TOGAF®, PMP®, ITIL®, OCP®`;
             case 'blog':
                 return `Technical Blog - ${baseName}`;
             default:

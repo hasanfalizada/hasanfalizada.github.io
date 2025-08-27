@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hasan Alizada - Technology Principal | TOGAF®, PMP®, ITIL®, OCP®</title>
+    <title>Hasan Alizada - Technology Principal</title>
 
     <!-- SEO Meta Tags -->
     <meta name="description"
@@ -69,7 +69,7 @@
 
     <!-- Local Libraries -->
     <script src="assets/js/jspdf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js" defer></script>
+    <script src="assets/js/marked.min.js" defer></script>
 </head>
 
 <body>
@@ -119,11 +119,13 @@
                             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                         </svg>
                     </a>
-                    <a href="https://www.xing.com/profile/YOUR_USERNAME" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="XING">
+                    <a href="https://www.xing.com/profile/YOUR_USERNAME" target="_blank" rel="noopener noreferrer"
+                       class="social-link" aria-label="XING">
                         <svg width="24" height="24" viewBox="0 0 24 24">
                             <rect width="24" height="24" rx="4" fill="#026466"/>
                             <g transform="translate(1,1)">
-                                <path fill="#ffffff" d="M13.741 0c-.34 0-.609.146-.768.432l-5.447 9.632a.708.708 0 0 0 0 .709l3.441 5.983c.158.286.419.437.754.437h3.264c.278 0 .479-.1.599-.295a.69.69 0 0 0-.018-.726l-3.374-5.861 5.384-9.482c.123-.211.125-.424.012-.62a.717.717 0 0 0-.625-.309H13.74zm-8.68 4.38c-.28 0-.482.101-.61.307a.64.64 0 0 0 .009.617l1.71 2.969-2.663 4.69c-.121.212-.123.426-.007.63.114.204.322.309.604.309h2.684c.337 0 .594-.15.76-.446l2.647-4.685-1.687-2.947c-.164-.287-.42-.444-.74-.444H5.06z"/>
+                                <path fill="#ffffff"
+                                      d="M13.741 0c-.34 0-.609.146-.768.432l-5.447 9.632a.708.708 0 0 0 0 .709l3.441 5.983c.158.286.419.437.754.437h3.264c.278 0 .479-.1.599-.295a.69.69 0 0 0-.018-.726l-3.374-5.861 5.384-9.482c.123-.211.125-.424.012-.62a.717.717 0 0 0-.625-.309H13.74zm-8.68 4.38c-.28 0-.482.101-.61.307a.64.64 0 0 0 .009.617l1.71 2.969-2.663 4.69c-.121.212-.123.426-.007.63.114.204.322.309.604.309h2.684c.337 0 .594-.15.76-.446l2.647-4.685-1.687-2.947c-.164-.287-.42-.444-.74-.444H5.06z"/>
                             </g>
                         </svg>
                     </a>
@@ -144,13 +146,6 @@
     <!-- Resume Section -->
     <section id="resume" class="section section--resume active">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Professional Resume</h2>
-                <button id="download-pdf-btn" class="btn btn--outline">
-                    <span class="btn__text">Generate PDF</span>
-                </button>
-            </div>
-
             <!-- Resume content will be dynamically loaded here -->
             <div id="resume-content" class="resume-content">
                 <div class="loading">Loading resume data...</div>
@@ -219,6 +214,19 @@
         checkAndInitialize();
     });
 </script>
+<!-- +++===+++ 2025-08-27 13:40 Asia/Baku — Hasan Alizada — Floating PDF FAB replacing legacy button -->
+<a id="fab-pdf"
+   class="fab-pdf"
+   href="#"
+   aria-label="Generate PDF"
+   title="Generate PDF">
+    <!-- Inline SVG icon -->
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM13 9V3.5L18.5 9H13z"/>
+        <path d="M7.5 18.5v-5h2.25a1.75 1.75 0 1 1 0 3.5H9v1.5H7.5zm3.75 0v-5h2.25a1.75 1.75 0 0 1 0 3.5h-.75v1.5h-1.5zm1.5-3h.75a.5.5 0 0 0 0-1h-.75v1zM16.5 13.5H19v1.5h-1v3.5h-1.5v-5z"/>
+    </svg>
+</a>
+
 </body>
 
 </html>
