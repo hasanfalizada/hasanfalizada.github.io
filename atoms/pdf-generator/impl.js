@@ -24,23 +24,20 @@ class PDFGenerator {
             };
         }
 
-        // Check if jsPDF is available
-        if (typeof window.jsPDF === 'undefined') {
-            console.error('+++===+++ jsPDF library not loaded');
-            return {
-                success: false,
-                pdfBlob: null,
-                error: 'PDF library not loaded'
-            };
-        }
-
         this.isGenerating = true;
 
         try {
+            // Check for jsPDF availability (local file)
+            console.log('+++===+++ Checking for local jsPDF library availability');
+            if (!window.jspdf || !window.jspdf.jsPDF) {
+                throw new Error('Local jsPDF library not loaded. Please check that assets/js/jspdf.min.js is properly loaded.');
+            }
+            console.log('+++===+++ Local jsPDF library confirmed available');
+
             const defaultOptions = {
                 format: 'a4',
                 orientation: 'portrait',
-                margins: { top: 20, right: 20, bottom: 20, left: 20 },
+                margins: {top: 20, right: 20, bottom: 20, left: 20},
                 fonts: {
                     primary: 'helvetica',
                     secondary: 'helvetica',
@@ -55,11 +52,11 @@ class PDFGenerator {
                 }
             };
 
-            const pdfOptions = { ...defaultOptions, ...options };
+            const pdfOptions = {...defaultOptions, ...options};
             console.log('+++===+++ PDF options configured');
 
-            // Create new jsPDF instance
-            const { jsPDF } = window.jsPDF;
+            // Create new jsPDF instance from local library
+            const {jsPDF} = window.jspdf;
             const doc = new jsPDF({
                 orientation: pdfOptions.orientation,
                 unit: 'mm',
@@ -110,7 +107,7 @@ class PDFGenerator {
         console.log('+++===+++ Formatting resume layout for PDF');
 
         const sections = [];
-        const { pageWidth, margins } = layoutOptions;
+        const {pageWidth, margins} = layoutOptions;
         const contentWidth = pageWidth - margins.left - margins.right;
 
         try {
@@ -118,15 +115,15 @@ class PDFGenerator {
             sections.push({
                 type: 'header',
                 content: resumeData.personal_info.name,
-                style: { font: 'helvetica', size: 24, color: '#000000', bold: true },
-                position: { x: margins.left, y: margins.top, width: contentWidth }
+                style: {font: 'helvetica', size: 24, color: '#000000', bold: true},
+                position: {x: margins.left, y: margins.top, width: contentWidth}
             });
 
             sections.push({
                 type: 'text',
                 content: resumeData.personal_info.title,
-                style: { font: 'helvetica', size: 14, color: '#666666', bold: false },
-                position: { x: margins.left, y: margins.top + 10, width: contentWidth }
+                style: {font: 'helvetica', size: 14, color: '#666666', bold: false},
+                position: {x: margins.left, y: margins.top + 10, width: contentWidth}
             });
 
             // Contact information
@@ -134,47 +131,47 @@ class PDFGenerator {
             sections.push({
                 type: 'text',
                 content: contactInfo,
-                style: { font: 'helvetica', size: 10, color: '#666666', bold: false },
-                position: { x: margins.left, y: margins.top + 18, width: contentWidth }
+                style: {font: 'helvetica', size: 10, color: '#666666', bold: false},
+                position: {x: margins.left, y: margins.top + 18, width: contentWidth}
             });
 
             // Professional summary
             sections.push({
                 type: 'section',
                 content: 'PROFESSIONAL SUMMARY',
-                style: { font: 'helvetica', size: 12, color: '#000000', bold: true },
-                position: { x: margins.left, y: margins.top + 30, width: contentWidth }
+                style: {font: 'helvetica', size: 12, color: '#000000', bold: true},
+                position: {x: margins.left, y: margins.top + 30, width: contentWidth}
             });
 
             sections.push({
                 type: 'text',
                 content: resumeData.personal_info.summary,
-                style: { font: 'helvetica', size: 10, color: '#333333', bold: false },
-                position: { x: margins.left, y: margins.top + 38, width: contentWidth }
+                style: {font: 'helvetica', size: 10, color: '#333333', bold: false},
+                position: {x: margins.left, y: margins.top + 38, width: contentWidth}
             });
 
             // Professional skills
             sections.push({
                 type: 'section',
                 content: 'PROFESSIONAL SKILLS',
-                style: { font: 'helvetica', size: 12, color: '#000000', bold: true },
-                position: { x: margins.left, y: margins.top + 65, width: contentWidth }
+                style: {font: 'helvetica', size: 12, color: '#000000', bold: true},
+                position: {x: margins.left, y: margins.top + 65, width: contentWidth}
             });
 
             const professionalSkills = resumeData.skills.professional.join(' • ');
             sections.push({
                 type: 'text',
                 content: professionalSkills,
-                style: { font: 'helvetica', size: 10, color: '#333333', bold: false },
-                position: { x: margins.left, y: margins.top + 73, width: contentWidth }
+                style: {font: 'helvetica', size: 10, color: '#333333', bold: false},
+                position: {x: margins.left, y: margins.top + 73, width: contentWidth}
             });
 
             // Technical skills
             sections.push({
                 type: 'section',
                 content: 'TECHNICAL SKILLS',
-                style: { font: 'helvetica', size: 12, color: '#000000', bold: true },
-                position: { x: margins.left, y: margins.top + 95, width: contentWidth }
+                style: {font: 'helvetica', size: 12, color: '#000000', bold: true},
+                position: {x: margins.left, y: margins.top + 95, width: contentWidth}
             });
 
             let yOffset = margins.top + 103;
@@ -183,8 +180,8 @@ class PDFGenerator {
                 sections.push({
                     type: 'text',
                     content: categoryTitle,
-                    style: { font: 'helvetica', size: 10, color: '#000000', bold: true },
-                    position: { x: margins.left, y: yOffset, width: contentWidth }
+                    style: {font: 'helvetica', size: 10, color: '#000000', bold: true},
+                    position: {x: margins.left, y: yOffset, width: contentWidth}
                 });
 
                 let skillsArray = Array.isArray(skills) ? skills : (skills.primary || []).concat(skills.additional || []);
@@ -192,8 +189,8 @@ class PDFGenerator {
                 sections.push({
                     type: 'text',
                     content: skillsText,
-                    style: { font: 'helvetica', size: 9, color: '#333333', bold: false },
-                    position: { x: margins.left, y: yOffset + 5, width: contentWidth }
+                    style: {font: 'helvetica', size: 9, color: '#333333', bold: false},
+                    position: {x: margins.left, y: yOffset + 5, width: contentWidth}
                 });
 
                 yOffset += 12;
@@ -204,8 +201,8 @@ class PDFGenerator {
             sections.push({
                 type: 'section',
                 content: 'WORK EXPERIENCE',
-                style: { font: 'helvetica', size: 12, color: '#000000', bold: true },
-                position: { x: margins.left, y: yOffset, width: contentWidth }
+                style: {font: 'helvetica', size: 12, color: '#000000', bold: true},
+                position: {x: margins.left, y: yOffset, width: contentWidth}
             });
 
             yOffset += 8;
@@ -214,16 +211,16 @@ class PDFGenerator {
                 sections.push({
                     type: 'text',
                     content: `${exp.position} | ${exp.company}`,
-                    style: { font: 'helvetica', size: 11, color: '#000000', bold: true },
-                    position: { x: margins.left, y: yOffset, width: contentWidth }
+                    style: {font: 'helvetica', size: 11, color: '#000000', bold: true},
+                    position: {x: margins.left, y: yOffset, width: contentWidth}
                 });
 
                 // Period and location
                 sections.push({
                     type: 'text',
                     content: `${exp.period} | ${exp.location}`,
-                    style: { font: 'helvetica', size: 9, color: '#666666', bold: false },
-                    position: { x: margins.left, y: yOffset + 5, width: contentWidth }
+                    style: {font: 'helvetica', size: 9, color: '#666666', bold: false},
+                    position: {x: margins.left, y: yOffset + 5, width: contentWidth}
                 });
 
                 yOffset += 12;
@@ -233,8 +230,8 @@ class PDFGenerator {
                     sections.push({
                         type: 'text',
                         content: exp.company_description,
-                        style: { font: 'helvetica', size: 9, color: '#666666', bold: false, italic: true },
-                        position: { x: margins.left, y: yOffset, width: contentWidth }
+                        style: {font: 'helvetica', size: 9, color: '#666666', bold: false, italic: true},
+                        position: {x: margins.left, y: yOffset, width: contentWidth}
                     });
                     yOffset += 8;
                 }
@@ -244,8 +241,8 @@ class PDFGenerator {
                     sections.push({
                         type: 'list',
                         content: `• ${achievement}`,
-                        style: { font: 'helvetica', size: 9, color: '#333333', bold: false },
-                        position: { x: margins.left, y: yOffset, width: contentWidth }
+                        style: {font: 'helvetica', size: 9, color: '#333333', bold: false},
+                        position: {x: margins.left, y: yOffset, width: contentWidth}
                     });
                     yOffset += 6;
                 });
@@ -273,51 +270,108 @@ class PDFGenerator {
     /**
      * Add formatted content to PDF document
      * @param {object} doc - jsPDF document instance
-     * @param {array} sections - Formatted sections array
+     * @param {object} formattedSections - Formatted resume sections
      * @param {object} options - PDF options
+     * @returns {Promise<void>}
      */
-    async addContentToPDF(doc, sections, options) {
+    async addContentToPDF(doc, formattedSections, options) {
         console.log('+++===+++ Adding content to PDF document');
 
-        const { pageHeight } = doc.internal.pageSize;
-        let currentPage = 1;
-        let currentY = 0;
+        try {
+            const {margins, fonts, colors} = options;
+            let currentY = margins.top;
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const contentWidth = pageWidth - margins.left - margins.right;
 
-        for (const section of sections) {
-            // Check if we need a new page
-            if (currentY > pageHeight - options.margins.bottom - 20) {
-                doc.addPage();
-                currentPage++;
-                currentY = options.margins.top;
-                console.log(`+++===+++ Added new page ${currentPage}`);
+            // Convert formattedSections object to array if needed
+            console.log('+++===+++ Processing formatted sections data structure');
+            let sectionsArray = [];
+
+            if (Array.isArray(formattedSections)) {
+                sectionsArray = formattedSections;
+            } else if (typeof formattedSections === 'object') {
+                // Convert object to array of sections
+                sectionsArray = Object.values(formattedSections);
+            } else {
+                throw new Error('Invalid formattedSections data structure');
             }
 
-            // Set font and style
-            doc.setFont(section.style.font, section.style.bold ? 'bold' : 'normal');
-            doc.setFontSize(section.style.size);
-            doc.setTextColor(section.style.color);
+            console.log(`+++===+++ Processing ${sectionsArray.length} sections for PDF`);
 
-            // Add content based on type
-            switch (section.type) {
-                case 'header':
-                case 'section':
-                case 'text':
-                case 'list':
-                    try {
-                        const lines = doc.splitTextToSize(section.content, section.position.width);
-                        doc.text(lines, section.position.x, section.position.y || currentY);
-                        currentY = (section.position.y || currentY) + (lines.length * section.style.size * 0.35);
-                    } catch (error) {
-                        console.error(`+++===+++ Error adding text content: ${error.message}`);
+            // Set default font
+            doc.setFont(fonts.primary);
+            doc.setFontSize(fonts.bodySize);
+            doc.setTextColor(colors.primary);
+
+            // Add header with name and title
+            doc.setFontSize(fonts.headerSize);
+            doc.setFont(fonts.primary, 'bold');
+            doc.text('Hasan Alizada', margins.left, currentY);
+            currentY += 8;
+
+            doc.setFontSize(fonts.bodySize + 2);
+            doc.text('Technology Principal', margins.left, currentY);
+            currentY += 12;
+
+            // Add sections
+            for (let i = 0; i < sectionsArray.length; i++) {
+                const section = sectionsArray[i];
+
+                // Skip null or undefined sections
+                if (!section) {
+                    console.log(`+++===+++ Skipping null section ${i + 1}`);
+                    continue;
+                }
+
+                console.log(`+++===+++ Adding section ${i + 1}: ${section.title || 'Unnamed'}`);
+
+                // Check if new page needed
+                if (currentY > pageHeight - margins.bottom - 20) {
+                    console.log('+++===+++ Adding new page');
+                    doc.addPage();
+                    currentY = margins.top;
+                }
+
+                // Add section title
+                if (section.title) {
+                    doc.setFontSize(fonts.bodySize + 2);
+                    doc.setFont(fonts.primary, 'bold');
+                    doc.setTextColor(colors.primary);
+                    doc.text(section.title, margins.left, currentY);
+                    currentY += 8;
+                }
+
+                // Add section content
+                doc.setFontSize(fonts.bodySize);
+                doc.setFont(fonts.primary, 'normal');
+                doc.setTextColor(colors.secondary);
+
+                if (section.content) {
+                    if (Array.isArray(section.content)) {
+                        // Handle array content (like skills, achievements)
+                        section.content.forEach(item => {
+                            const lines = doc.splitTextToSize(item, contentWidth);
+                            doc.text(lines, margins.left + 5, currentY);
+                            currentY += lines.length * 5;
+                        });
+                    } else if (typeof section.content === 'string') {
+                        // Handle string content
+                        const lines = doc.splitTextToSize(section.content, contentWidth);
+                        doc.text(lines, margins.left, currentY);
+                        currentY += lines.length * 5;
                     }
-                    break;
+                }
 
-                default:
-                    console.warn(`+++===+++ Unknown section type: ${section.type}`);
+                currentY += 5; // Space between sections
             }
-        }
 
-        console.log(`+++===+++ PDF content added successfully across ${currentPage} page(s)`);
+            console.log('+++===+++ PDF content added successfully');
+
+        } catch (error) {
+            console.error('+++===+++ Error adding content to PDF:', error);
+            throw error;
+        }
     }
 
     /**

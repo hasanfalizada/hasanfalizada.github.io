@@ -1,4 +1,4 @@
-// +++===+++ 2025-08-26 16:00 UTC — Hasan Alizada — Main application entry point with atomic architecture integration
+// +++===+++ 2025-08-27 08:50 UTC — Hasan Alizada — Updated for Resume as default section, removed Home
 
 /**
  * Main Application Class - Orchestrates all atomic modules
@@ -8,13 +8,18 @@ class App {
         console.log('+++===+++ App constructor called');
         this.atoms = {};
         this.isInitialized = false;
-        this.currentSection = 'home';
+        this.currentSection = 'resume'; // Changed default from 'home' to 'resume'
     }
 
     /**
      * Initialize application and all atomic modules
      */
     async initialize() {
+        if (this.isInitialized) {
+            console.log('+++===+++ Application already initialized, skipping');
+            return;
+        }
+
         console.log('+++===+++ Starting application initialization');
 
         try {
@@ -51,13 +56,39 @@ class App {
         try {
             // Load resume data loader atom
             if (typeof ResumeDataLoader === 'undefined') {
+                console.log('+++===+++ Loading ResumeDataLoader script');
                 await this.loadScript('atoms/resume-data-loader/impl.js');
+                // Wait for class to be available
+                await this.waitForGlobal('ResumeDataLoader');
             }
-            this.atoms.resumeDataLoader = new ResumeDataLoader();
-            console.log('+++===+++ Resume data loader atom initialized');
+            if (!this.atoms.resumeDataLoader) {
+                this.atoms.resumeDataLoader = new ResumeDataLoader();
+                console.log('+++===+++ Resume data loader atom initialized');
+            }
 
-            // Initialize other atoms as classes become available
-            // PDF Generator, Blog Renderer, SEO Optimizer, UI Components, Navigation Handler
+            // Load PDF generator atom
+            if (typeof PDFGenerator === 'undefined') {
+                console.log('+++===+++ Loading PDFGenerator script');
+                await this.loadScript('atoms/pdf-generator/impl.js');
+                // Wait for class to be available
+                await this.waitForGlobal('PDFGenerator');
+            }
+            if (!this.atoms.pdfGenerator) {
+                this.atoms.pdfGenerator = new PDFGenerator();
+                console.log('+++===+++ PDF generator atom initialized');
+            }
+
+            // Load blog renderer atom
+            if (typeof BlogRenderer === 'undefined') {
+                console.log('+++===+++ Loading BlogRenderer script');
+                await this.loadScript('atoms/blog-renderer/impl.js');
+                // Wait for class to be available
+                await this.waitForGlobal('BlogRenderer');
+            }
+            if (!this.atoms.blogRenderer) {
+                this.atoms.blogRenderer = new BlogRenderer();
+                console.log('+++===+++ Blog renderer atom initialized');
+            }
 
             console.log('+++===+++ All available atoms initialized');
 
@@ -130,7 +161,7 @@ class App {
             // Load resume content
             await this.loadResumeContent();
 
-            // Load blog content  
+            // Load blog content
             await this.loadBlogContent();
 
             console.log('+++===+++ Initial content loaded successfully');
@@ -319,7 +350,7 @@ class App {
     }
 
     /**
-     * Load blog content
+     * Load blog content using blog renderer atom
      */
     async loadBlogContent() {
         console.log('+++===+++ Loading blog content');
@@ -328,31 +359,50 @@ class App {
         if (!blogContentContainer) return;
 
         try {
-            // For now, show placeholder content
-            // This will be replaced with blog renderer atom implementation
-            const blogHtml = `
+            const articlesResult = await this.atoms.blogRenderer.loadArticleList();
+
+            if (!articlesResult.success) {
+                throw new Error(articlesResult.error);
+            }
+
+            // Generate article links HTML
+            const linksResult = this.atoms.blogRenderer.generateArticleLinks(articlesResult.articles);
+
+            if (!linksResult.success) {
+                throw new Error(linksResult.error);
+            }
+
+            blogContentContainer.innerHTML = linksResult.htmlLinks;
+            console.log('+++===+++ Blog content rendered successfully');
+
+        } catch (error) {
+            console.error('+++===+++ Error loading blog content:', error);
+
+            // Fallback content
+            const fallbackHtml = `
                 <div class="articles-list">
                     <div class="article-card" data-url="articles/welcome.html">
                         <h3 class="article-title">Welcome to My Technical Blog</h3>
-                        <div class="article-meta">Published: Coming Soon</div>
+                        <div class="article-meta">
+                            <span class="article-date">August 26, 2025</span>
+                            <span class="article-reading-time">2 min read</span>
+                            <div class="article-tags">
+                                <span class="article-tag">welcome</span>
+                                <span class="article-tag">introduction</span>
+                            </div>
+                        </div>
                         <p class="article-description">
-                            Stay tuned for technical articles about enterprise architecture, 
+                            Welcome to my technical blog where I share insights about enterprise architecture, 
                             system design, and modern development practices.
                         </p>
+                    </div>
+                    <div class="error-notice">
+                        <p>Some articles may not be available. Error: ${error.message}</p>
                     </div>
                 </div>
             `;
 
-            blogContentContainer.innerHTML = blogHtml;
-            console.log('+++===+++ Blog content placeholder loaded');
-
-        } catch (error) {
-            console.error('+++===+++ Error loading blog content:', error);
-            blogContentContainer.innerHTML = `
-                <div class="error">
-                    <p>Failed to load blog content. Please try again later.</p>
-                </div>
-            `;
+            blogContentContainer.innerHTML = fallbackHtml;
         }
     }
 
@@ -362,8 +412,8 @@ class App {
     navigateToSection(sectionId) {
         console.log(`+++===+++ Navigating to section: ${sectionId}`);
 
-        // Update URL hash
-        window.location.hash = sectionId === 'home' ? '' : sectionId;
+        // Update URL hash - empty hash for resume (default)
+        window.location.hash = sectionId === 'resume' ? '' : sectionId;
 
         // Update active section
         this.updateActiveSection(sectionId);
@@ -415,7 +465,7 @@ class App {
         console.log('+++===+++ Handling initial route');
 
         const hash = window.location.hash.substring(1);
-        const sectionId = hash || 'home';
+        const sectionId = hash || 'resume'; // Default to resume if no hash
 
         this.updateActiveSection(sectionId);
         this.updateActiveNavigation(sectionId);
@@ -429,7 +479,7 @@ class App {
         console.log('+++===+++ Handling hash change');
 
         const hash = window.location.hash.substring(1);
-        const sectionId = hash || 'home';
+        const sectionId = hash || 'resume'; // Default to resume if no hash
 
         if (sectionId !== this.currentSection) {
             this.updateActiveSection(sectionId);
@@ -439,29 +489,117 @@ class App {
     }
 
     /**
-     * Generate PDF (placeholder for PDF generator atom)
+     * Generate PDF using PDF generator atom
      */
     async generatePDF() {
         console.log('+++===+++ PDF generation requested');
 
         try {
             // Show loading state
-            const button = document.querySelector('#generate-pdf-btn, #download-pdf-btn');
-            const originalText = button.textContent;
-            button.textContent = 'Generating PDF...';
-            button.disabled = true;
+            const buttons = document.querySelectorAll('#generate-pdf-btn, #download-pdf-btn');
+            const originalTexts = Array.from(buttons).map(btn => btn.textContent);
 
-            // For now, show alert - will be replaced with PDF generator atom
-            alert('PDF generation will be implemented with jsPDF library in the PDF generator atom.');
+            buttons.forEach(btn => {
+                btn.textContent = 'Generating PDF...';
+                btn.disabled = true;
+            });
 
-            // Reset button state
-            button.textContent = originalText;
-            button.disabled = false;
+            // Load resume data
+            const resumeResult = await this.atoms.resumeDataLoader.loadResumeData();
+            if (!resumeResult.success) {
+                throw new Error(`Failed to load resume data: ${resumeResult.error}`);
+            }
+
+            // Generate and download PDF
+            const pdfResult = await this.atoms.pdfGenerator.generateAndDownload(
+                resumeResult.data,
+                {
+                    filename: 'Hasan_Alizada_Resume.pdf',
+                    format: 'a4',
+                    orientation: 'portrait'
+                }
+            );
+
+            if (!pdfResult.success) {
+                throw new Error(`Failed to generate PDF: ${pdfResult.error}`);
+            }
+
+            console.log('+++===+++ PDF generated and downloaded successfully');
+
+            // Show success message briefly
+            buttons.forEach(btn => {
+                btn.textContent = 'PDF Downloaded!';
+            });
+
+            setTimeout(() => {
+                buttons.forEach((btn, index) => {
+                    btn.textContent = originalTexts[index];
+                    btn.disabled = false;
+                });
+            }, 2000);
 
         } catch (error) {
             console.error('+++===+++ PDF generation failed:', error);
-            alert('Failed to generate PDF. Please try again.');
+
+            // Reset button states
+            const buttons = document.querySelectorAll('#generate-pdf-btn, #download-pdf-btn');
+            buttons.forEach(btn => {
+                btn.textContent = btn.id === 'generate-pdf-btn' ? 'Create Resume PDF' : 'Generate PDF';
+                btn.disabled = false;
+            });
+
+            // Show error message
+            this.showError(`Failed to generate PDF: ${error.message}`);
         }
+    }
+
+    /**
+     * Generate page title for section
+     * @param {string} sectionId - Section ID
+     * @returns {string}
+     */
+    generatePageTitle(sectionId) {
+        const baseName = 'Hasan Alizada - Technology Principal';
+
+        switch (sectionId) {
+            case 'resume':
+                return `${baseName} | TOGAF®, PMP®, ITIL®, OCP®`;
+            case 'blog':
+                return `Technical Blog - ${baseName}`;
+            default:
+                return baseName;
+        }
+    }
+
+    /**
+     * Wait for global variable to become available
+     * @param {string} globalName - Name of global variable to wait for
+     * @param {number} timeout - Timeout in milliseconds (default 5000)
+     * @returns {Promise}
+     */
+    waitForGlobal(globalName, timeout = 5000) {
+        console.log(`+++===+++ Waiting for global ${globalName} to be available`);
+        return new Promise((resolve, reject) => {
+            const startTime = Date.now();
+
+            const checkGlobal = () => {
+                if (typeof window[globalName] !== 'undefined') {
+                    console.log(`+++===+++ Global ${globalName} is now available`);
+                    resolve();
+                    return;
+                }
+
+                if (Date.now() - startTime > timeout) {
+                    console.error(`+++===+++ Timeout waiting for global ${globalName}`);
+                    reject(new Error(`Timeout waiting for ${globalName} to load`));
+                    return;
+                }
+
+                setTimeout(checkGlobal, 50);
+            };
+
+            checkGlobal();
+        });
     }
 
     /**
@@ -469,6 +607,13 @@ class App {
      */
     loadScript(src) {
         return new Promise((resolve, reject) => {
+            // Check if script already exists
+            const existingScript = document.querySelector(`script[src="${src}"]`);
+            if (existingScript) {
+                resolve(); // Script already loaded
+                return;
+            }
+
             const script = document.createElement('script');
             script.src = src;
             script.onload = resolve;
@@ -499,12 +644,3 @@ class App {
 
 // Initialize global App instance
 window.App = new App();
-
-// Auto-initialize if DOM is already loaded
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        window.App.initialize();
-    });
-} else {
-    window.App.initialize();
-}

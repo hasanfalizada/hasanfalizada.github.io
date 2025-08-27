@@ -1,0 +1,108 @@
+{
+    "articles": [
+        {
+            "title": "Welcome to My Technical Blog",
+            "slug": "welcome",
+            "filename": "welcome.md",
+            "path": "articles/welcome.md",
+            "date": "2025-08-26",
+            "author": "Hasan Alizada",
+            "tags": [
+                "welcome",
+                "introduction",
+                "enterprise architecture"
+            ],
+            "description": "Welcome to my technical blog where I share insights about enterprise architecture, system design, and modern development practices.",
+            "readingTime": 2,
+            "wordCount": 300,
+            "permalink": "https://hasanfalizada.github.io/articles/welcome.html"
+        },
+        {
+            "title": "Enterprise Architecture Best Practices with TOGAF",
+            "slug": "enterprise-architecture-best-practices",
+            "filename": "enterprise-architecture-best-practices.md",
+            "path": "articles/enterprise-architecture-best-practices.md",
+            "date": "2025-08-25",
+            "author": "Hasan Alizada",
+            "tags": [
+                "architecture",
+                "enterprise",
+                "TOGAF",
+                "best-practices"
+            ],
+            "description": "Key principles and best practices for designing scalable enterprise architectures using the TOGAF framework.",
+            "readingTime": 8,
+            "wordCount": 1200,
+            "permalink": "https://hasanfalizada.github.io/articles/enterprise-architecture-best-practices.html"
+        },
+        {
+            "title": "Microservices Architecture Patterns in Practice",
+            "slug": "microservices-patterns",
+            "filename": "microservices-patterns.md",
+            "path": "articles/microservices-patterns.md",
+            "date": "2025-08-20",
+            "author": "Hasan Alizada",
+            "tags": [
+                "microservices",
+                "architecture",
+                "patterns",
+                "distributed-systems"
+            ],
+            "description": "Practical guide to implementing microservices architecture patterns with real-world examples and lessons learned.",
+            "readingTime": 12,
+            "wordCount": 1800,
+            "permalink": "https://hasanfalizada.github.io/articles/microservices-patterns.html"
+        },
+        {
+            "title": "Cloud Migration Strategies for Enterprise Applications",
+            "slug": "cloud-migration-strategies",
+            "filename": "cloud-migration-strategies.md",
+            "path": "articles/cloud-migration-strategies.md",
+            "date": "2025-08-15",
+            "author": "Hasan Alizada",
+            "tags": [
+                "cloud",
+                "migration",
+                "enterprise",
+                "strategy",
+                "Oracle Cloud",
+                "AWS"
+            ],
+            "description": "Comprehensive guide to planning and executing cloud migration projects for enterprise applications.",
+            "readingTime": 10,
+            "wordCount": 1500,
+            "permalink": "https://hasanfalizada.github.io/articles/cloud-migration-strategies.html"
+        },
+        {
+            "title": "Building Resilient Systems with Event-Driven Architecture",
+            "slug": "event-driven-architecture",
+            "filename": "event-driven-architecture.md",
+            "path": "articles/event-driven-architecture.md",
+            "date": "2025-08-10",
+            "author": "Hasan Alizada",
+            "tags": [
+                "event-driven",
+                "architecture",
+                "resilience",
+                "Apache Kafka",
+                "messaging"
+            ],
+            "description": "How to design and implement event-driven architectures for building resilient, scalable systems.",
+            "readingTime": 9,
+            "wordCount": 1350,
+            "permalink": "https://hasanfalizada.github.io/articles/event-driven-architecture.html"
+        }
+    ],
+    "metadata": {
+        "lastUpdated": "2025-08-26",
+        "totalArticles": 5,
+        "categories": [
+            "enterprise architecture",
+            "microservices",
+            "cloud",
+            "patterns",
+            "best practices"
+        ],
+        "notes": "+++===+++ 2025-08-26 16:15 UTC — Hasan Alizada — Articles index for blog renderer atom"
+    }
+}

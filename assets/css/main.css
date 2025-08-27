@@ -631,3 +631,130 @@ a:hover {
         padding: 1.5rem;
     }
 }
+
+/* Social Media Icons Styling */
+.nav-center .social-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: none;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+}
+
+.social-link:hover {
+    transform: translateY(-2px);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* LinkedIn - Professional Blue */
+.social-link[aria-label="LinkedIn"] svg {
+    fill: #0077b5;
+    width: 24px;
+    height: 24px;
+}
+
+.social-link[aria-label="LinkedIn"]:hover svg {
+    fill: #005885;
+}
+
+/* Twitter - Twitter Blue */
+.social-link[aria-label="Twitter"] svg {
+    fill: #1da1f2;
+    width: 24px;
+    height: 24px;
+}
+
+.social-link[aria-label="Twitter"]:hover svg {
+    fill: #0d8bd9;
+}
+
+/* GitHub - Dark Gray */
+.social-link[aria-label="GitHub"] svg {
+    fill: #333;
+    width: 24px;
+    height: 24px;
+}
+
+.social-link[aria-label="GitHub"]:hover svg {
+    fill: #000;
+}
+
+/* Facebook - Facebook Blue */
+.social-link[aria-label="Facebook"] svg {
+    fill: #1877f2;
+    width: 24px;
+    height: 24px;
+}
+
+.social-link[aria-label="Facebook"]:hover svg {
+    fill: #166fe5;
+}
+
+/* YouTube - YouTube Red */
+.social-link[aria-label="YouTube"] svg {
+    fill: #ff0000;
+    width: 24px;
+    height: 24px;
+}
+
+.social-link[aria-label="YouTube"]:hover svg {
+    fill: #cc0000;
+}
+
+/* Instagram - Instagram Gradient (approximated) */
+.social-link[aria-label="Instagram"] svg {
+    fill: #e4405f;
+    width: 24px;
+    height: 24px;
+}
+
+.social-link[aria-label="Instagram"]:hover svg {
+    fill: #c13584;
+}
+
+/* XING - Original icon with rounded square background */
+.social-link[aria-label="XING"] svg {
+    width: 24px;
+    height: 24px;
+}
+
+.social-link[aria-label="XING"] svg rect {
+    fill: #026466;
+}
+
+.social-link[aria-label="XING"] svg path {
+    fill: white;
+}
+
+.social-link[aria-label="XING"]:hover svg rect {
+    fill: #014a4c;
+}
+
+/* Remove any existing button styles */
+.social-link {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .nav-center .social-links {
+        gap: 1rem;
+    }
+
+    .social-link svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+}
