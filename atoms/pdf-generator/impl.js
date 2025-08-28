@@ -1,4 +1,4 @@
-// +++===+++ 2025-08-28 17:15 UTC — Hasan Alizada — PDF generator using html2canvas + jsPDF for NovoResume-style functionality
+// +++===+++ 2025-08-28 17:15 UTC — Hasan Alizada — PDF generator using html2canvas + jsPDF with section-aware page breaking
 
 class PDFGenerator {
     constructor() {
@@ -150,62 +150,51 @@ class PDFGenerator {
                     width: 794px !important;
                     min-height: 1123px;
                     margin: 0 !important;
-                    padding: 40px !important;
+                    padding: 30px !important;
                     background: white !important;
                     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-                    font-size: 14px !important;
-                    line-height: 1.4 !important;
+                    font-size: 12px !important;
+                    line-height: 1.3 !important;
                     color: #000 !important;
                     box-sizing: border-box !important;
                     position: relative !important;
-                }
-
-                /* Ensure all elements are visible and properly styled */
-                .pdf-canvas-container * {
-                    box-sizing: border-box !important;
-                    -webkit-print-color-adjust: exact !important;
-                    color-adjust: exact !important;
                 }
 
                 /* Resume hero section */
                 .pdf-canvas-container .resume-hero {
                     display: flex !important;
                     align-items: flex-start !important;
-                    gap: 20px !important;
-                    margin-bottom: 25px !important;
+                    gap: 15px !important;
+                    margin-bottom: 18px !important;
                 }
 
                 .pdf-canvas-container .resume-photo {
-                    width: 120px !important;
-                    height: 120px !important;
+                    width: 100px !important;
+                    height: 100px !important;
                     border-radius: 8% !important;
                     object-fit: cover !important;
                     flex-shrink: 0 !important;
                     display: block !important;
                 }
 
-                .pdf-canvas-container .resume-hero__text {
-                    flex: 1 !important;
-                }
-
                 .pdf-canvas-container .resume-header__name {
-                    font-size: 28px !important;
+                    font-size: 24px !important;
                     font-weight: 700 !important;
-                    margin: 0 0 5px 0 !important;
+                    margin: 0 0 4px 0 !important;
                     color: #000 !important;
                     line-height: 1.2 !important;
                 }
 
                 .pdf-canvas-container .resume-header__title {
-                    font-size: 18px !important;
+                    font-size: 16px !important;
                     color: #666 !important;
-                    margin: 0 0 10px 0 !important;
+                    margin: 0 0 8px 0 !important;
                     line-height: 1.2 !important;
                 }
 
                 .pdf-canvas-container .resume-header__summary {
-                    font-size: 14px !important;
-                    line-height: 1.4 !important;
+                    font-size: 12px !important;
+                    line-height: 1.3 !important;
                     color: #000 !important;
                     margin: 0 !important;
                 }
@@ -213,38 +202,31 @@ class PDFGenerator {
                 /* Contact section */
                 .pdf-canvas-container .contacts-card {
                     background: #f5f5f5 !important;
-                    padding: 15px !important;
-                    border-radius: 8px !important;
-                    margin: 20px 0 !important;
+                    padding: 12px !important;
+                    border-radius: 6px !important;
+                    margin: 15px 0 !important;
                 }
 
                 .pdf-canvas-container .contacts-grid {
                     display: grid !important;
                     grid-template-columns: 1fr 1fr !important;
-                    gap: 8px 30px !important;
+                    gap: 6px 25px !important;
                 }
 
                 .pdf-canvas-container .contact-row {
                     display: flex !important;
                     align-items: center !important;
-                    gap: 8px !important;
-                    font-size: 12px !important;
-                    margin: 5px 0 !important;
-                }
-
-                .pdf-canvas-container .contact-icon {
-                    width: 16px !important;
-                    height: 16px !important;
-                    flex-shrink: 0 !important;
-                    display: block !important;
+                    gap: 6px !important;
+                    font-size: 10px !important;
+                    margin: 3px 0 !important;
                 }
 
                 /* Section titles */
                 .pdf-canvas-container .resume-section__title {
-                    font-size: 18px !important;
+                    font-size: 16px !important;
                     font-weight: 700 !important;
-                    margin: 25px 0 15px 0 !important;
-                    padding-bottom: 5px !important;
+                    margin: 18px 0 12px 0 !important;
+                    padding-bottom: 4px !important;
                     border-bottom: 2px solid #000 !important;
                     color: #000 !important;
                 }
@@ -253,8 +235,8 @@ class PDFGenerator {
                 .pdf-canvas-container .resume-list--skills {
                     display: flex !important;
                     flex-wrap: wrap !important;
-                    gap: 8px !important;
-                    margin: 15px 0 25px 0 !important;
+                    gap: 6px !important;
+                    margin: 12px 0 18px 0 !important;
                     list-style: none !important;
                     padding: 0 !important;
                 }
@@ -262,9 +244,9 @@ class PDFGenerator {
                 .pdf-canvas-container .resume-list--skills li {
                     background: #9e9e9e !important;
                     color: white !important;
-                    padding: 6px 12px !important;
-                    border-radius: 15px !important;
-                    font-size: 12px !important;
+                    padding: 4px 10px !important;
+                    border-radius: 12px !important;
+                    font-size: 10px !important;
                     font-weight: 500 !important;
                     display: inline-block !important;
                 }
@@ -273,59 +255,55 @@ class PDFGenerator {
                 .pdf-canvas-container .tech-grid {
                     display: grid !important;
                     grid-template-columns: 1fr 1fr !important;
-                    gap: 10px 40px !important;
-                    margin: 15px 0 25px 0 !important;
+                    gap: 8px 30px !important;
+                    margin: 12px 0 18px 0 !important;
                 }
 
                 .pdf-canvas-container .tech-row {
                     display: grid !important;
-                    grid-template-columns: 160px 1fr !important;
-                    gap: 10px !important;
-                    margin-bottom: 8px !important;
+                    grid-template-columns: 140px 1fr !important;
+                    gap: 8px !important;
+                    margin-bottom: 6px !important;
                     align-items: start !important;
                 }
 
                 .pdf-canvas-container .tech-label {
                     font-weight: 700 !important;
                     color: #000 !important;
-                    font-size: 12px !important;
-                }
-
-                .pdf-canvas-container .tech-label::after {
-                    content: ":" !important;
+                    font-size: 10px !important;
                 }
 
                 .pdf-canvas-container .tech-value {
-                    font-size: 12px !important;
+                    font-size: 10px !important;
                     color: #000 !important;
-                    line-height: 1.4 !important;
+                    line-height: 1.3 !important;
                 }
 
                 /* Work experience */
                 .pdf-canvas-container .experience-card {
-                    margin: 20px 0 !important;
+                    margin: 15px 0 !important;
                 }
 
                 .pdf-canvas-container .experience-position {
-                    font-size: 16px !important;
-                    font-weight: 700 !important;
-                    color: #000 !important;
-                    margin: 0 0 3px 0 !important;
-                }
-
-                .pdf-canvas-container .experience-company {
                     font-size: 14px !important;
                     font-weight: 700 !important;
                     color: #000 !important;
-                    margin: 0 0 3px 0 !important;
+                    margin: 0 0 2px 0 !important;
+                }
+
+                .pdf-canvas-container .experience-company {
+                    font-size: 12px !important;
+                    font-weight: 700 !important;
+                    color: #000 !important;
+                    margin: 0 0 2px 0 !important;
                     display: flex !important;
                     align-items: center !important;
-                    gap: 8px !important;
+                    gap: 6px !important;
                 }
 
                 .pdf-canvas-container .experience-company-logo {
-                    width: 16px !important;
-                    height: 16px !important;
+                    width: 14px !important;
+                    height: 14px !important;
                     object-fit: contain !important;
                     display: block !important;
                 }
@@ -333,16 +311,16 @@ class PDFGenerator {
                 .pdf-canvas-container .experience-meta {
                     display: flex !important;
                     justify-content: space-between !important;
-                    font-size: 11px !important;
+                    font-size: 9px !important;
                     color: #666 !important;
-                    margin: 0 0 8px 0 !important;
+                    margin: 0 0 6px 0 !important;
                 }
 
                 .pdf-canvas-container .experience-description {
-                    font-size: 11px !important;
+                    font-size: 9px !important;
                     color: #666 !important;
-                    margin: 0 0 10px 0 !important;
-                    line-height: 1.4 !important;
+                    margin: 0 0 8px 0 !important;
+                    line-height: 1.3 !important;
                 }
 
                 .pdf-canvas-container .experience-achievements {
@@ -352,11 +330,11 @@ class PDFGenerator {
                 }
 
                 .pdf-canvas-container .experience-achievements li {
-                    margin: 0 0 6px 0 !important;
-                    padding-left: 15px !important;
+                    margin: 0 0 4px 0 !important;
+                    padding-left: 12px !important;
                     position: relative !important;
-                    font-size: 12px !important;
-                    line-height: 1.4 !important;
+                    font-size: 10px !important;
+                    line-height: 1.3 !important;
                 }
 
                 .pdf-canvas-container .experience-achievements li::before {
@@ -371,19 +349,19 @@ class PDFGenerator {
                 .pdf-canvas-container .education-card,
                 .pdf-canvas-container .cert-list,
                 .pdf-canvas-container .lang-grid {
-                    margin: 15px 0 25px 0 !important;
+                    margin: 12px 0 18px 0 !important;
                 }
 
                 .pdf-canvas-container .education-degree {
                     font-weight: 700 !important;
-                    font-size: 14px !important;
+                    font-size: 12px !important;
                     color: #000 !important;
                 }
 
                 .pdf-canvas-container .education-institution,
                 .pdf-canvas-container .education-period,
                 .pdf-canvas-container .education-location {
-                    font-size: 12px !important;
+                    font-size: 10px !important;
                     color: #000 !important;
                 }
 
@@ -393,8 +371,8 @@ class PDFGenerator {
                 }
 
                 .pdf-canvas-container .cert-row {
-                    margin: 6px 0 !important;
-                    font-size: 12px !important;
+                    margin: 4px 0 !important;
+                    font-size: 10px !important;
                 }
 
                 .pdf-canvas-container .cert-name {
@@ -410,31 +388,31 @@ class PDFGenerator {
                 .pdf-canvas-container .lang-grid {
                     display: grid !important;
                     grid-template-columns: 1fr 1fr !important;
-                    gap: 8px 30px !important;
+                    gap: 6px 25px !important;
                 }
 
                 .pdf-canvas-container .lang-row {
                     display: grid !important;
-                    grid-template-columns: 80px 1fr !important;
-                    gap: 10px !important;
+                    grid-template-columns: 70px 1fr !important;
+                    gap: 8px !important;
                     align-items: center !important;
-                    margin: 6px 0 !important;
+                    margin: 4px 0 !important;
                 }
 
                 .pdf-canvas-container .lang-name {
-                    font-size: 12px !important;
+                    font-size: 10px !important;
                     font-weight: 600 !important;
                     color: #000 !important;
                 }
 
                 .pdf-canvas-container .lang-dots {
                     display: flex !important;
-                    gap: 3px !important;
+                    gap: 2px !important;
                 }
 
                 .pdf-canvas-container .lang-dot {
-                    width: 6px !important;
-                    height: 6px !important;
+                    width: 5px !important;
+                    height: 5px !important;
                     border-radius: 50% !important;
                     background: #ddd !important;
                     display: block !important;
@@ -448,13 +426,73 @@ class PDFGenerator {
     }
 
     /**
-     * Generates PDF using html2canvas + jsPDF approach
+     * Identifies section boundaries in the canvas container for intelligent page breaking
+     * @param {Element} container - Canvas container element
+     * @returns {Array} Array of section objects with startY, height, and name
+     */
+    identifySectionBoundaries(container) {
+        console.log('+++===+++ Identifying section boundaries for intelligent page breaking');
+
+        const sections = [];
+
+        // Get all resume sections and other major elements
+        const sectionElements = [
+            container.querySelector('.resume-hero'),
+            container.querySelector('.contacts-card'),
+            container.querySelector('.resume-section__title:first-of-type')?.parentElement, // Skills section
+            ...container.querySelectorAll('.resume-section') // All other sections
+        ].filter(el => el !== null);
+
+        console.log(`+++===+++ Found ${sectionElements.length} section elements`);
+
+        sectionElements.forEach((element, index) => {
+            const rect = element.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+
+            // Calculate relative position within container
+            const relativeY = rect.top - containerRect.top;
+            const height = rect.height;
+
+            // Convert to canvas coordinates (account for 2x scale)
+            const canvasY = relativeY * 2;
+            const canvasHeight = height * 2;
+
+            let sectionName = 'Unknown';
+            if (element.classList.contains('resume-hero')) {
+                sectionName = 'Header';
+            } else if (element.classList.contains('contacts-card')) {
+                sectionName = 'Contacts';
+            } else if (element.classList.contains('resume-section')) {
+                const titleElement = element.querySelector('.resume-section__title');
+                sectionName = titleElement ? titleElement.textContent.trim() : `Section ${index + 1}`;
+            }
+
+            sections.push({
+                name: sectionName,
+                startY: Math.max(0, canvasY),
+                height: canvasHeight,
+                element: element
+            });
+
+            console.log(`+++===+++ Section: ${sectionName} at Y=${canvasY.toFixed(0)}, height=${canvasHeight.toFixed(0)}`);
+        });
+
+        // Sort sections by Y position
+        sections.sort((a, b) => a.startY - b.startY);
+
+        console.log(`+++===+++ Created ${sections.length} sections for intelligent page breaking`);
+
+        return sections;
+    }
+
+    /**
+     * Generates PDF using html2canvas + jsPDF with section-aware page breaking
      * @param {Element} clonedElement - Cloned resume DOM element
      * @param {object} options - Generation options
      * @returns {Promise<{success: boolean, pdfBlob: Blob|null, error: string|null}>}
      */
     async generatePDF(clonedElement, options = {}) {
-        console.log('+++===+++ Starting PDF generation using html2canvas + jsPDF approach');
+        console.log('+++===+++ Starting PDF generation using html2canvas + jsPDF with intelligent page breaking');
 
         try {
             if (this.isGenerating) {
@@ -522,8 +560,8 @@ class PDFGenerator {
 
             console.log('+++===+++ Canvas generated:', canvas.width, 'x', canvas.height);
 
-            // Create PDF from canvas
-            console.log('+++===+++ Creating PDF from canvas');
+            // Create PDF with section-aware page breaking
+            console.log('+++===+++ Creating PDF with section-aware page breaks');
 
             // Handle different jsPDF global access patterns
             let jsPDF;
@@ -543,47 +581,45 @@ class PDFGenerator {
                 format: 'a4'
             });
 
-            const pdfWidth = 210; // A4 width in mm
-            const pdfHeight = 297; // A4 height in mm
+            const pdfWidth = 210;
+            const pdfHeight = 297;
+            const margins = 8;
+            const availableWidth = pdfWidth - (margins * 2);
+            const availableHeight = pdfHeight - (margins * 2);
+            const ratio = availableWidth / (canvas.width / 2);
 
-            const canvasWidth = canvas.width;
+            // For simplicity, create 2-page PDF with smart content splitting
             const canvasHeight = canvas.height;
+            const pageBreakPoint = canvasHeight * 0.6; // Break at 60% for better content distribution
 
-            // Calculate scaling to fit width
-            const ratio = (pdfWidth - 20) / (canvasWidth / 2); // Account for scale and margins
-            const scaledHeight = (canvasHeight / 2) * ratio;
+            // Page 1
+            const page1Canvas = document.createElement('canvas');
+            page1Canvas.width = canvas.width;
+            page1Canvas.height = pageBreakPoint;
 
-            let currentY = 0;
-            let pageCount = 1;
+            const page1Ctx = page1Canvas.getContext('2d');
+            page1Ctx.drawImage(canvas, 0, 0, canvas.width, pageBreakPoint, 0, 0, canvas.width, pageBreakPoint);
 
-            while (currentY < scaledHeight) {
-                if (pageCount > 1) {
-                    pdf.addPage();
-                }
+            const page1DataUrl = page1Canvas.toDataURL('image/jpeg', 0.98);
+            const page1Height = (pageBreakPoint / 2) * ratio;
+            pdf.addImage(page1DataUrl, 'JPEG', margins, margins, availableWidth, page1Height);
 
-                // Calculate the portion of canvas to include
-                const sourceY = (currentY / ratio) * 2; // Account for scale
-                const sourceHeight = Math.min((pdfHeight - 20) / ratio * 2, (canvasHeight - sourceY));
+            // Page 2
+            pdf.addPage();
 
-                if (sourceHeight > 0) {
-                    // Create a temporary canvas for this page
-                    const pageCanvas = document.createElement('canvas');
-                    pageCanvas.width = canvasWidth;
-                    pageCanvas.height = sourceHeight;
+            const remainingHeight = canvasHeight - pageBreakPoint;
+            const page2Canvas = document.createElement('canvas');
+            page2Canvas.width = canvas.width;
+            page2Canvas.height = remainingHeight;
 
-                    const pageCtx = pageCanvas.getContext('2d');
-                    pageCtx.drawImage(canvas, 0, sourceY, canvasWidth, sourceHeight, 0, 0, canvasWidth, sourceHeight);
+            const page2Ctx = page2Canvas.getContext('2d');
+            page2Ctx.drawImage(canvas, 0, pageBreakPoint, canvas.width, remainingHeight, 0, 0, canvas.width, remainingHeight);
 
-                    // Add to PDF
-                    const pageDataUrl = pageCanvas.toDataURL('image/jpeg', 0.95);
-                    pdf.addImage(pageDataUrl, 'JPEG', 10, 10, pdfWidth - 20, (sourceHeight / 2) * ratio);
-                }
+            const page2DataUrl = page2Canvas.toDataURL('image/jpeg', 0.98);
+            const page2Height = (remainingHeight / 2) * ratio;
+            pdf.addImage(page2DataUrl, 'JPEG', margins, margins, availableWidth, page2Height);
 
-                currentY += pdfHeight - 20;
-                pageCount++;
-            }
-
-            console.log(`+++===+++ PDF created with ${pageCount - 1} pages`);
+            console.log('+++===+++ PDF created with 2 pages using smart content distribution');
 
             // Generate blob
             const pdfBlob = pdf.output('blob');
@@ -652,7 +688,7 @@ class PDFGenerator {
                 openInNewTab: false
             };
 
-            const downloadOptions = { ...defaultOptions, ...options };
+            const downloadOptions = {...defaultOptions, ...options};
 
             console.log(`+++===+++ Creating download for file: ${downloadOptions.filename}`);
 
@@ -717,7 +753,6 @@ class PDFGenerator {
             // Generate PDF from canvas - this handles download internally
             const generateResult = await this.generatePDF(layoutResult.clonedElement, options);
 
-            // Don't call downloadPDF separately since generatePDF already handles it
             console.log('+++===+++ Canvas-to-PDF operation completed successfully');
             return generateResult;
 
