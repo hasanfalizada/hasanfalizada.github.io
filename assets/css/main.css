@@ -1190,3 +1190,166 @@ a:hover {
         opacity: 0.08; /* slightly stronger to keep visible on small screens */
     }
 }
+
+/* +++===+++ 2025-08-28 10:05 Asia/Baku — Hasan Alizada — EDUCATION PDF-parity styles */
+.education-card {
+    margin: 12px 0 16px;
+}
+
+.education-heading {
+    display: block;
+}
+
+.education-degree {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.25;
+    color: #111;
+}
+
+.education-institution {
+    margin-top: 2px;
+    font-size: 14.5px;
+    color: #111;
+}
+
+.education-meta {
+    display: flex;
+    justify-content: space-between; /* period left, location right */
+    align-items: baseline;
+    margin-top: 6px;
+    font-size: 12px;
+    line-height: 1.25;
+    color: #7b7b7b;
+    font-style: italic; /* subtle italic like the PDF */
+}
+
+.education-period {
+    opacity: 0.95;
+}
+
+.education-location {
+    text-align: right;
+}
+
+@media (max-width: 560px) {
+    .education-meta {
+        flex-direction: column;
+        gap: 2px;
+        align-items: flex-start;
+    }
+
+    .education-location {
+        text-align: left;
+    }
+}
+
+/* +++===+++ 2025-08-28 10:30 Asia/Baku — Hasan Alizada — LANGUAGES section styles (PDF-like list) */
+.language-list {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+}
+
+.language-row {
+    margin: 4px 0;
+    line-height: 1.4;
+    color: #111;
+    font-size: 14px;
+}
+
+.language-name {
+    font-weight: 600;
+}
+
+.language-level {
+    margin-left: 6px;
+    color: #6f6f6f;
+    font-style: italic;
+    font-weight: 500;
+}
+
+/* +++===+++ 2025-08-28 11:40 Asia/Baku — Hasan Alizada — LANGUAGES: 2-column dot scale */
+.lang-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 48px; /* row / column */
+    margin-top: 6px;
+}
+
+.lang-col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.lang-row {
+    display: grid;
+    grid-template-columns: 140px 1fr; /* name column width; tweak to taste */
+    align-items: center;
+    gap: 10px;
+    min-height: 22px;
+}
+
+.lang-name {
+    font-weight: 600;
+    color: #111;
+    font-size: 14px;
+}
+
+.lang-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lang-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    border: 1.5px solid #111;
+    background: transparent;
+}
+
+.lang-dot.is-filled {
+    background: #111;
+}
+
+/* Responsive tweaks */
+@media (max-width: 920px) {
+    .lang-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 520px) {
+    .lang-row {
+        grid-template-columns: 120px 1fr;
+    }
+}
+
+/* +++===+++ 2025-08-28 12:10 Asia/Baku — Hasan Alizada — CERTIFICATES: clean list styling */
+.cert-list {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+}
+
+.cert-row {
+    margin: 4px 0;
+    line-height: 1.45;
+    color: #111;
+    font-size: 14px;
+}
+
+.cert-name {
+    font-weight: 600; /* slight emphasis like PDF */
+}
+
+.cert-period {
+    margin-left: 6px;
+    color: #6f6f6f; /* subtle grey dates */
+    font-weight: 500;
+}

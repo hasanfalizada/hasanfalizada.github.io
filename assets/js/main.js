@@ -206,6 +206,219 @@ class App {
     }
 
     /**
+     * +++===+++ 2025-08-28 10:05 Asia/Baku — Hasan Alizada — EDUCATION item renderer to match PDF (degree, institution, meta row)
+     * @param {object} ed - one entry from data.education
+     * @param {number} idx
+     * @returns {string}
+     */
+    function
+
+    renderEducationItem(ed, idx) {
+        console.log('+++===+++ [renderEducationItem] idx=%d institution=%s', idx, ed?.institution);
+
+        const degree = ed?.degree ? String(ed.degree) : '';
+        const school = ed?.institution ? String(ed.institution) : '';
+        const location = ed?.location ? String(ed.location) : '';
+        const period = ed?.period ? String(ed.period) : '';
+
+        return `
+    <div class="education-card">
+      <div class="education-heading">
+        <div class="education-degree">${degree}</div>
+        <div class="education-institution">${school}</div>
+        <div class="education-meta">
+          <span class="education-period">${period}</span>
+          <span class="education-location">${location}</span>
+        </div>
+      </div>
+    </div>
+  `;
+    }
+
+    /**
+     * +++===+++ 2025-08-28 10:05 Asia/Baku — Hasan Alizada — EDUCATION section composer (uniform rendering for all items)
+     * @param {Array<object>} education
+     * @returns {string}
+     */
+    function
+
+    renderEducationSection(education) {
+        const list = Array.isArray(education) ? education : [];
+        console.log('+++===+++ [renderEducationSection] items=%d', list.length);
+        const items = list.map((ed, i) => this.renderEducationItem(ed, i)).join('');
+        return `
+    <div class="resume-section">
+      <h3 class="resume-section__title">EDUCATION</h3>
+      ${items}
+    </div>
+  `;
+    }
+
+    // +++===+++ 2025-08-28 10:30 Asia/Baku — Hasan Alizada — LANGUAGES: item & section renderers (PDF-style list with optional level)
+    /**
+     * Render one language line: "Name (Level)" — level is optional.
+     * @param {object} lang
+     * @param {number} idx
+     * @returns {string}
+     */
+    function
+
+    renderLanguageItem(lang, idx) {
+        console.log('+++===+++ [renderLanguageItem] idx=%d name=%s level=%s', idx, lang?.name, lang?.level);
+        const name = lang?.name ? String(lang.name) : '';
+        const level = lang?.level ? String(lang.level) : '';
+        return `
+    <li class="language-row">
+      <span class="language-name">${name}</span>
+      ${level ? `<span class="language-level">(${level})</span>` : ''}
+    </li>
+  `;
+    }
+
+    /**
+     * Render LANGUAGES section (uniform for all items).
+     * @param {Array<object>} languages
+     * @returns {string}
+     */
+    function
+
+    renderLanguagesSection(languages) {
+        const list = Array.isArray(languages) ? languages : [];
+        console.log('+++===+++ [renderLanguagesSection] items=%d', list.length);
+        const items = list.map((l, i) => this.renderLanguageItem(l, i)).join('');
+        return `
+    <div class="resume-section">
+      <h3 class="resume-section__title">LANGUAGES</h3>
+      <ul class="language-list">${items}</ul>
+    </div>
+  `;
+    }
+
+    // +++===+++ 2025-08-28 11:40 Asia/Baku — Hasan Alizada — LANGUAGES: 2-column with 5-dot proficiency; mapping from textual levels
+
+    /**
+     * Map a textual level to a 0–5 score.
+     * Also honors numeric fields if present: lang.score | lang.proficiency | lang.levelScore
+     */
+    function
+
+    languageLevelToScore(lang) {
+        const direct = Number(lang?.score ?? lang?.proficiency ?? lang?.levelScore);
+        if (!Number.isNaN(direct)) {
+            const clamped = Math.max(0, Math.min(5, Math.round(direct)));
+            console.log('+++===+++ [languageLevelToScore] direct=%s -> %d', direct, clamped);
+            return clamped;
+        }
+
+        const s = String(lang?.level || '').toLowerCase().trim();
+        let score = 0;
+
+        // Mapping chosen to match the PDF look:
+        // Native/Bilingual=5; Fluent/Advanced/C1/C2=4; Intermediate/B2=3; Elementary/A2=2; Basic/Beginner/A1=1; else 0
+        if (!s) score = 0;
+        else if (/(native|bilingual)/.test(s)) score = 5;
+        else if (/(fluent|advanced|c1|c2)/.test(s)) score = 4;
+        else if (/(upper[- ]?intermediate|intermediate|b2|professional)/.test(s)) score = 3;
+        else if (/(elementary|a2|pre[- ]?intermediate)/.test(s)) score = 2;
+        else if (/(basic|beginner|a1)/.test(s)) score = 1;
+        else score = 0;
+
+        console.log('+++===+++ [languageLevelToScore] level="%s" -> %d', s, score);
+        return score;
+    }
+
+    /**
+     * Render a single language row with 5 dots.
+     * Example row: "English ● ● ● ○ ○"
+     */
+    function
+
+    renderLanguageRowDots(lang, idx) {
+        const name = lang?.name ? String(lang.name) : '';
+        const score = this.languageLevelToScore(lang);
+        console.log('+++===+++ [renderLanguageRowDots] idx=%d name=%s score=%d', idx, name, score);
+
+        const MAX = 5;
+        const dots = Array.from({length: MAX}, (_, i) =>
+            `<span class="lang-dot${i < score ? ' is-filled' : ''}" aria-hidden="true"></span>`
+        ).join('');
+
+        return `
+    <div class="lang-row">
+      <div class="lang-name">${name}</div>
+      <div class="lang-dots" role="img" aria-label="${name}: ${score}/${MAX}">${dots}</div>
+    </div>
+  `;
+    }
+
+    /**
+     * Render LANGUAGES section as two balanced columns with dot-rows.
+     */
+    function
+
+    renderLanguagesSectionDots(languages) {
+        const list = Array.isArray(languages) ? languages : [];
+        console.log('+++===+++ [renderLanguagesSectionDots] items=%d', list.length);
+        const mid = Math.ceil(list.length / 2);
+        const left = list.slice(0, mid);
+        const right = list.slice(mid);
+
+        const renderCol = (arr, side) => arr.map((l, i) => this.renderLanguageRowDots(l, i)).join('');
+
+        return `
+    <div class="resume-section">
+      <h3 class="resume-section__title">LANGUAGES</h3>
+      <div class="lang-grid">
+        <div class="lang-col">${renderCol(left, 'L')}</div>
+        <div class="lang-col">${renderCol(right, 'R')}</div>
+      </div>
+    </div>
+  `;
+    }
+
+    // +++===+++ 2025-08-28 12:10 Asia/Baku — Hasan Alizada — CERTIFICATES: PDF-style simple list with grey period
+    /**
+     * Render one certificate line: "Name (Period)" — period optional.
+     * @param {object} cert
+     * @param {number} idx
+     * @returns {string}
+     */
+    function
+
+    renderCertificateItem(cert, idx) {
+        const name = cert?.name ? String(cert.name) : '';
+        const period = cert?.period ? String(cert.period) : '';
+        console.log('+++===+++ [renderCertificateItem] idx=%d name="%s" hasPeriod=%s', idx, name, Boolean(period));
+
+        return `
+    <li class="cert-row">
+      <span class="cert-name">${name}</span>
+      ${period ? `<span class="cert-period">(${period})</span>` : ''}
+    </li>
+  `;
+    }
+
+    /**
+     * Render CERTIFICATES section (uniform for all items).
+     * @param {Array<object>} certs
+     * @returns {string}
+     */
+    function
+
+    renderCertificatesSection(certs) {
+        const list = Array.isArray(certs) ? certs : [];
+        console.log('+++===+++ [renderCertificatesSection] items=%d', list.length);
+        const items = list.map((c, i) => this.renderCertificateItem(c, i)).join('');
+        return `
+    <div class="resume-section">
+      <h3 class="resume-section__title">CERTIFICATES</h3>
+      <ul class="cert-list">${items}</ul>
+    </div>
+  `;
+    }
+
+
+    /**
      * +++===+++ 2025-08-27 17:10 Asia/Baku — Hasan Alizada — Added optional company logo before company name (PDF-parity)
      * Render a single experience card; shows logo if exp.company_logo is provided.
      * @param {object} exp
@@ -484,51 +697,23 @@ class App {
 
         // ===== EDUCATION =====
         console.log('+++===+++ [generateResumeHTML] EDUCATION');
-        const education = Array.isArray(data.education) ? data.education : [];
-        const eduHtml = education.map((e, idx) => {
-            console.log('+++===+++ [generateResumeHTML] Education[' + idx + ']', e.institution || '');
-            return `
-      <div class="education-item">
-        <div class="education-degree">${e.degree || ''}</div>
-        <div class="education-institution">${(e.institution || '')}${e.location ? ` — ${e.location}` : ''}</div>
-        <div class="education-period">${e.period || ''}</div>
-      </div>
-    `;
-        }).join('');
-        html += `
-    <div class="resume-section">
-      <h3 class="resume-section__title">EDUCATION</h3>
-      ${eduHtml}
-    </div>
-  `;
 
-        // ===== CERTIFICATES =====
+        // ===== EDUCATION =====
+        console.log('+++===+++ [generateResumeHTML] EDUCATION');
+        const education = Array.isArray(data.education) ? data.education : [];
+        html += this.renderEducationSection(education);
+
+// ===== CERTIFICATES =====
         console.log('+++===+++ [generateResumeHTML] CERTIFICATES');
         const certs = Array.isArray(data.certificates) ? data.certificates : [];
-        const certHtml = certs.map((c, idx) => {
-            console.log('+++===+++ [generateResumeHTML] Certificate[' + idx + ']', c.name || '');
-            return `<li>${c.name || ''}${c.period ? ` (${c.period})` : ''}</li>`;
-        }).join('');
-        html += `
-    <div class="resume-section">
-      <h3 class="resume-section__title">CERTIFICATES</h3>
-      <ul class="resume-list">${certHtml}</ul>
-    </div>
-  `;
+        html += this.renderCertificatesSection(certs);
 
-        // ===== LANGUAGES =====
+
+// ===== LANGUAGES =====
         console.log('+++===+++ [generateResumeHTML] LANGUAGES');
-        const langs = Array.isArray(data.languages) ? data.languages : [];
-        const langsHtml = langs.map((l, idx) => {
-            console.log('+++===+++ [generateResumeHTML] Language[' + idx + ']', l.name || '');
-            return `<li>${l.name || ''}</li>`;
-        }).join('');
-        html += `
-    <div class="resume-section">
-      <h3 class="resume-section__title">LANGUAGES</h3>
-      <ul class="resume-list">${langsHtml}</ul>
-    </div>
-  `;
+        const languages = Array.isArray(data.languages) ? data.languages : [];
+        html += this.renderLanguagesSectionDots(languages);
+
 
         console.log('+++===+++ [generateResumeHTML] Finished');
         return html;
