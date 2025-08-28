@@ -1,774 +1,619 @@
-// +++===+++ 2025-08-28 17:15 UTC — Hasan Alizada — PDF generator using html2canvas + jsPDF with section-aware page breaking
+// 2025-08-28 — PDFGenerator (text-only, vector PDF via pdfmake) — JSON-first
+// SINGLE SOURCE OF TRUTH: reads data only from data/resume.json (no DOM).
+// Emits selectable text + live links using pdfmake. No rasterization.
 
 class PDFGenerator {
     constructor() {
         this.isGenerating = false;
-        this.html2canvasReady = false;
-        this.jsPDFReady = false;
-        console.log('+++===+++ PDFGenerator initialized with Canvas-to-PDF approach');
+        console.log('PDFGenerator initialized (JSON→pdfmake, no rasterization)');
     }
 
     /**
-     * Ensures required libraries are loaded
-     * @returns {Promise<boolean>}
+     * Public API used by App.generatePDF()
+     * @param {*} _unused
+     * @param {{filename?: string, compact?: boolean}} opts
      */
-    async ensureLibrariesLoaded() {
-        console.log('+++===+++ Ensuring html2canvas and jsPDF libraries are loaded');
+    async generateAndDownload(_unused = null, opts = {}) {
+        if (this.isGenerating) {
+            return {success: false, error: 'A PDF generation is already in progress'};
+        }
+        this.isGenerating = true;
 
-        if (this.html2canvasReady && this.jsPDFReady && window.html2canvas && window.jsPDF) {
-            console.log('+++===+++ Libraries already loaded and ready');
+        try {
+            // 1) Load resume.json
+            const data = await this._loadResumeJson();
+            if (!data) throw new Error('resume.json not found or invalid');
+
+            // 2) Ensure pdfmake
+            await this._ensurePdfMake();
+
+            // 3) Normalize JSON → internal model
+            const m = this._normalize(data);
+
+            // 4) Build doc
+            const doc = this._buildDocDefinition(m, opts);
+
+            // 5) Filename
+            const safe = this._safeFilename([m.profile.firstName, m.profile.lastName].filter(Boolean).join(' ') || 'Resume');
+            const filename = (opts.filename && String(opts.filename).trim()) || `${safe}_Resume.pdf`;
+
+            // 6) Download
+            window.pdfMake.createPdf(doc).download(filename);
+            return {success: true};
+        } catch (e) {
+            console.error('PDF generation failed:', e);
+            return {success: false, error: String(e && e.message || e)};
+        } finally {
+            this.isGenerating = false;
+        }
+    }
+
+    // ---------- data load ----------
+    async _loadResumeJson() {
+        try {
+            const res = await fetch('data/resume.json', {cache: 'no-store'});
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return await res.json();
+        } catch (e) {
+            console.error('Failed to load data/resume.json:', e);
+            return null;
+        }
+    }
+
+    // ---------- utils ----------
+    async _ensurePdfMake() {
+        if (window.pdfMake && window.pdfMake.createPdf) return;
+        const load = (src) => new Promise((res, rej) => {
+            const s = document.createElement('script');
+            s.src = src;
+            s.async = true;
+            s.onload = res;
+            s.onerror = () => rej(new Error('Failed to load ' + src));
+            document.head.appendChild(s);
+        });
+        await load('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js');
+        await load('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.js');
+        if (!window.pdfMake || !window.pdfMake.createPdf) throw new Error('pdfmake failed to initialize');
+    }
+
+    _safeFilename(s) {
+        return String(s).replace(/[^\w\-]+/g, '_').replace(/_+/g, '_').replace(/^_+|_+$/g, '');
+    }
+
+    _clean(s) {
+        return (s ?? '').toString().trim();
+    }
+
+    _normUrl(u) {
+        if (!u) return null;
+        if (/^mailto:|^https?:\/\//i.test(u)) return u;
+        if (/^tel:/i.test(u)) return u;
+        if (/^\+?[0-9][0-9()\-\s]{5,}$/.test(u)) return 'tel:' + u.replace(/[^\d+]/g, '');
+        return 'https://' + String(u).replace(/^\/+/, '');
+    }
+
+    _dedupeByText(items) {
+        const seen = new Set();
+        return items.filter(it => {
+            const key = (it.text || '').toLowerCase();
+            if (!key || seen.has(key)) return false;
+            seen.add(key);
             return true;
-        }
-
-        return new Promise((resolve, reject) => {
-            let loadedCount = 0;
-            const totalLibraries = 2;
-
-            const checkComplete = () => {
-                loadedCount++;
-                if (loadedCount === totalLibraries) {
-                    this.html2canvasReady = true;
-                    this.jsPDFReady = true;
-                    resolve(true);
-                }
-            };
-
-            // Load html2canvas
-            if (!window.html2canvas) {
-                console.log('+++===+++ Loading html2canvas from CDN');
-                const html2canvasScript = document.createElement('script');
-                html2canvasScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-                html2canvasScript.onload = () => {
-                    console.log('+++===+++ html2canvas loaded successfully');
-                    checkComplete();
-                };
-                html2canvasScript.onerror = () => reject(new Error('Failed to load html2canvas'));
-                document.head.appendChild(html2canvasScript);
-            } else {
-                checkComplete();
-            }
-
-            // Load jsPDF
-            if (!window.jsPDF) {
-                console.log('+++===+++ Loading jsPDF from CDN');
-                const jsPDFScript = document.createElement('script');
-                jsPDFScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-                jsPDFScript.onload = () => {
-                    console.log('+++===+++ jsPDF loaded successfully');
-                    checkComplete();
-                };
-                jsPDFScript.onerror = () => reject(new Error('Failed to load jsPDF'));
-                document.head.appendChild(jsPDFScript);
-            } else {
-                checkComplete();
-            }
         });
     }
 
+    // ---------- normalization ----------
     /**
-     * Clones and prepares resume DOM content for PDF generation
-     * @returns {{success: boolean, clonedElement: Element|null, error: string|null}}
+     * Accepts flexible resume.json shapes and maps to:
+     * {
+     *   profile: { firstName, lastName, title, credentials },
+     *   contact: { email, phone, location, website, socials: [{label, url, text}] },
+     *   summary: "…",
+     *   skills: ["…","…"],
+     *   technical: [{ label, value }],
+     *   experience: [{ company, position, location, period, bullets[], description }],
+     *   education: [{ school, degree, year }],
+     *   certifications: [{ name, issuer, year }],
+     *   languages: [{ name, level }]
+     * }
      */
-    formatResumeLayout() {
-        console.log('+++===+++ Starting formatResumeLayout - cloning resume DOM content');
+    // REPLACE the entire _normalize(raw) method with this:
 
-        try {
-            // Find the resume content element
-            const resumeContent = document.getElementById('resume-content');
-            if (!resumeContent) {
-                throw new Error('Resume content element not found (#resume-content)');
+    _normalize(raw) {
+        const g = (obj, path, dflt = null) => {
+            try {
+                return path.split('.').reduce((o, k) => (o && o[k] != null ? o[k] : null), obj) ?? dflt;
+            } catch {
+                return dflt;
             }
+        };
+        const clean = (s) => (s ?? '').toString().trim();
 
-            console.log('+++===+++ Found resume content element, cloning DOM');
-            console.log('+++===+++ Original content innerHTML length:', resumeContent.innerHTML.length);
-            console.log('+++===+++ Original content children count:', resumeContent.children.length);
+        // ---- PROFILE (personal_info) ----
+        const pi = g(raw, 'personal_info', {}) || {};
+        const fullName = clean(pi.name || '');
+        const firstName = fullName ? fullName.split(' ')[0] : '';
+        const lastName = fullName ? fullName.split(' ').slice(1).join(' ') : '';
 
-            // Create a deep clone of the resume content
-            const clonedElement = resumeContent.cloneNode(true);
+        const profile = {
+            firstName,
+            lastName,
+            name: fullName,
+            title: clean(pi.title || ''),                 // e.g., "AWS® SA, TOGAF® 10, PMP® ..."
+            credentials: '',                              // keep empty unless you add a dedicated field
+        };
 
-            console.log('+++===+++ Cloned content innerHTML length:', clonedElement.innerHTML.length);
-            console.log('+++===+++ Cloned content children count:', clonedElement.children.length);
+        // ---- CONTACT + SOCIALS ----
+        const contactObj = g(pi, 'contact', {}) || {};
+        const contact = {
+            email: clean(contactObj.email || ''),
+            phone: clean(contactObj.phone || ''),
+            location: clean(contactObj.location || ''),
+            website: clean(contactObj.website || ''),
+            socials: []
+        };
 
-            console.log('+++===+++ Cleaning cloned element for PDF generation');
-
-            // Remove any loading indicators or non-essential elements
-            const loadingElements = clonedElement.querySelectorAll('.loading, .error');
-            loadingElements.forEach(el => el.remove());
-
-            // Remove any interactive elements that don't make sense in PDF
-            const interactiveElements = clonedElement.querySelectorAll('button, .nav-link');
-            interactiveElements.forEach(el => el.remove());
-
-            // Force load all images by converting to absolute URLs
-            const images = clonedElement.querySelectorAll('img');
-            console.log(`+++===+++ Processing ${images.length} images for PDF`);
-
-            images.forEach((img, index) => {
-                if (img.src && !img.src.startsWith('http') && !img.src.startsWith('data:')) {
-                    const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
-                    img.src = baseUrl + img.src.replace(/^\.\//, '');
-                }
-
-                // Ensure images are not lazy loaded
-                img.loading = 'eager';
-                img.style.display = 'block';
-
-                console.log(`+++===+++ Image ${index + 1}: ${img.src.substring(0, 50)}...`);
-            });
-
-            // Add PDF-specific styling class
-            clonedElement.classList.add('pdf-content');
-
-            console.log('+++===+++ Resume content cloned and prepared successfully');
-
-            return {
-                success: true,
-                clonedElement: clonedElement,
-                error: null
-            };
-
-        } catch (error) {
-            console.error('+++===+++ Error formatting resume layout:', error.message);
-            return {
-                success: false,
-                clonedElement: null,
-                error: error.message
-            };
-        }
-    }
-
-    /**
-     * Creates canvas-optimized CSS styles
-     * @returns {string} CSS styles for canvas rendering
-     */
-    createCanvasStyles() {
-        console.log('+++===+++ Creating canvas-optimized styles');
-
-        return `
-            <style>
-                .pdf-canvas-container {
-                    width: 794px !important;
-                    min-height: 1123px;
-                    margin: 0 !important;
-                    padding: 30px !important;
-                    background: white !important;
-                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-                    font-size: 12px !important;
-                    line-height: 1.3 !important;
-                    color: #000 !important;
-                    box-sizing: border-box !important;
-                    position: relative !important;
-                }
-
-                /* Resume hero section */
-                .pdf-canvas-container .resume-hero {
-                    display: flex !important;
-                    align-items: flex-start !important;
-                    gap: 15px !important;
-                    margin-bottom: 18px !important;
-                }
-
-                .pdf-canvas-container .resume-photo {
-                    width: 100px !important;
-                    height: 100px !important;
-                    border-radius: 8% !important;
-                    object-fit: cover !important;
-                    flex-shrink: 0 !important;
-                    display: block !important;
-                }
-
-                .pdf-canvas-container .resume-header__name {
-                    font-size: 24px !important;
-                    font-weight: 700 !important;
-                    margin: 0 0 4px 0 !important;
-                    color: #000 !important;
-                    line-height: 1.2 !important;
-                }
-
-                .pdf-canvas-container .resume-header__title {
-                    font-size: 16px !important;
-                    color: #666 !important;
-                    margin: 0 0 8px 0 !important;
-                    line-height: 1.2 !important;
-                }
-
-                .pdf-canvas-container .resume-header__summary {
-                    font-size: 12px !important;
-                    line-height: 1.3 !important;
-                    color: #000 !important;
-                    margin: 0 !important;
-                }
-
-                /* Contact section */
-                .pdf-canvas-container .contacts-card {
-                    background: #f5f5f5 !important;
-                    padding: 12px !important;
-                    border-radius: 6px !important;
-                    margin: 15px 0 !important;
-                }
-
-                .pdf-canvas-container .contacts-grid {
-                    display: grid !important;
-                    grid-template-columns: 1fr 1fr !important;
-                    gap: 6px 25px !important;
-                }
-
-                .pdf-canvas-container .contact-row {
-                    display: flex !important;
-                    align-items: center !important;
-                    gap: 6px !important;
-                    font-size: 10px !important;
-                    margin: 3px 0 !important;
-                }
-
-                /* Section titles */
-                .pdf-canvas-container .resume-section__title {
-                    font-size: 16px !important;
-                    font-weight: 700 !important;
-                    margin: 18px 0 12px 0 !important;
-                    padding-bottom: 4px !important;
-                    border-bottom: 2px solid #000 !important;
-                    color: #000 !important;
-                }
-
-                /* Skills pills */
-                .pdf-canvas-container .resume-list--skills {
-                    display: flex !important;
-                    flex-wrap: wrap !important;
-                    gap: 6px !important;
-                    margin: 12px 0 18px 0 !important;
-                    list-style: none !important;
-                    padding: 0 !important;
-                }
-
-                .pdf-canvas-container .resume-list--skills li {
-                    background: #9e9e9e !important;
-                    color: white !important;
-                    padding: 4px 10px !important;
-                    border-radius: 12px !important;
-                    font-size: 10px !important;
-                    font-weight: 500 !important;
-                    display: inline-block !important;
-                }
-
-                /* Technical skills grid */
-                .pdf-canvas-container .tech-grid {
-                    display: grid !important;
-                    grid-template-columns: 1fr 1fr !important;
-                    gap: 8px 30px !important;
-                    margin: 12px 0 18px 0 !important;
-                }
-
-                .pdf-canvas-container .tech-row {
-                    display: grid !important;
-                    grid-template-columns: 140px 1fr !important;
-                    gap: 8px !important;
-                    margin-bottom: 6px !important;
-                    align-items: start !important;
-                }
-
-                .pdf-canvas-container .tech-label {
-                    font-weight: 700 !important;
-                    color: #000 !important;
-                    font-size: 10px !important;
-                }
-
-                .pdf-canvas-container .tech-value {
-                    font-size: 10px !important;
-                    color: #000 !important;
-                    line-height: 1.3 !important;
-                }
-
-                /* Work experience */
-                .pdf-canvas-container .experience-card {
-                    margin: 15px 0 !important;
-                }
-
-                .pdf-canvas-container .experience-position {
-                    font-size: 14px !important;
-                    font-weight: 700 !important;
-                    color: #000 !important;
-                    margin: 0 0 2px 0 !important;
-                }
-
-                .pdf-canvas-container .experience-company {
-                    font-size: 12px !important;
-                    font-weight: 700 !important;
-                    color: #000 !important;
-                    margin: 0 0 2px 0 !important;
-                    display: flex !important;
-                    align-items: center !important;
-                    gap: 6px !important;
-                }
-
-                .pdf-canvas-container .experience-company-logo {
-                    width: 14px !important;
-                    height: 14px !important;
-                    object-fit: contain !important;
-                    display: block !important;
-                }
-
-                .pdf-canvas-container .experience-meta {
-                    display: flex !important;
-                    justify-content: space-between !important;
-                    font-size: 9px !important;
-                    color: #666 !important;
-                    margin: 0 0 6px 0 !important;
-                }
-
-                .pdf-canvas-container .experience-description {
-                    font-size: 9px !important;
-                    color: #666 !important;
-                    margin: 0 0 8px 0 !important;
-                    line-height: 1.3 !important;
-                }
-
-                .pdf-canvas-container .experience-achievements {
-                    list-style: none !important;
-                    padding: 0 !important;
-                    margin: 0 !important;
-                }
-
-                .pdf-canvas-container .experience-achievements li {
-                    margin: 0 0 4px 0 !important;
-                    padding-left: 12px !important;
-                    position: relative !important;
-                    font-size: 10px !important;
-                    line-height: 1.3 !important;
-                }
-
-                .pdf-canvas-container .experience-achievements li::before {
-                    content: "•" !important;
-                    position: absolute !important;
-                    left: 0 !important;
-                    color: #000 !important;
-                    font-weight: bold !important;
-                }
-
-                /* Education, Certificates, Languages */
-                .pdf-canvas-container .education-card,
-                .pdf-canvas-container .cert-list,
-                .pdf-canvas-container .lang-grid {
-                    margin: 12px 0 18px 0 !important;
-                }
-
-                .pdf-canvas-container .education-degree {
-                    font-weight: 700 !important;
-                    font-size: 12px !important;
-                    color: #000 !important;
-                }
-
-                .pdf-canvas-container .education-institution,
-                .pdf-canvas-container .education-period,
-                .pdf-canvas-container .education-location {
-                    font-size: 10px !important;
-                    color: #000 !important;
-                }
-
-                .pdf-canvas-container .cert-list {
-                    list-style: none !important;
-                    padding: 0 !important;
-                }
-
-                .pdf-canvas-container .cert-row {
-                    margin: 4px 0 !important;
-                    font-size: 10px !important;
-                }
-
-                .pdf-canvas-container .cert-name {
-                    font-weight: 600 !important;
-                    color: #000 !important;
-                }
-
-                .pdf-canvas-container .cert-period {
-                    color: #666 !important;
-                }
-
-                /* Languages with dots */
-                .pdf-canvas-container .lang-grid {
-                    display: grid !important;
-                    grid-template-columns: 1fr 1fr !important;
-                    gap: 6px 25px !important;
-                }
-
-                .pdf-canvas-container .lang-row {
-                    display: grid !important;
-                    grid-template-columns: 70px 1fr !important;
-                    gap: 8px !important;
-                    align-items: center !important;
-                    margin: 4px 0 !important;
-                }
-
-                .pdf-canvas-container .lang-name {
-                    font-size: 10px !important;
-                    font-weight: 600 !important;
-                    color: #000 !important;
-                }
-
-                .pdf-canvas-container .lang-dots {
-                    display: flex !important;
-                    gap: 2px !important;
-                }
-
-                .pdf-canvas-container .lang-dot {
-                    width: 5px !important;
-                    height: 5px !important;
-                    border-radius: 50% !important;
-                    background: #ddd !important;
-                    display: block !important;
-                }
-
-                .pdf-canvas-container .lang-dot.is-filled {
-                    background: #000 !important;
-                }
-            </style>
-        `;
-    }
-
-    /**
-     * Identifies section boundaries in the canvas container for intelligent page breaking
-     * @param {Element} container - Canvas container element
-     * @returns {Array} Array of section objects with startY, height, and name
-     */
-    identifySectionBoundaries(container) {
-        console.log('+++===+++ Identifying section boundaries for intelligent page breaking');
-
-        const sections = [];
-
-        // Get all resume sections and other major elements
-        const sectionElements = [
-            container.querySelector('.resume-hero'),
-            container.querySelector('.contacts-card'),
-            container.querySelector('.resume-section__title:first-of-type')?.parentElement, // Skills section
-            ...container.querySelectorAll('.resume-section') // All other sections
-        ].filter(el => el !== null);
-
-        console.log(`+++===+++ Found ${sectionElements.length} section elements`);
-
-        sectionElements.forEach((element, index) => {
-            const rect = element.getBoundingClientRect();
-            const containerRect = container.getBoundingClientRect();
-
-            // Calculate relative position within container
-            const relativeY = rect.top - containerRect.top;
-            const height = rect.height;
-
-            // Convert to canvas coordinates (account for 2x scale)
-            const canvasY = relativeY * 2;
-            const canvasHeight = height * 2;
-
-            let sectionName = 'Unknown';
-            if (element.classList.contains('resume-hero')) {
-                sectionName = 'Header';
-            } else if (element.classList.contains('contacts-card')) {
-                sectionName = 'Contacts';
-            } else if (element.classList.contains('resume-section')) {
-                const titleElement = element.querySelector('.resume-section__title');
-                sectionName = titleElement ? titleElement.textContent.trim() : `Section ${index + 1}`;
-            }
-
-            sections.push({
-                name: sectionName,
-                startY: Math.max(0, canvasY),
-                height: canvasHeight,
-                element: element
-            });
-
-            console.log(`+++===+++ Section: ${sectionName} at Y=${canvasY.toFixed(0)}, height=${canvasHeight.toFixed(0)}`);
+        // social_links is an OBJECT of platform -> url
+        const socialLinks = g(pi, 'social_links', {}) || {};
+        Object.entries(socialLinks).forEach(([label, url]) => {
+            if (!url) return;
+            const norm = this._normUrl(url);
+            const txt = (String(url).replace(/^https?:\/\//, '') || label).trim();
+            if (norm) contact.socials.push({label, url: norm, text: txt});
         });
+        contact.socials = this._dedupeByText(contact.socials);
 
-        // Sort sections by Y position
-        sections.sort((a, b) => a.startY - b.startY);
+        // ---- SUMMARY: prefer HTML if present ----
+        const summary = clean(pi.summary_html || pi.summary || '');
 
-        console.log(`+++===+++ Created ${sections.length} sections for intelligent page breaking`);
+        // ---- SKILLS (your schema) ----
+        // 1) Professional: flat array of strings
+        const skillsProfessional = Array.isArray(g(raw, 'skills.professional'))
+            ? g(raw, 'skills.professional').map(clean).filter(Boolean)
+            : [];
 
-        return sections;
-    }
+        // 2) (Optional) If you want to keep 'skills' section as a flat list in the PDF:
+        //    We'll use only "professional" here, and render "technical" under Technical Skills.
+        const skills = skillsProfessional;
 
-    /**
-     * Generates PDF using html2canvas + jsPDF with section-aware page breaking
-     * @param {Element} clonedElement - Cloned resume DOM element
-     * @param {object} options - Generation options
-     * @returns {Promise<{success: boolean, pdfBlob: Blob|null, error: string|null}>}
-     */
-    async generatePDF(clonedElement, options = {}) {
-        console.log('+++===+++ Starting PDF generation using html2canvas + jsPDF with intelligent page breaking');
+        // ---- TECHNICAL (object of arrays) ----
+        // Convert each key in skills.technical to {label, value}
+        const technical = [];
+        const techObj = g(raw, 'skills.technical', {}) || {};
+        Object.keys(techObj).forEach(key => {
+            const val = techObj[key];
 
-        try {
-            if (this.isGenerating) {
-                throw new Error('PDF generation already in progress');
-            }
+            // normalize label
+            let cleanLabel = this._labelize(key)
+                .replace(/&/g, 'and')        // & → and
+                .replace(/\//g, ' ')         // / → space
+                .replace(/_/g, ' ')          // underscores → space
+                .replace(/\s+/g, ' ')        // collapse multiple spaces
+                .trim();
 
-            this.isGenerating = true;
+            // enforce Title Case
+            cleanLabel = cleanLabel.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
 
-            // Ensure libraries are loaded
-            const librariesLoaded = await this.ensureLibrariesLoaded();
-            if (!librariesLoaded) {
-                throw new Error('Required libraries failed to load');
-            }
-
-            console.log('+++===+++ Creating canvas-optimized container');
-
-            // Create container for canvas rendering
-            const canvasContainer = document.createElement('div');
-            canvasContainer.className = 'pdf-canvas-container';
-            canvasContainer.id = 'pdf-canvas-container';
-
-            // Add canvas styles
-            const styles = this.createCanvasStyles();
-
-            // Create wrapper with styles and content
-            const wrapper = document.createElement('div');
-            wrapper.innerHTML = styles;
-            wrapper.appendChild(clonedElement);
-
-            canvasContainer.appendChild(wrapper);
-
-            // Add to document (visible but off-screen)
-            canvasContainer.style.position = 'fixed';
-            canvasContainer.style.top = '0';
-            canvasContainer.style.left = '100vw';
-            canvasContainer.style.zIndex = '10000';
-            document.body.appendChild(canvasContainer);
-
-            // Wait for images to load
-            console.log('+++===+++ Waiting for images to load');
-            const images = canvasContainer.querySelectorAll('img');
-            await Promise.all(Array.from(images).map(img => {
-                if (img.complete) return Promise.resolve();
-                return new Promise(resolve => {
-                    img.onload = resolve;
-                    img.onerror = resolve; // Continue even if image fails
+            if (val && typeof val === 'object' && !Array.isArray(val)) {
+                const parts = [];
+                Object.keys(val).forEach(sub => {
+                    const arr = Array.isArray(val[sub]) ? val[sub].map(clean).filter(Boolean) : [];
+                    if (arr.length) parts.push(`${this._labelize(sub)}: ${arr.join(', ')}`);
                 });
-            }));
-
-            console.log('+++===+++ Container dimensions:', canvasContainer.offsetWidth, 'x', canvasContainer.scrollHeight);
-
-            // Generate canvas using html2canvas
-            console.log('+++===+++ Generating canvas from HTML');
-            const canvas = await window.html2canvas(canvasContainer, {
-                scale: 2,
-                useCORS: true,
-                allowTaint: true,
-                backgroundColor: '#ffffff',
-                width: canvasContainer.offsetWidth,
-                height: canvasContainer.scrollHeight,
-                scrollX: 0,
-                scrollY: 0,
-                logging: false
-            });
-
-            console.log('+++===+++ Canvas generated:', canvas.width, 'x', canvas.height);
-
-            // Create PDF with section-aware page breaking
-            console.log('+++===+++ Creating PDF with section-aware page breaks');
-
-            // Handle different jsPDF global access patterns
-            let jsPDF;
-            if (window.jsPDF) {
-                jsPDF = window.jsPDF;
-                console.log('+++===+++ Using window.jsPDF');
-            } else if (window.jspdf && window.jspdf.jsPDF) {
-                jsPDF = window.jspdf.jsPDF;
-                console.log('+++===+++ Using window.jspdf.jsPDF');
+                if (parts.length) technical.push({ label: cleanLabel, value: parts.join(' | ') });
             } else {
-                throw new Error('jsPDF constructor not found in expected locations');
+                const arr = Array.isArray(val) ? val.map(clean).filter(Boolean) : [];
+                if (arr.length) technical.push({ label: cleanLabel, value: arr.join(', ') });
             }
+        });
 
-            const pdf = new jsPDF({
-                orientation: 'portrait',
-                unit: 'mm',
-                format: 'a4'
-            });
 
-            const pdfWidth = 210;
-            const pdfHeight = 297;
-            const margins = 8;
-            const availableWidth = pdfWidth - (margins * 2);
-            const availableHeight = pdfHeight - (margins * 2);
-            const ratio = availableWidth / (canvas.width / 2);
 
-            // For simplicity, create 2-page PDF with smart content splitting
-            const canvasHeight = canvas.height;
-            const pageBreakPoint = canvasHeight * 0.6; // Break at 60% for better content distribution
+        // ---- EXPERIENCE (work_experience) ----
+        const experience = Array.isArray(g(raw, 'work_experience')) ? g(raw, 'work_experience').map(e => ({
+            company: clean(e.company || ''),
+            position: clean(e.position || ''),
+            location: clean(e.location || ''),
+            period: clean(e.period || ''), // already "MM/YYYY – MM/YYYY" in your data
+            description: clean(e.company_description || ''),
+            bullets: Array.isArray(e.achievements)
+                ? e.achievements.map(clean).filter(Boolean)
+                : []
+        })).filter(j => j.company || j.position || j.description || (j.bullets && j.bullets.length)) : [];
 
-            // Page 1
-            const page1Canvas = document.createElement('canvas');
-            page1Canvas.width = canvas.width;
-            page1Canvas.height = pageBreakPoint;
+        // ---- EDUCATION ----
+        const education = Array.isArray(g(raw, 'education')) ? g(raw, 'education').map(ed => ({
+            school: clean(ed.institution || ed.school || ''),
+            degree: clean(ed.degree || ''),
+            year: clean(ed.period || ed.year || ''),
+        })).filter(x => x.school || x.degree || x.year) : [];
 
-            const page1Ctx = page1Canvas.getContext('2d');
-            page1Ctx.drawImage(canvas, 0, 0, canvas.width, pageBreakPoint, 0, 0, canvas.width, pageBreakPoint);
+        // ---- CERTIFICATIONS (certificates) ----
+        const certifications = Array.isArray(g(raw, 'certificates')) ? g(raw, 'certificates').map(c => ({
+            name: clean(c.name || ''),
+            issuer: '',                           // issuer not present in your schema
+            year: clean(c.period || ''),        // show the period string
+        })).filter(x => x.name) : [];
 
-            const page1DataUrl = page1Canvas.toDataURL('image/jpeg', 0.98);
-            const page1Height = (pageBreakPoint / 2) * ratio;
-            pdf.addImage(page1DataUrl, 'JPEG', margins, margins, availableWidth, page1Height);
+        // ---- LANGUAGES (top-level array) ----
+        const languages = Array.isArray(g(raw, 'languages')) ? g(raw, 'languages').map(l => ({
+            name: clean(l.name || l.language || l),
+            level: clean(l.level || '')
+        })).filter(x => x.name) : [];
 
-            // Page 2
-            pdf.addPage();
-
-            const remainingHeight = canvasHeight - pageBreakPoint;
-            const page2Canvas = document.createElement('canvas');
-            page2Canvas.width = canvas.width;
-            page2Canvas.height = remainingHeight;
-
-            const page2Ctx = page2Canvas.getContext('2d');
-            page2Ctx.drawImage(canvas, 0, pageBreakPoint, canvas.width, remainingHeight, 0, 0, canvas.width, remainingHeight);
-
-            const page2DataUrl = page2Canvas.toDataURL('image/jpeg', 0.98);
-            const page2Height = (remainingHeight / 2) * ratio;
-            pdf.addImage(page2DataUrl, 'JPEG', margins, margins, availableWidth, page2Height);
-
-            console.log('+++===+++ PDF created with 2 pages using smart content distribution');
-
-            // Generate blob
-            const pdfBlob = pdf.output('blob');
-            console.log('+++===+++ PDF blob generated, size:', pdfBlob.size, 'bytes');
-
-            // Auto-download the PDF
-            console.log('+++===+++ Auto-downloading PDF');
-            const filename = options.filename || 'Hasan_Alizada_Resume.pdf';
-            const url = URL.createObjectURL(pdfBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-
-            // Cleanup
-            if (canvasContainer && canvasContainer.parentNode) {
-                canvasContainer.parentNode.removeChild(canvasContainer);
-            }
-
-            this.isGenerating = false;
-
-            return {
-                success: true,
-                pdfBlob: pdfBlob,
-                error: null
-            };
-
-        } catch (error) {
-            console.error('+++===+++ Error generating PDF:', error.message);
-
-            // Cleanup on error
-            const canvasContainer = document.getElementById('pdf-canvas-container');
-            if (canvasContainer && canvasContainer.parentNode) {
-                canvasContainer.parentNode.removeChild(canvasContainer);
-            }
-
-            this.isGenerating = false;
-
-            return {
-                success: false,
-                pdfBlob: null,
-                error: error.message
-            };
-        }
+        return {profile, contact, summary, skills, technical, experience, education, certifications, languages};
     }
 
-    /**
-     * Downloads the generated PDF with proper filename
-     * @param {Blob} pdfBlob - PDF blob to download
-     * @param {object} options - Download options
-     * @returns {{success: boolean, error: string|null}}
-     */
-    downloadPDF(pdfBlob, options = {}) {
-        console.log('+++===+++ Starting PDF download process');
 
-        try {
-            if (!pdfBlob || !(pdfBlob instanceof Blob)) {
-                throw new Error('Invalid PDF blob provided');
-            }
-
-            const defaultOptions = {
-                filename: 'Hasan_Alizada_Resume.pdf',
-                openInNewTab: false
-            };
-
-            const downloadOptions = {...defaultOptions, ...options};
-
-            console.log(`+++===+++ Creating download for file: ${downloadOptions.filename}`);
-
-            if (downloadOptions.openInNewTab) {
-                // Open in new tab
-                const url = URL.createObjectURL(pdfBlob);
-                window.open(url, '_blank');
-                // Clean up after a delay
-                setTimeout(() => URL.revokeObjectURL(url), 1000);
-            } else {
-                // Direct download
-                const url = URL.createObjectURL(pdfBlob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = downloadOptions.filename;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-            }
-
-            console.log('+++===+++ PDF download initiated successfully');
-            return {
-                success: true,
-                error: null
-            };
-
-        } catch (error) {
-            console.error('+++===+++ Error downloading PDF:', error.message);
-            return {
-                success: false,
-                error: error.message
-            };
-        }
+    _labelize(key) {
+        return String(key || '')
+            .replace(/_/g, ' ')
+            .replace(/\b\w/g, m => m.toUpperCase());
     }
 
-    /**
-     * Generate and download PDF in one operation (legacy method for compatibility)
-     * @param {object} resumeData - Complete resume data (unused in canvas approach)
-     * @param {object} options - PDF and download options
-     * @returns {Promise<{success: boolean, error: string|null}>}
-     */
-    async generateAndDownload(resumeData, options = {}) {
-        console.log('+++===+++ Starting generate and download operation with Canvas-to-PDF');
+    // ---------- doc build ----------
+    _sectionTitle(t) {
+        return {text: t, style: 'h2', margin: [0, 10, 0, 4]};
+    }
 
-        try {
-            // Prevent duplicate calls
-            if (this.isGenerating) {
-                console.log('+++===+++ PDF generation already in progress, skipping duplicate call');
+    _buildDocDefinition(m, opts = {}) {
+        const compact = !!opts.compact;
+
+        // ---------- styles (black everywhere except hyperlinks) ----------
+        const styles = {
+            name: {fontSize: 22, bold: true, lineHeight: 1.05, color: '#000000'},
+            title: {fontSize: 12, color: '#000000', margin: [0, 2, 0, 2]},
+            creds: {fontSize: 10, color: '#000000', italics: true, margin: [0, 0, 0, 6]},
+
+            h2: {fontSize: 11, bold: true, color: '#000000', margin: [0, compact ? 8 : 12, 0, 6], lineHeight: 1.1},
+
+            meta: {fontSize: 9, color: '#000000'},
+            small: {fontSize: compact ? 9 : 10, color: '#000000'},
+            bullet: {margin: [0, 1, 0, 1], fontSize: compact ? 9 : 10, color: '#000000'},
+
+            jobHeader: {bold: true, fontSize: 10, margin: [0, 1, 0, 0], color: '#000000'},
+            jobSub: {fontSize: 9, color: '#000000', margin: [0, 1, 0, 4]},
+
+            contactLink: {fontSize: 9, color: '#0B57D0'}, // hyperlinks ONLY
+            contactText: {fontSize: 9, color: '#000000'},
+            sep: {fontSize: 9, color: '#000000'}
+        };
+
+        // ---------- helpers ----------
+        const fullName = [m.profile.firstName, m.profile.lastName].filter(Boolean).join(' ') || m.profile.name || 'Resume';
+        const bulletSep = {text: '  •  ', style: 'sep'};
+        const linkItem = (text, url) => url ? {text, link: url, style: 'contactLink'} : {text, style: 'contactText'};
+
+        const makeHr = (margin = [0, 8, 0, 12]) => ({
+            canvas: [{type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1, lineColor: '#e8e8e8'}],
+            margin
+        });
+
+        const chunk = (arr, n) => {
+            const out = [];
+            for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
+            return out;
+        };
+
+        // dotted leader: "Label ....... (Level)"
+        const langRow = (name, level) => {
+            const left = name || '';
+            const right = level ? `(${level})` : '';
+            const maxDots = 60;
+            const dotsCount = Math.max(4, maxDots - (left.length + right.length));
+            const dots = ' .'.repeat(Math.floor(dotsCount / 2));
+            return {text: `${left} ${dots} ${right}`.trim(), style: 'small'};
+        };
+
+        const joinLine = (...parts) => parts.filter(Boolean).join(' ');
+
+        const unbreakableCard = (stack) => ({
+            table: {widths: ['*'], body: [[{stack}]]},
+            layout: 'noBorders',
+            dontBreakRows: true,
+            margin: [0, 2, 0, 6]
+        });
+
+        // Map contact item to an appropriate Unicode icon (lightweight; no images)
+        const iconFor = (s) => {
+            const t = (s || '').toLowerCase();
+            if (t.startsWith('mailto:') || t.includes('@')) return '✉';   // email
+            if (t.startsWith('tel:') || /^\+/.test(t)) return '☎';   // phone
+            if (t.includes('linkedin')) return '🔗';   // linkedin
+            if (t.includes('github')) return '🐙';   // github
+            if (t.includes('twitter') || t.includes('x.com')) return '🐦';   // twitter / X
+            if (t.includes('facebook')) return '📘';   // facebook
+            if (t.includes('instagram')) return '📷';   // instagram
+            if (t.includes('youtube')) return '▶';    // youtube
+            if (t.includes('xing')) return '✦';    // xing
+            if (t.includes('http')) return '🌐';   // generic web
+            if (t.includes('baku') || t.includes('azerbaijan')) return '📍'; // location guess
+            return '•';
+        };
+
+        // HTML → pdfmake spans (handles <strong>, <em>, <i>, <br>, <p>)
+        const htmlToSpans = (html) => {
+            const div = document.createElement('div');
+            div.innerHTML = html;
+            const spans = [];
+            const walk = (node, fmt = {bold: false, italics: false}) => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    const txt = node.textContent;
+                    if (txt) spans.push({text: txt, style: 'small', bold: !!fmt.bold, italics: !!fmt.italics});
+                    return;
+                }
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    const tag = node.tagName.toLowerCase();
+                    if (tag === 'br') {
+                        spans.push({text: '\n', style: 'small'});
+                        return;
+                    }
+                    const next = {...fmt};
+                    if (tag === 'strong' || tag === 'b') next.bold = true;
+                    if (tag === 'em' || tag === 'i') next.italics = true;
+                    if (tag === 'p' && spans.length) spans.push({text: '\n', style: 'small'});
+                    node.childNodes.forEach(child => walk(child, next));
+                    if (tag === 'p') spans.push({text: '\n', style: 'small'});
+                }
+            };
+            div.childNodes.forEach(n => walk(n));
+            return spans;
+        };
+
+        // ---------- header ----------
+        const content = [{text: fullName, style: 'name'}];
+        if (m.profile.title) content.push({text: m.profile.title, style: 'title'});
+        if (m.profile.credentials) content.push({text: m.profile.credentials, style: 'creds'});
+
+        const labelFor = (s) => {
+            const t = (s || '').toLowerCase();
+            if (t.startsWith('mailto:') && t.includes('@')) return 'Email';
+            if (t.startsWith('tel:') || /^\+/.test(t)) return 'Phone';
+            if (t.includes('linkedin')) return 'LinkedIn';
+            if (t.includes('github.io')) return 'Website';   // personal site, not repo
+            if (t.includes('github')) return 'GitHub';    // repos/profiles
+            if (t.includes('twitter') || t.includes('x.com')) return 'Twitter';
+            if (t.includes('facebook')) return 'Facebook';
+            if (t.includes('instagram')) return 'Instagram';
+            if (t.includes('youtube')) return 'YouTube';
+            if (t.includes('xing')) return 'Xing';
+            if (t.includes('maps')) return 'Location';
+            if (t.includes('http')) return 'Web';
+            return 'Contact';
+        };
+
+
+        if (m.contact) {
+            const items = [];
+
+            if (m.contact.email) items.push({
+                url: 'mailto:' + m.contact.email,
+                node: linkItem(m.contact.email, 'mailto:' + m.contact.email)
+            });
+            if (m.contact.phone) items.push({
+                url: this._normUrl(m.contact.phone),
+                node: linkItem(m.contact.phone, this._normUrl(m.contact.phone))
+            });
+            if (m.contact.website) items.push({
+                url: this._normUrl(m.contact.website),
+                node: linkItem(String(m.contact.website).replace(/^https?:\/\//, ''), this._normUrl(m.contact.website))
+            });
+
+            if (Array.isArray(m.contact.socials)) {
+                m.contact.socials.forEach(s => {
+                    const url = this._normUrl(s.url);
+                    const txt = s.text || s.label || (url || '').replace(/^https?:\/\//, '');
+                    items.push({url, node: linkItem(txt, url)});
+                });
+            }
+            if (m.contact.location) {
+                const locText = m.contact.location;
+                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locText)}`;
+                items.push({
+                    url: mapsUrl,
+                    node: linkItem(locText, mapsUrl)  // now clickable link (blue)
+                });
+            }
+
+            if (items.length) {
+                const half = Math.ceil(items.length / 2);
+                const colA = items.slice(0, half);
+                const colB = items.slice(half);
+
+                const renderCol = (col) => col.map(i => ({
+                    columns: [
+                        // fixed-width label column (black)
+                        {width: 64, text: labelFor(i.url || i.node?.text), style: 'contactText'},
+                        // value (blue if link, else black)
+                        {width: '*', ...(i.node || {text: ''})}
+                    ],
+                    columnGap: 8,
+                    margin: [0, 1, 0, 1]
+                }));
+
+                content.push({
+                    columns: [
+                        {width: '*', stack: renderCol(colA)},
+                        {width: '*', stack: renderCol(colB)}
+                    ],
+                    columnGap: 24,
+                    margin: [0, 6, 0, 4]
+                });
+            }
+        }
+
+        content.push(makeHr([0, 6, 0, 10]));
+
+        // ---------- summary (HTML supported) ----------
+        if (m.summary) {
+            content.push({text: 'Summary', style: 'h2'});
+            const spans = /<\s*\/?\s*(strong|b|em|i|br|p)\b/i.test(m.summary)
+                ? htmlToSpans(m.summary)
+                : [{text: m.summary, style: 'small'}];
+            content.push({text: spans});
+        }
+
+        /// ---------- skills (3 columns, individual items, no commas) ----------
+        if (m.skills && m.skills.length) {
+            content.push({text: 'Skills', style: 'h2'});
+
+            if (typeof m.skills[0] === 'string') {
+                // flat list (professional skills)
+                const colSize = Math.ceil(m.skills.length / 3);
+                const cols = [
+                    m.skills.slice(0, colSize).map(s => ({text: s, style: 'small', margin: [0, 1, 0, 1]})),
+                    m.skills.slice(colSize, colSize * 2).map(s => ({text: s, style: 'small', margin: [0, 1, 0, 1]})),
+                    m.skills.slice(colSize * 2).map(s => ({text: s, style: 'small', margin: [0, 1, 0, 1]}))
+                ];
+
+                content.push({
+                    columns: [
+                        {width: '*', stack: cols[0]},
+                        {width: '*', stack: cols[1]},
+                        {width: '*', stack: cols[2]}
+                    ],
+                    columnGap: 16
+                });
+            } else {
+                // categorized list (if present)
+                const rows = m.skills.map(cat => ({
+                    text: cat.category ? `${cat.category}:` : '',
+                    style: 'small',
+                    bold: !!cat.category,
+                    margin: [0, 2, 0, 2]
+                }));
+
+                const colSize = Math.ceil(rows.length / 3);
+                const left = rows.slice(0, colSize);
+                const middle = rows.slice(colSize, colSize * 2);
+                const right = rows.slice(colSize * 2);
+
+                content.push({
+                    columns: [
+                        {width: '*', stack: left},
+                        {width: '*', stack: middle},
+                        {width: '*', stack: right}
+                    ],
+                    columnGap: 16
+                });
+            }
+        }
+
+
+        // ---------- technical skills (2-column structured layout) ----------
+        if (m.technical && m.technical.length) {
+            content.push({text: 'Technical Skills', style: 'h2'});
+
+            // Turn each entry into a "label: value" row
+            const rows = m.technical.map(row => {
+                const label = row.label ? row.label + ':' : '';
+                const value = row.value || '';
                 return {
-                    success: false,
-                    error: 'PDF generation already in progress'
+                    columns: [
+                        {width: 120, text: label, style: 'small', bold: true, margin: [0, 1, 0, 1]},
+                        {width: '*', text: value, style: 'small', margin: [0, 1, 0, 1]}
+                    ],
+                    columnGap: 8
                 };
-            }
+            });
 
-            // Format resume layout (clone DOM)
-            const layoutResult = this.formatResumeLayout();
-            if (!layoutResult.success) {
-                return layoutResult;
-            }
+            // Split into two halves to mimic "two blocks side by side"
+            const half = Math.ceil(rows.length / 2);
+            const left = rows.slice(0, half);
+            const right = rows.slice(half);
 
-            // Generate PDF from canvas - this handles download internally
-            const generateResult = await this.generatePDF(layoutResult.clonedElement, options);
-
-            console.log('+++===+++ Canvas-to-PDF operation completed successfully');
-            return generateResult;
-
-        } catch (error) {
-            console.error('+++===+++ Error in generate and download:', error);
-            return {
-                success: false,
-                error: error.message
-            };
+            content.push({
+                columns: [
+                    {width: '*', stack: left},
+                    {width: '*', stack: right}
+                ],
+                columnGap: 24
+            });
         }
+
+
+        // ---------- experience (dates UNDER workplace; no card split) ----------
+        if (m.experience && m.experience.length) {
+            content.push({text: 'Experience', style: 'h2'});
+
+            m.experience.forEach(job => {
+                const headerLine = joinLine(job.company || '', job.position ? '— ' + job.position : '');
+                const metaTop = joinLine(job.location || '');
+                const metaBelow = joinLine(job.period || '');
+
+                const block = [];
+                if (headerLine) block.push({text: headerLine, style: 'jobHeader'});
+                if (metaTop) block.push({text: metaTop, style: 'jobSub'});   // location
+                if (metaBelow) block.push({text: metaBelow, style: 'jobSub'}); // dates under workplace
+
+                if (job.description) block.push({text: job.description, style: 'small', margin: [0, 2, 0, 2]});
+                if (job.bullets && job.bullets.length) {
+                    block.push({ul: job.bullets.map(b => ({text: b, style: 'bullet'}))});
+                }
+
+                content.push(unbreakableCard(block)); // prevents splitting across pages
+            });
+        }
+
+        // ---------- education (no stray "—") ----------
+        if (m.education && m.education.length) {
+            content.push({text: 'Education', style: 'h2'});
+            m.education.forEach(ed => {
+                const parts = [];
+                if (ed.school) parts.push(ed.school);
+                if (ed.degree) parts.push('— ' + ed.degree);
+                const main = parts.join(' ');
+                const line = joinLine(main, ed.year ? `(${ed.year})` : '');
+                content.push(unbreakableCard([{text: line, style: 'small'}]));
+            });
+        }
+
+        // ---------- certifications ----------
+        if (m.certifications && m.certifications.length) {
+            content.push({text: 'Certifications', style: 'h2'});
+            m.certifications.forEach(c => {
+                const parts = [];
+                if (c.name) parts.push(c.name);
+                if (c.issuer) parts.push('— ' + c.issuer);
+                const main = parts.join(' ');
+                const line = joinLine(main, c.year ? `(${c.year})` : '');
+                content.push(unbreakableCard([{text: line, style: 'small'}]));
+            });
+        }
+
+        // ---------- languages (dotted leaders; two columns if long) ----------
+        if (m.languages && m.languages.length) {
+            content.push({text: 'Languages', style: 'h2'});
+            const labels = m.languages.map(l => ({name: l.name, level: l.level}));
+            if (labels.length <= 8) {
+                labels.forEach(l => content.push(langRow(l.name, l.level)));
+            } else {
+                const half = Math.ceil(labels.length / 2);
+                const left = labels.slice(0, half).map(l => langRow(l.name, l.level));
+                const right = labels.slice(half).map(l => langRow(l.name, l.level));
+                content.push({columns: [{width: '*', stack: left}, {width: '*', stack: right}], columnGap: 16});
+            }
+        }
+
+        // ---------- return ----------
+        return {
+            pageSize: 'A4',
+            pageMargins: compact ? [30, 34, 30, 40] : [36, 44, 36, 48],
+            defaultStyle: {fontSize: compact ? 9 : 10, lineHeight: 1.35, color: '#000000'},
+            styles,
+            content,
+            footer: (current, total) => ({
+                columns: [{text: '', width: '*'}, {
+                    text: `${current} / ${total}`,
+                    style: 'meta',
+                    alignment: 'right',
+                    margin: [0, 0, 12, 0]
+                }]
+            })
+        };
     }
+
+
 }
 
-// Export for use in main application
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = PDFGenerator;
-} else {
-    window.PDFGenerator = PDFGenerator;
-}
+window.PDFGenerator = PDFGenerator;
