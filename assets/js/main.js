@@ -860,63 +860,88 @@ class App {
     }
 
     /**
-     * Generate PDF using PDF generator atom
+     * Generate PDF using HTML-to-PDF approach for perfect website parity
      */
     async generatePDF() {
-        console.log('+++===+++ PDF generation requested');
+        console.log('+++===+++ PDF generation requested with HTML-to-PDF approach');
 
         try {
-            // Show loading state
-            const buttons = document.querySelectorAll('#generate-pdf-btn, #download-pdf-btn');
-            const originalTexts = Array.from(buttons).map(btn => btn.textContent);
-
-            buttons.forEach(btn => {
-                btn.textContent = 'Generating PDF...';
-                btn.disabled = true;
+            // Show loading state on all PDF buttons
+            const buttons = document.querySelectorAll('#generate-pdf-btn, #download-pdf-btn, #fab-pdf');
+            const originalTexts = Array.from(buttons).map(btn => {
+                if (btn.textContent && btn.textContent.trim()) {
+                    return btn.textContent;
+                } else {
+                    return btn.getAttribute('aria-label') || 'Generate PDF';
+                }
             });
 
-            // Load resume data
-            const resumeResult = await this.atoms.resumeDataLoader.loadResumeData();
-            if (!resumeResult.success) {
-                throw new Error(`Failed to load resume data: ${resumeResult.error}`);
-            }
-
-            // Generate and download PDF
-            const pdfResult = await this.atoms.pdfGenerator.generateAndDownload(
-                resumeResult.data,
-                {
-                    filename: 'Hasan_Alizada_Resume.pdf',
-                    format: 'a4',
-                    orientation: 'portrait'
+            console.log('+++===+++ Setting loading state on PDF buttons');
+            buttons.forEach(btn => {
+                if (btn.textContent && btn.textContent.trim()) {
+                    btn.textContent = 'Generating PDF...';
+                } else {
+                    btn.setAttribute('aria-label', 'Generating PDF...');
                 }
-            );
+                btn.disabled = true;
+                btn.style.pointerEvents = 'none';
+                btn.style.opacity = '0.6';
+            });
 
-            if (!pdfResult.success) {
-                throw new Error(`Failed to generate PDF: ${pdfResult.error}`);
+            console.log('+++===+++ Starting HTML-to-PDF generation process');
+
+            // Use the generateAndDownload method which handles everything
+            const result = await this.atoms.pdfGenerator.generateAndDownload(null, {
+                filename: 'Hasan_Alizada_Resume.pdf',
+                margin: [5, 5, 5, 5],
+                image: { type: 'jpeg', quality: 0.95 }
+            });
+
+            if (!result.success) {
+                throw new Error(`Failed to generate PDF: ${result.error}`);
             }
 
-            console.log('+++===+++ PDF generated and downloaded successfully');
+            console.log('+++===+++ Canvas-to-PDF generation and download completed successfully');
 
             // Show success message briefly
             buttons.forEach(btn => {
-                btn.textContent = 'PDF Downloaded!';
+                if (btn.textContent && btn.textContent.trim()) {
+                    btn.textContent = 'PDF Downloaded!';
+                } else {
+                    btn.setAttribute('aria-label', 'PDF Downloaded!');
+                }
+                btn.style.opacity = '1';
             });
 
+            // Reset button states after delay
             setTimeout(() => {
                 buttons.forEach((btn, index) => {
-                    btn.textContent = originalTexts[index];
+                    const originalText = originalTexts[index];
+                    if (btn.textContent && btn.textContent.trim()) {
+                        btn.textContent = originalText;
+                    } else {
+                        btn.setAttribute('aria-label', originalText);
+                    }
                     btn.disabled = false;
+                    btn.style.pointerEvents = '';
+                    btn.style.opacity = '1';
                 });
             }, 2000);
 
         } catch (error) {
-            console.error('+++===+++ PDF generation failed:', error);
+            console.error('+++===+++ HTML-to-PDF generation failed:', error.message);
 
-            // Reset button states
-            const buttons = document.querySelectorAll('#generate-pdf-btn, #download-pdf-btn');
+            // Reset button states on error
+            const buttons = document.querySelectorAll('#generate-pdf-btn, #download-pdf-btn, #fab-pdf');
             buttons.forEach(btn => {
-                btn.textContent = btn.id === 'generate-pdf-btn' ? 'Create Resume PDF' : 'Generate PDF';
+                if (btn.textContent && btn.textContent.trim()) {
+                    btn.textContent = btn.id === 'generate-pdf-btn' ? 'Create Resume PDF' : 'Generate PDF';
+                } else {
+                    btn.setAttribute('aria-label', 'Generate PDF');
+                }
                 btn.disabled = false;
+                btn.style.pointerEvents = '';
+                btn.style.opacity = '1';
             });
 
             // Show error message

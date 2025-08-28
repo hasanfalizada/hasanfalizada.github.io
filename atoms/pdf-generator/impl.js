@@ -1,85 +1,613 @@
-// +++===+++ 2025-08-26 16:15 UTC — Hasan Alizada — PDF Generator atom implementation using jsPDF
+// +++===+++ 2025-08-28 17:15 UTC — Hasan Alizada — PDF generator using html2canvas + jsPDF for NovoResume-style functionality
 
 class PDFGenerator {
     constructor() {
         this.isGenerating = false;
-        console.log('+++===+++ PDFGenerator initialized');
+        this.html2canvasReady = false;
+        this.jsPDFReady = false;
+        console.log('+++===+++ PDFGenerator initialized with Canvas-to-PDF approach');
     }
 
     /**
-     * Generates PDF from resume data with professional formatting
-     * @param {object} resumeData - Complete resume data object
-     * @param {object} options - PDF generation options
-     * @returns {Promise<{success: boolean, pdfBlob: Blob, error: string|null}>}
+     * Ensures required libraries are loaded
+     * @returns {Promise<boolean>}
      */
-    async generatePDF(resumeData, options = {}) {
-        console.log('+++===+++ Starting PDF generation');
+    async ensureLibrariesLoaded() {
+        console.log('+++===+++ Ensuring html2canvas and jsPDF libraries are loaded');
 
-        if (this.isGenerating) {
-            console.log('+++===+++ PDF generation already in progress');
-            return {
-                success: false,
-                pdfBlob: null,
-                error: 'PDF generation already in progress'
-            };
+        if (this.html2canvasReady && this.jsPDFReady && window.html2canvas && window.jsPDF) {
+            console.log('+++===+++ Libraries already loaded and ready');
+            return true;
         }
 
-        this.isGenerating = true;
+        return new Promise((resolve, reject) => {
+            let loadedCount = 0;
+            const totalLibraries = 2;
 
-        try {
-            // Check for jsPDF availability (local file)
-            console.log('+++===+++ Checking for local jsPDF library availability');
-            if (!window.jspdf || !window.jspdf.jsPDF) {
-                throw new Error('Local jsPDF library not loaded. Please check that assets/js/jspdf.min.js is properly loaded.');
-            }
-            console.log('+++===+++ Local jsPDF library confirmed available');
-
-            const defaultOptions = {
-                format: 'a4',
-                orientation: 'portrait',
-                margins: {top: 20, right: 20, bottom: 20, left: 20},
-                fonts: {
-                    primary: 'helvetica',
-                    secondary: 'helvetica',
-                    headerSize: 18,
-                    bodySize: 11,
-                    smallSize: 9
-                },
-                colors: {
-                    primary: '#000000',
-                    secondary: '#666666',
-                    accent: '#333333'
+            const checkComplete = () => {
+                loadedCount++;
+                if (loadedCount === totalLibraries) {
+                    this.html2canvasReady = true;
+                    this.jsPDFReady = true;
+                    resolve(true);
                 }
             };
 
-            const pdfOptions = {...defaultOptions, ...options};
-            console.log('+++===+++ PDF options configured');
+            // Load html2canvas
+            if (!window.html2canvas) {
+                console.log('+++===+++ Loading html2canvas from CDN');
+                const html2canvasScript = document.createElement('script');
+                html2canvasScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                html2canvasScript.onload = () => {
+                    console.log('+++===+++ html2canvas loaded successfully');
+                    checkComplete();
+                };
+                html2canvasScript.onerror = () => reject(new Error('Failed to load html2canvas'));
+                document.head.appendChild(html2canvasScript);
+            } else {
+                checkComplete();
+            }
 
-            // Create new jsPDF instance from local library
-            const {jsPDF} = window.jspdf;
-            const doc = new jsPDF({
-                orientation: pdfOptions.orientation,
+            // Load jsPDF
+            if (!window.jsPDF) {
+                console.log('+++===+++ Loading jsPDF from CDN');
+                const jsPDFScript = document.createElement('script');
+                jsPDFScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+                jsPDFScript.onload = () => {
+                    console.log('+++===+++ jsPDF loaded successfully');
+                    checkComplete();
+                };
+                jsPDFScript.onerror = () => reject(new Error('Failed to load jsPDF'));
+                document.head.appendChild(jsPDFScript);
+            } else {
+                checkComplete();
+            }
+        });
+    }
+
+    /**
+     * Clones and prepares resume DOM content for PDF generation
+     * @returns {{success: boolean, clonedElement: Element|null, error: string|null}}
+     */
+    formatResumeLayout() {
+        console.log('+++===+++ Starting formatResumeLayout - cloning resume DOM content');
+
+        try {
+            // Find the resume content element
+            const resumeContent = document.getElementById('resume-content');
+            if (!resumeContent) {
+                throw new Error('Resume content element not found (#resume-content)');
+            }
+
+            console.log('+++===+++ Found resume content element, cloning DOM');
+            console.log('+++===+++ Original content innerHTML length:', resumeContent.innerHTML.length);
+            console.log('+++===+++ Original content children count:', resumeContent.children.length);
+
+            // Create a deep clone of the resume content
+            const clonedElement = resumeContent.cloneNode(true);
+
+            console.log('+++===+++ Cloned content innerHTML length:', clonedElement.innerHTML.length);
+            console.log('+++===+++ Cloned content children count:', clonedElement.children.length);
+
+            console.log('+++===+++ Cleaning cloned element for PDF generation');
+
+            // Remove any loading indicators or non-essential elements
+            const loadingElements = clonedElement.querySelectorAll('.loading, .error');
+            loadingElements.forEach(el => el.remove());
+
+            // Remove any interactive elements that don't make sense in PDF
+            const interactiveElements = clonedElement.querySelectorAll('button, .nav-link');
+            interactiveElements.forEach(el => el.remove());
+
+            // Force load all images by converting to absolute URLs
+            const images = clonedElement.querySelectorAll('img');
+            console.log(`+++===+++ Processing ${images.length} images for PDF`);
+
+            images.forEach((img, index) => {
+                if (img.src && !img.src.startsWith('http') && !img.src.startsWith('data:')) {
+                    const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
+                    img.src = baseUrl + img.src.replace(/^\.\//, '');
+                }
+
+                // Ensure images are not lazy loaded
+                img.loading = 'eager';
+                img.style.display = 'block';
+
+                console.log(`+++===+++ Image ${index + 1}: ${img.src.substring(0, 50)}...`);
+            });
+
+            // Add PDF-specific styling class
+            clonedElement.classList.add('pdf-content');
+
+            console.log('+++===+++ Resume content cloned and prepared successfully');
+
+            return {
+                success: true,
+                clonedElement: clonedElement,
+                error: null
+            };
+
+        } catch (error) {
+            console.error('+++===+++ Error formatting resume layout:', error.message);
+            return {
+                success: false,
+                clonedElement: null,
+                error: error.message
+            };
+        }
+    }
+
+    /**
+     * Creates canvas-optimized CSS styles
+     * @returns {string} CSS styles for canvas rendering
+     */
+    createCanvasStyles() {
+        console.log('+++===+++ Creating canvas-optimized styles');
+
+        return `
+            <style>
+                .pdf-canvas-container {
+                    width: 794px !important;
+                    min-height: 1123px;
+                    margin: 0 !important;
+                    padding: 40px !important;
+                    background: white !important;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+                    font-size: 14px !important;
+                    line-height: 1.4 !important;
+                    color: #000 !important;
+                    box-sizing: border-box !important;
+                    position: relative !important;
+                }
+
+                /* Ensure all elements are visible and properly styled */
+                .pdf-canvas-container * {
+                    box-sizing: border-box !important;
+                    -webkit-print-color-adjust: exact !important;
+                    color-adjust: exact !important;
+                }
+
+                /* Resume hero section */
+                .pdf-canvas-container .resume-hero {
+                    display: flex !important;
+                    align-items: flex-start !important;
+                    gap: 20px !important;
+                    margin-bottom: 25px !important;
+                }
+
+                .pdf-canvas-container .resume-photo {
+                    width: 120px !important;
+                    height: 120px !important;
+                    border-radius: 8% !important;
+                    object-fit: cover !important;
+                    flex-shrink: 0 !important;
+                    display: block !important;
+                }
+
+                .pdf-canvas-container .resume-hero__text {
+                    flex: 1 !important;
+                }
+
+                .pdf-canvas-container .resume-header__name {
+                    font-size: 28px !important;
+                    font-weight: 700 !important;
+                    margin: 0 0 5px 0 !important;
+                    color: #000 !important;
+                    line-height: 1.2 !important;
+                }
+
+                .pdf-canvas-container .resume-header__title {
+                    font-size: 18px !important;
+                    color: #666 !important;
+                    margin: 0 0 10px 0 !important;
+                    line-height: 1.2 !important;
+                }
+
+                .pdf-canvas-container .resume-header__summary {
+                    font-size: 14px !important;
+                    line-height: 1.4 !important;
+                    color: #000 !important;
+                    margin: 0 !important;
+                }
+
+                /* Contact section */
+                .pdf-canvas-container .contacts-card {
+                    background: #f5f5f5 !important;
+                    padding: 15px !important;
+                    border-radius: 8px !important;
+                    margin: 20px 0 !important;
+                }
+
+                .pdf-canvas-container .contacts-grid {
+                    display: grid !important;
+                    grid-template-columns: 1fr 1fr !important;
+                    gap: 8px 30px !important;
+                }
+
+                .pdf-canvas-container .contact-row {
+                    display: flex !important;
+                    align-items: center !important;
+                    gap: 8px !important;
+                    font-size: 12px !important;
+                    margin: 5px 0 !important;
+                }
+
+                .pdf-canvas-container .contact-icon {
+                    width: 16px !important;
+                    height: 16px !important;
+                    flex-shrink: 0 !important;
+                    display: block !important;
+                }
+
+                /* Section titles */
+                .pdf-canvas-container .resume-section__title {
+                    font-size: 18px !important;
+                    font-weight: 700 !important;
+                    margin: 25px 0 15px 0 !important;
+                    padding-bottom: 5px !important;
+                    border-bottom: 2px solid #000 !important;
+                    color: #000 !important;
+                }
+
+                /* Skills pills */
+                .pdf-canvas-container .resume-list--skills {
+                    display: flex !important;
+                    flex-wrap: wrap !important;
+                    gap: 8px !important;
+                    margin: 15px 0 25px 0 !important;
+                    list-style: none !important;
+                    padding: 0 !important;
+                }
+
+                .pdf-canvas-container .resume-list--skills li {
+                    background: #9e9e9e !important;
+                    color: white !important;
+                    padding: 6px 12px !important;
+                    border-radius: 15px !important;
+                    font-size: 12px !important;
+                    font-weight: 500 !important;
+                    display: inline-block !important;
+                }
+
+                /* Technical skills grid */
+                .pdf-canvas-container .tech-grid {
+                    display: grid !important;
+                    grid-template-columns: 1fr 1fr !important;
+                    gap: 10px 40px !important;
+                    margin: 15px 0 25px 0 !important;
+                }
+
+                .pdf-canvas-container .tech-row {
+                    display: grid !important;
+                    grid-template-columns: 160px 1fr !important;
+                    gap: 10px !important;
+                    margin-bottom: 8px !important;
+                    align-items: start !important;
+                }
+
+                .pdf-canvas-container .tech-label {
+                    font-weight: 700 !important;
+                    color: #000 !important;
+                    font-size: 12px !important;
+                }
+
+                .pdf-canvas-container .tech-label::after {
+                    content: ":" !important;
+                }
+
+                .pdf-canvas-container .tech-value {
+                    font-size: 12px !important;
+                    color: #000 !important;
+                    line-height: 1.4 !important;
+                }
+
+                /* Work experience */
+                .pdf-canvas-container .experience-card {
+                    margin: 20px 0 !important;
+                }
+
+                .pdf-canvas-container .experience-position {
+                    font-size: 16px !important;
+                    font-weight: 700 !important;
+                    color: #000 !important;
+                    margin: 0 0 3px 0 !important;
+                }
+
+                .pdf-canvas-container .experience-company {
+                    font-size: 14px !important;
+                    font-weight: 700 !important;
+                    color: #000 !important;
+                    margin: 0 0 3px 0 !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    gap: 8px !important;
+                }
+
+                .pdf-canvas-container .experience-company-logo {
+                    width: 16px !important;
+                    height: 16px !important;
+                    object-fit: contain !important;
+                    display: block !important;
+                }
+
+                .pdf-canvas-container .experience-meta {
+                    display: flex !important;
+                    justify-content: space-between !important;
+                    font-size: 11px !important;
+                    color: #666 !important;
+                    margin: 0 0 8px 0 !important;
+                }
+
+                .pdf-canvas-container .experience-description {
+                    font-size: 11px !important;
+                    color: #666 !important;
+                    margin: 0 0 10px 0 !important;
+                    line-height: 1.4 !important;
+                }
+
+                .pdf-canvas-container .experience-achievements {
+                    list-style: none !important;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                }
+
+                .pdf-canvas-container .experience-achievements li {
+                    margin: 0 0 6px 0 !important;
+                    padding-left: 15px !important;
+                    position: relative !important;
+                    font-size: 12px !important;
+                    line-height: 1.4 !important;
+                }
+
+                .pdf-canvas-container .experience-achievements li::before {
+                    content: "•" !important;
+                    position: absolute !important;
+                    left: 0 !important;
+                    color: #000 !important;
+                    font-weight: bold !important;
+                }
+
+                /* Education, Certificates, Languages */
+                .pdf-canvas-container .education-card,
+                .pdf-canvas-container .cert-list,
+                .pdf-canvas-container .lang-grid {
+                    margin: 15px 0 25px 0 !important;
+                }
+
+                .pdf-canvas-container .education-degree {
+                    font-weight: 700 !important;
+                    font-size: 14px !important;
+                    color: #000 !important;
+                }
+
+                .pdf-canvas-container .education-institution,
+                .pdf-canvas-container .education-period,
+                .pdf-canvas-container .education-location {
+                    font-size: 12px !important;
+                    color: #000 !important;
+                }
+
+                .pdf-canvas-container .cert-list {
+                    list-style: none !important;
+                    padding: 0 !important;
+                }
+
+                .pdf-canvas-container .cert-row {
+                    margin: 6px 0 !important;
+                    font-size: 12px !important;
+                }
+
+                .pdf-canvas-container .cert-name {
+                    font-weight: 600 !important;
+                    color: #000 !important;
+                }
+
+                .pdf-canvas-container .cert-period {
+                    color: #666 !important;
+                }
+
+                /* Languages with dots */
+                .pdf-canvas-container .lang-grid {
+                    display: grid !important;
+                    grid-template-columns: 1fr 1fr !important;
+                    gap: 8px 30px !important;
+                }
+
+                .pdf-canvas-container .lang-row {
+                    display: grid !important;
+                    grid-template-columns: 80px 1fr !important;
+                    gap: 10px !important;
+                    align-items: center !important;
+                    margin: 6px 0 !important;
+                }
+
+                .pdf-canvas-container .lang-name {
+                    font-size: 12px !important;
+                    font-weight: 600 !important;
+                    color: #000 !important;
+                }
+
+                .pdf-canvas-container .lang-dots {
+                    display: flex !important;
+                    gap: 3px !important;
+                }
+
+                .pdf-canvas-container .lang-dot {
+                    width: 6px !important;
+                    height: 6px !important;
+                    border-radius: 50% !important;
+                    background: #ddd !important;
+                    display: block !important;
+                }
+
+                .pdf-canvas-container .lang-dot.is-filled {
+                    background: #000 !important;
+                }
+            </style>
+        `;
+    }
+
+    /**
+     * Generates PDF using html2canvas + jsPDF approach
+     * @param {Element} clonedElement - Cloned resume DOM element
+     * @param {object} options - Generation options
+     * @returns {Promise<{success: boolean, pdfBlob: Blob|null, error: string|null}>}
+     */
+    async generatePDF(clonedElement, options = {}) {
+        console.log('+++===+++ Starting PDF generation using html2canvas + jsPDF approach');
+
+        try {
+            if (this.isGenerating) {
+                throw new Error('PDF generation already in progress');
+            }
+
+            this.isGenerating = true;
+
+            // Ensure libraries are loaded
+            const librariesLoaded = await this.ensureLibrariesLoaded();
+            if (!librariesLoaded) {
+                throw new Error('Required libraries failed to load');
+            }
+
+            console.log('+++===+++ Creating canvas-optimized container');
+
+            // Create container for canvas rendering
+            const canvasContainer = document.createElement('div');
+            canvasContainer.className = 'pdf-canvas-container';
+            canvasContainer.id = 'pdf-canvas-container';
+
+            // Add canvas styles
+            const styles = this.createCanvasStyles();
+
+            // Create wrapper with styles and content
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = styles;
+            wrapper.appendChild(clonedElement);
+
+            canvasContainer.appendChild(wrapper);
+
+            // Add to document (visible but off-screen)
+            canvasContainer.style.position = 'fixed';
+            canvasContainer.style.top = '0';
+            canvasContainer.style.left = '100vw';
+            canvasContainer.style.zIndex = '10000';
+            document.body.appendChild(canvasContainer);
+
+            // Wait for images to load
+            console.log('+++===+++ Waiting for images to load');
+            const images = canvasContainer.querySelectorAll('img');
+            await Promise.all(Array.from(images).map(img => {
+                if (img.complete) return Promise.resolve();
+                return new Promise(resolve => {
+                    img.onload = resolve;
+                    img.onerror = resolve; // Continue even if image fails
+                });
+            }));
+
+            console.log('+++===+++ Container dimensions:', canvasContainer.offsetWidth, 'x', canvasContainer.scrollHeight);
+
+            // Generate canvas using html2canvas
+            console.log('+++===+++ Generating canvas from HTML');
+            const canvas = await window.html2canvas(canvasContainer, {
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: '#ffffff',
+                width: canvasContainer.offsetWidth,
+                height: canvasContainer.scrollHeight,
+                scrollX: 0,
+                scrollY: 0,
+                logging: false
+            });
+
+            console.log('+++===+++ Canvas generated:', canvas.width, 'x', canvas.height);
+
+            // Create PDF from canvas
+            console.log('+++===+++ Creating PDF from canvas');
+
+            // Handle different jsPDF global access patterns
+            let jsPDF;
+            if (window.jsPDF) {
+                jsPDF = window.jsPDF;
+                console.log('+++===+++ Using window.jsPDF');
+            } else if (window.jspdf && window.jspdf.jsPDF) {
+                jsPDF = window.jspdf.jsPDF;
+                console.log('+++===+++ Using window.jspdf.jsPDF');
+            } else {
+                throw new Error('jsPDF constructor not found in expected locations');
+            }
+
+            const pdf = new jsPDF({
+                orientation: 'portrait',
                 unit: 'mm',
-                format: pdfOptions.format
+                format: 'a4'
             });
 
-            console.log('+++===+++ jsPDF document created');
+            const pdfWidth = 210; // A4 width in mm
+            const pdfHeight = 297; // A4 height in mm
 
-            // Format resume data for PDF layout
-            const formattedSections = this.formatResumeLayout(resumeData, {
-                pageWidth: doc.internal.pageSize.getWidth(),
-                pageHeight: doc.internal.pageSize.getHeight(),
-                margins: pdfOptions.margins
-            });
+            const canvasWidth = canvas.width;
+            const canvasHeight = canvas.height;
 
-            // Generate PDF content
-            await this.addContentToPDF(doc, formattedSections, pdfOptions);
+            // Calculate scaling to fit width
+            const ratio = (pdfWidth - 20) / (canvasWidth / 2); // Account for scale and margins
+            const scaledHeight = (canvasHeight / 2) * ratio;
+
+            let currentY = 0;
+            let pageCount = 1;
+
+            while (currentY < scaledHeight) {
+                if (pageCount > 1) {
+                    pdf.addPage();
+                }
+
+                // Calculate the portion of canvas to include
+                const sourceY = (currentY / ratio) * 2; // Account for scale
+                const sourceHeight = Math.min((pdfHeight - 20) / ratio * 2, (canvasHeight - sourceY));
+
+                if (sourceHeight > 0) {
+                    // Create a temporary canvas for this page
+                    const pageCanvas = document.createElement('canvas');
+                    pageCanvas.width = canvasWidth;
+                    pageCanvas.height = sourceHeight;
+
+                    const pageCtx = pageCanvas.getContext('2d');
+                    pageCtx.drawImage(canvas, 0, sourceY, canvasWidth, sourceHeight, 0, 0, canvasWidth, sourceHeight);
+
+                    // Add to PDF
+                    const pageDataUrl = pageCanvas.toDataURL('image/jpeg', 0.95);
+                    pdf.addImage(pageDataUrl, 'JPEG', 10, 10, pdfWidth - 20, (sourceHeight / 2) * ratio);
+                }
+
+                currentY += pdfHeight - 20;
+                pageCount++;
+            }
+
+            console.log(`+++===+++ PDF created with ${pageCount - 1} pages`);
 
             // Generate blob
-            const pdfBlob = doc.output('blob');
-            console.log('+++===+++ PDF blob generated successfully');
+            const pdfBlob = pdf.output('blob');
+            console.log('+++===+++ PDF blob generated, size:', pdfBlob.size, 'bytes');
+
+            // Auto-download the PDF
+            console.log('+++===+++ Auto-downloading PDF');
+            const filename = options.filename || 'Hasan_Alizada_Resume.pdf';
+            const url = URL.createObjectURL(pdfBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            // Cleanup
+            if (canvasContainer && canvasContainer.parentNode) {
+                canvasContainer.parentNode.removeChild(canvasContainer);
+            }
 
             this.isGenerating = false;
+
             return {
                 success: true,
                 pdfBlob: pdfBlob,
@@ -87,8 +615,16 @@ class PDFGenerator {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error generating PDF:', error);
+            console.error('+++===+++ Error generating PDF:', error.message);
+
+            // Cleanup on error
+            const canvasContainer = document.getElementById('pdf-canvas-container');
+            if (canvasContainer && canvasContainer.parentNode) {
+                canvasContainer.parentNode.removeChild(canvasContainer);
+            }
+
             this.isGenerating = false;
+
             return {
                 success: false,
                 pdfBlob: null,
@@ -98,314 +634,54 @@ class PDFGenerator {
     }
 
     /**
-     * Formats resume data into PDF-ready sections with proper spacing and typography
-     * @param {object} resumeData - Complete resume data
-     * @param {object} layoutOptions - Layout configuration
-     * @returns {{success: boolean, formattedSections: array, error: string|null}}
-     */
-    formatResumeLayout(resumeData, layoutOptions = {}) {
-        console.log('+++===+++ Formatting resume layout for PDF');
-
-        const sections = [];
-        const {pageWidth, margins} = layoutOptions;
-        const contentWidth = pageWidth - margins.left - margins.right;
-
-        try {
-            // Header section with personal info
-            sections.push({
-                type: 'header',
-                content: resumeData.personal_info.name,
-                style: {font: 'helvetica', size: 24, color: '#000000', bold: true},
-                position: {x: margins.left, y: margins.top, width: contentWidth}
-            });
-
-            sections.push({
-                type: 'text',
-                content: resumeData.personal_info.title,
-                style: {font: 'helvetica', size: 14, color: '#666666', bold: false},
-                position: {x: margins.left, y: margins.top + 10, width: contentWidth}
-            });
-
-            // Contact information
-            const contactInfo = `${resumeData.personal_info.contact.email} | ${resumeData.personal_info.contact.phone} | ${resumeData.personal_info.contact.location}`;
-            sections.push({
-                type: 'text',
-                content: contactInfo,
-                style: {font: 'helvetica', size: 10, color: '#666666', bold: false},
-                position: {x: margins.left, y: margins.top + 18, width: contentWidth}
-            });
-
-            // Professional summary
-            sections.push({
-                type: 'section',
-                content: 'PROFESSIONAL SUMMARY',
-                style: {font: 'helvetica', size: 12, color: '#000000', bold: true},
-                position: {x: margins.left, y: margins.top + 30, width: contentWidth}
-            });
-
-            sections.push({
-                type: 'text',
-                content: resumeData.personal_info.summary,
-                style: {font: 'helvetica', size: 10, color: '#333333', bold: false},
-                position: {x: margins.left, y: margins.top + 38, width: contentWidth}
-            });
-
-            // Professional skills
-            sections.push({
-                type: 'section',
-                content: 'PROFESSIONAL SKILLS',
-                style: {font: 'helvetica', size: 12, color: '#000000', bold: true},
-                position: {x: margins.left, y: margins.top + 65, width: contentWidth}
-            });
-
-            const professionalSkills = resumeData.skills.professional.join(' • ');
-            sections.push({
-                type: 'text',
-                content: professionalSkills,
-                style: {font: 'helvetica', size: 10, color: '#333333', bold: false},
-                position: {x: margins.left, y: margins.top + 73, width: contentWidth}
-            });
-
-            // Technical skills
-            sections.push({
-                type: 'section',
-                content: 'TECHNICAL SKILLS',
-                style: {font: 'helvetica', size: 12, color: '#000000', bold: true},
-                position: {x: margins.left, y: margins.top + 95, width: contentWidth}
-            });
-
-            let yOffset = margins.top + 103;
-            Object.entries(resumeData.skills.technical).forEach(([category, skills]) => {
-                const categoryTitle = category.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) + ':';
-                sections.push({
-                    type: 'text',
-                    content: categoryTitle,
-                    style: {font: 'helvetica', size: 10, color: '#000000', bold: true},
-                    position: {x: margins.left, y: yOffset, width: contentWidth}
-                });
-
-                let skillsArray = Array.isArray(skills) ? skills : (skills.primary || []).concat(skills.additional || []);
-                const skillsText = skillsArray.join(', ');
-                sections.push({
-                    type: 'text',
-                    content: skillsText,
-                    style: {font: 'helvetica', size: 9, color: '#333333', bold: false},
-                    position: {x: margins.left, y: yOffset + 5, width: contentWidth}
-                });
-
-                yOffset += 12;
-            });
-
-            // Work experience
-            yOffset += 10;
-            sections.push({
-                type: 'section',
-                content: 'WORK EXPERIENCE',
-                style: {font: 'helvetica', size: 12, color: '#000000', bold: true},
-                position: {x: margins.left, y: yOffset, width: contentWidth}
-            });
-
-            yOffset += 8;
-            resumeData.work_experience.forEach((exp, index) => {
-                // Position and company
-                sections.push({
-                    type: 'text',
-                    content: `${exp.position} | ${exp.company}`,
-                    style: {font: 'helvetica', size: 11, color: '#000000', bold: true},
-                    position: {x: margins.left, y: yOffset, width: contentWidth}
-                });
-
-                // Period and location
-                sections.push({
-                    type: 'text',
-                    content: `${exp.period} | ${exp.location}`,
-                    style: {font: 'helvetica', size: 9, color: '#666666', bold: false},
-                    position: {x: margins.left, y: yOffset + 5, width: contentWidth}
-                });
-
-                yOffset += 12;
-
-                // Company description
-                if (exp.company_description) {
-                    sections.push({
-                        type: 'text',
-                        content: exp.company_description,
-                        style: {font: 'helvetica', size: 9, color: '#666666', bold: false, italic: true},
-                        position: {x: margins.left, y: yOffset, width: contentWidth}
-                    });
-                    yOffset += 8;
-                }
-
-                // Achievements
-                exp.achievements.slice(0, 5).forEach(achievement => { // Limit to 5 achievements for space
-                    sections.push({
-                        type: 'list',
-                        content: `• ${achievement}`,
-                        style: {font: 'helvetica', size: 9, color: '#333333', bold: false},
-                        position: {x: margins.left, y: yOffset, width: contentWidth}
-                    });
-                    yOffset += 6;
-                });
-
-                yOffset += 5; // Space between experiences
-            });
-
-            console.log(`+++===+++ Resume layout formatted with ${sections.length} sections`);
-            return {
-                success: true,
-                formattedSections: sections,
-                error: null
-            };
-
-        } catch (error) {
-            console.error('+++===+++ Error formatting resume layout:', error);
-            return {
-                success: false,
-                formattedSections: [],
-                error: error.message
-            };
-        }
-    }
-
-    /**
-     * Add formatted content to PDF document
-     * @param {object} doc - jsPDF document instance
-     * @param {object} formattedSections - Formatted resume sections
-     * @param {object} options - PDF options
-     * @returns {Promise<void>}
-     */
-    async addContentToPDF(doc, formattedSections, options) {
-        console.log('+++===+++ Adding content to PDF document');
-
-        try {
-            const {margins, fonts, colors} = options;
-            let currentY = margins.top;
-            const pageWidth = doc.internal.pageSize.getWidth();
-            const pageHeight = doc.internal.pageSize.getHeight();
-            const contentWidth = pageWidth - margins.left - margins.right;
-
-            // Convert formattedSections object to array if needed
-            console.log('+++===+++ Processing formatted sections data structure');
-            let sectionsArray = [];
-
-            if (Array.isArray(formattedSections)) {
-                sectionsArray = formattedSections;
-            } else if (typeof formattedSections === 'object') {
-                // Convert object to array of sections
-                sectionsArray = Object.values(formattedSections);
-            } else {
-                throw new Error('Invalid formattedSections data structure');
-            }
-
-            console.log(`+++===+++ Processing ${sectionsArray.length} sections for PDF`);
-
-            // Set default font
-            doc.setFont(fonts.primary);
-            doc.setFontSize(fonts.bodySize);
-            doc.setTextColor(colors.primary);
-
-            // Add header with name and title
-            doc.setFontSize(fonts.headerSize);
-            doc.setFont(fonts.primary, 'bold');
-            doc.text('Hasan Alizada', margins.left, currentY);
-            currentY += 8;
-
-            doc.setFontSize(fonts.bodySize + 2);
-            doc.text('Technology Principal', margins.left, currentY);
-            currentY += 12;
-
-            // Add sections
-            for (let i = 0; i < sectionsArray.length; i++) {
-                const section = sectionsArray[i];
-
-                // Skip null or undefined sections
-                if (!section) {
-                    console.log(`+++===+++ Skipping null section ${i + 1}`);
-                    continue;
-                }
-
-                console.log(`+++===+++ Adding section ${i + 1}: ${section.title || 'Unnamed'}`);
-
-                // Check if new page needed
-                if (currentY > pageHeight - margins.bottom - 20) {
-                    console.log('+++===+++ Adding new page');
-                    doc.addPage();
-                    currentY = margins.top;
-                }
-
-                // Add section title
-                if (section.title) {
-                    doc.setFontSize(fonts.bodySize + 2);
-                    doc.setFont(fonts.primary, 'bold');
-                    doc.setTextColor(colors.primary);
-                    doc.text(section.title, margins.left, currentY);
-                    currentY += 8;
-                }
-
-                // Add section content
-                doc.setFontSize(fonts.bodySize);
-                doc.setFont(fonts.primary, 'normal');
-                doc.setTextColor(colors.secondary);
-
-                if (section.content) {
-                    if (Array.isArray(section.content)) {
-                        // Handle array content (like skills, achievements)
-                        section.content.forEach(item => {
-                            const lines = doc.splitTextToSize(item, contentWidth);
-                            doc.text(lines, margins.left + 5, currentY);
-                            currentY += lines.length * 5;
-                        });
-                    } else if (typeof section.content === 'string') {
-                        // Handle string content
-                        const lines = doc.splitTextToSize(section.content, contentWidth);
-                        doc.text(lines, margins.left, currentY);
-                        currentY += lines.length * 5;
-                    }
-                }
-
-                currentY += 5; // Space between sections
-            }
-
-            console.log('+++===+++ PDF content added successfully');
-
-        } catch (error) {
-            console.error('+++===+++ Error adding content to PDF:', error);
-            throw error;
-        }
-    }
-
-    /**
-     * Triggers PDF download in browser with specified filename
-     * @param {Blob} pdfBlob - PDF Blob object
-     * @param {string} filename - Desired filename
+     * Downloads the generated PDF with proper filename
+     * @param {Blob} pdfBlob - PDF blob to download
+     * @param {object} options - Download options
      * @returns {{success: boolean, error: string|null}}
      */
-    downloadPDF(pdfBlob, filename = 'Hasan_Alizada_Resume.pdf') {
-        console.log(`+++===+++ Downloading PDF with filename: ${filename}`);
+    downloadPDF(pdfBlob, options = {}) {
+        console.log('+++===+++ Starting PDF download process');
 
         try {
-            // Create download link
-            const url = URL.createObjectURL(pdfBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = filename;
+            if (!pdfBlob || !(pdfBlob instanceof Blob)) {
+                throw new Error('Invalid PDF blob provided');
+            }
 
-            // Trigger download
-            document.body.appendChild(link);
-            link.click();
+            const defaultOptions = {
+                filename: 'Hasan_Alizada_Resume.pdf',
+                openInNewTab: false
+            };
 
-            // Cleanup
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
+            const downloadOptions = { ...defaultOptions, ...options };
 
-            console.log('+++===+++ PDF download triggered successfully');
+            console.log(`+++===+++ Creating download for file: ${downloadOptions.filename}`);
+
+            if (downloadOptions.openInNewTab) {
+                // Open in new tab
+                const url = URL.createObjectURL(pdfBlob);
+                window.open(url, '_blank');
+                // Clean up after a delay
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+            } else {
+                // Direct download
+                const url = URL.createObjectURL(pdfBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = downloadOptions.filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }
+
+            console.log('+++===+++ PDF download initiated successfully');
             return {
                 success: true,
                 error: null
             };
 
         } catch (error) {
-            console.error('+++===+++ Error downloading PDF:', error);
+            console.error('+++===+++ Error downloading PDF:', error.message);
             return {
                 success: false,
                 error: error.message
@@ -414,30 +690,36 @@ class PDFGenerator {
     }
 
     /**
-     * Generate and download PDF in one operation
-     * @param {object} resumeData - Complete resume data
+     * Generate and download PDF in one operation (legacy method for compatibility)
+     * @param {object} resumeData - Complete resume data (unused in canvas approach)
      * @param {object} options - PDF and download options
      * @returns {Promise<{success: boolean, error: string|null}>}
      */
     async generateAndDownload(resumeData, options = {}) {
-        console.log('+++===+++ Starting generate and download operation');
+        console.log('+++===+++ Starting generate and download operation with Canvas-to-PDF');
 
         try {
-            const generateResult = await this.generatePDF(resumeData, options);
-            if (!generateResult.success) {
-                return generateResult;
+            // Prevent duplicate calls
+            if (this.isGenerating) {
+                console.log('+++===+++ PDF generation already in progress, skipping duplicate call');
+                return {
+                    success: false,
+                    error: 'PDF generation already in progress'
+                };
             }
 
-            const downloadResult = this.downloadPDF(generateResult.pdfBlob, options.filename);
-            if (!downloadResult.success) {
-                return downloadResult;
+            // Format resume layout (clone DOM)
+            const layoutResult = this.formatResumeLayout();
+            if (!layoutResult.success) {
+                return layoutResult;
             }
 
-            console.log('+++===+++ Generate and download completed successfully');
-            return {
-                success: true,
-                error: null
-            };
+            // Generate PDF from canvas - this handles download internally
+            const generateResult = await this.generatePDF(layoutResult.clonedElement, options);
+
+            // Don't call downloadPDF separately since generatePDF already handles it
+            console.log('+++===+++ Canvas-to-PDF operation completed successfully');
+            return generateResult;
 
         } catch (error) {
             console.error('+++===+++ Error in generate and download:', error);
