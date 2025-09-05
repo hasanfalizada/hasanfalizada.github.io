@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://hasanfalizada.github.io/sitemap.xml
+
+# Allow indexing of all content
+Allow: /assets/
+Allow: /articles/
+Allow: /data/
+
+# Performance optimizations
+Crawl-delay: 1

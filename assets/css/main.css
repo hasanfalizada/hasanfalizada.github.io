@@ -632,7 +632,8 @@ a:hover {
     }
 }
 
-/* Social Media Icons Styling */
+/* +++===+++ 2025-09-05 16:30 UTC — Hasan Alizada — REPLACE the entire Social Media Icons section with this */
+/* Social Media Icons Styling - Dynamic Version */
 .nav-center .social-links {
     display: flex;
     align-items: center;
@@ -656,88 +657,10 @@ a:hover {
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
-/* LinkedIn - Professional Blue */
-.social-link[aria-label="LinkedIn"] svg {
-    fill: #0077b5;
+.social-link svg {
     width: 24px;
     height: 24px;
-}
-
-.social-link[aria-label="LinkedIn"]:hover svg {
-    fill: #005885;
-}
-
-/* Twitter - Twitter Blue */
-.social-link[aria-label="Twitter"] svg {
-    fill: #1da1f2;
-    width: 24px;
-    height: 24px;
-}
-
-.social-link[aria-label="Twitter"]:hover svg {
-    fill: #0d8bd9;
-}
-
-/* GitHub - Dark Gray */
-.social-link[aria-label="GitHub"] svg {
-    fill: #333;
-    width: 24px;
-    height: 24px;
-}
-
-.social-link[aria-label="GitHub"]:hover svg {
-    fill: #000;
-}
-
-/* Facebook - Facebook Blue */
-.social-link[aria-label="Facebook"] svg {
-    fill: #1877f2;
-    width: 24px;
-    height: 24px;
-}
-
-.social-link[aria-label="Facebook"]:hover svg {
-    fill: #166fe5;
-}
-
-/* YouTube - YouTube Red */
-.social-link[aria-label="YouTube"] svg {
-    fill: #ff0000;
-    width: 24px;
-    height: 24px;
-}
-
-.social-link[aria-label="YouTube"]:hover svg {
-    fill: #cc0000;
-}
-
-/* Instagram - Instagram Gradient (approximated) */
-.social-link[aria-label="Instagram"] svg {
-    fill: #e4405f;
-    width: 24px;
-    height: 24px;
-}
-
-.social-link[aria-label="Instagram"]:hover svg {
-    fill: #c13584;
-}
-
-/* XING - Original icon with rounded square background */
-.social-link[aria-label="XING"] svg {
-    width: 24px;
-    height: 24px;
-}
-
-.social-link[aria-label="XING"] svg rect {
-    fill: #026466;
-}
-
-.social-link[aria-label="XING"] svg path {
-    fill: white;
-}
-
-.social-link[aria-label="XING"]:hover svg rect {
-    fill: #014a4c;
+    transition: fill 0.3s ease;
 }
 
 /* Remove any existing button styles */
@@ -754,8 +677,19 @@ a:hover {
     }
 
     .social-link svg {
-        width: 20px !important;
-        height: 20px !important;
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-center .social-links {
+        gap: 0.75rem;
+    }
+
+    .social-link svg {
+        width: 18px;
+        height: 18px;
     }
 }
 
