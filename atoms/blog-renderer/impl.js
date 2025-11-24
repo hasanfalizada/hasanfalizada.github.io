@@ -5,7 +5,6 @@ class BlogRenderer {
         this.articlesCache = new Map();
         this.articlesListCache = null;
         this.baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '');
-        console.log('+++===+++ BlogRenderer initialized');
     }
 
     /**
@@ -13,10 +12,7 @@ class BlogRenderer {
      * @returns {Promise<{success: boolean, articles: array, error: string|null}>}
      */
     async loadArticleList() {
-        console.log('+++===+++ Loading article list');
-
         if (this.articlesListCache) {
-            console.log('+++===+++ Returning cached article list');
             return {
                 success: true,
                 articles: this.articlesListCache,
@@ -30,10 +26,8 @@ class BlogRenderer {
             let articles;
 
             if (articlesIndex && articlesIndex.articles) {
-                console.log('+++===+++ Using articles index');
                 articles = articlesIndex.articles.map(article => this.enrichArticleMetadata(article));
             } else {
-                console.log('+++===+++ Using manual articles list');
                 articles = this.getManualArticlesList();
             }
 
@@ -41,7 +35,6 @@ class BlogRenderer {
             articles.sort((a, b) => new Date(b.date) - new Date(a.date));
 
             this.articlesListCache = articles;
-            console.log(`+++===+++ Loaded ${articles.length} articles`);
 
             return {
                 success: true,
@@ -50,8 +43,6 @@ class BlogRenderer {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error loading article list:', error);
-
             // Fallback to manual list
             const articles = this.getManualArticlesList();
             this.articlesListCache = articles;
@@ -74,7 +65,6 @@ class BlogRenderer {
             if (!response.ok) return null;
             return await response.json();
         } catch (error) {
-            console.log('+++===+++ Articles index not available');
             return null;
         }
     }
@@ -129,8 +119,6 @@ class BlogRenderer {
      * @returns {{success: boolean, htmlContent: string, metadata: object, error: string|null}}
      */
     renderMarkdown(markdownContent, options = {}) {
-        console.log('+++===+++ Rendering markdown content');
-
         try {
             if (typeof marked === 'undefined') {
                 throw new Error('Marked.js library not loaded');
@@ -153,7 +141,6 @@ class BlogRenderer {
             // Enhance HTML
             const enhancedHtml = this.enhanceHtml(htmlContent, options);
 
-            console.log('+++===+++ Markdown rendered successfully');
             return {
                 success: true,
                 htmlContent: enhancedHtml,
@@ -162,7 +149,6 @@ class BlogRenderer {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error rendering markdown:', error);
             return {
                 success: false,
                 htmlContent: '',
@@ -241,8 +227,6 @@ class BlogRenderer {
      * @returns {{success: boolean, htmlLinks: string, error: string|null}}
      */
     generateArticleLinks(articles, sortOptions = {}) {
-        console.log(`+++===+++ Generating HTML links for ${articles.length} articles`);
-
         try {
             const options = {
                 sortBy: 'date',
@@ -292,7 +276,6 @@ class BlogRenderer {
 
             const result = `<div class="articles-list">${htmlLinks}</div>`;
 
-            console.log(`+++===+++ Generated HTML links for ${filteredArticles.length} articles`);
             return {
                 success: true,
                 htmlLinks: result,
@@ -300,7 +283,6 @@ class BlogRenderer {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error generating article links:', error);
             return {
                 success: false,
                 htmlLinks: '',
@@ -334,8 +316,6 @@ class BlogRenderer {
      * @returns {{success: boolean, error: string|null}}
      */
     openArticleInNewTab(articleUrl, articleSlug = '') {
-        console.log(`+++===+++ Opening article in new tab: ${articleUrl}`);
-
         try {
             window.open(articleUrl, '_blank', 'noopener,noreferrer');
             return {
@@ -343,7 +323,6 @@ class BlogRenderer {
                 error: null
             };
         } catch (error) {
-            console.error('+++===+++ Error opening article:', error);
             return {
                 success: false,
                 error: error.message
@@ -357,11 +336,8 @@ class BlogRenderer {
      * @returns {Promise<{success: boolean, content: string, metadata: object, error: string|null}>}
      */
     async loadArticleContent(articlePath) {
-        console.log(`+++===+++ Loading article content from: ${articlePath}`);
-
         // Check cache first
         if (this.articlesCache.has(articlePath)) {
-            console.log('+++===+++ Returning cached article content');
             return this.articlesCache.get(articlePath);
         }
 
@@ -389,11 +365,9 @@ class BlogRenderer {
             // Cache the result
             this.articlesCache.set(articlePath, result);
 
-            console.log('+++===+++ Article content loaded and cached successfully');
             return result;
 
         } catch (error) {
-            console.error('+++===+++ Error loading article content:', error);
             return {
                 success: false,
                 content: '',
@@ -407,7 +381,6 @@ class BlogRenderer {
      * Clear all caches
      */
     clearCache() {
-        console.log('+++===+++ Clearing blog renderer caches');
         this.articlesCache.clear();
         this.articlesListCache = null;
     }

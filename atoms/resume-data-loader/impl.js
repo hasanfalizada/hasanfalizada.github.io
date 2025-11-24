@@ -4,7 +4,6 @@ class ResumeDataLoader {
     constructor() {
         this.dataCache = null;
         this.isLoading = false;
-        console.log('+++===+++ ResumeDataLoader initialized');
     }
 
     /**
@@ -12,10 +11,7 @@ class ResumeDataLoader {
      * @returns {Promise<{success: boolean, data: object, error: string|null}>}
      */
     async loadResumeData() {
-        console.log('+++===+++ Starting loadResumeData operation');
-
         if (this.dataCache) {
-            console.log('+++===+++ Returning cached resume data');
             return {
                 success: true,
                 data: this.dataCache,
@@ -24,7 +20,6 @@ class ResumeDataLoader {
         }
 
         if (this.isLoading) {
-            console.log('+++===+++ Resume data already loading, waiting...');
             return new Promise(resolve => {
                 const checkLoaded = () => {
                     if (!this.isLoading) {
@@ -40,7 +35,6 @@ class ResumeDataLoader {
         this.isLoading = true;
 
         try {
-            console.log('+++===+++ Fetching resume data from data/resume.json');
             const response = await fetch('data/resume.json');
 
             if (!response.ok) {
@@ -48,7 +42,6 @@ class ResumeDataLoader {
             }
 
             const data = await response.json();
-            console.log('+++===+++ Resume data fetched successfully, validating structure');
 
             const validation = this.validateResumeStructure(data);
             if (!validation.valid) {
@@ -58,7 +51,6 @@ class ResumeDataLoader {
             this.dataCache = data;
             this.isLoading = false;
 
-            console.log('+++===+++ Resume data loaded and cached successfully');
             return {
                 success: true,
                 data: this.dataCache,
@@ -66,7 +58,6 @@ class ResumeDataLoader {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error loading resume data:', error.message);
             this.isLoading = false;
 
             return {
@@ -83,7 +74,6 @@ class ResumeDataLoader {
      * @returns {{valid: boolean, errors: string[]}}
      */
     validateResumeStructure(data) {
-        console.log('+++===+++ Validating resume data structure');
         const errors = [];
 
         // Check required top-level properties
@@ -145,7 +135,6 @@ class ResumeDataLoader {
         }
 
         const isValid = errors.length === 0;
-        console.log(`+++===+++ Resume data validation ${isValid ? 'passed' : 'failed'}, errors: ${errors.length}`);
 
         return {
             valid: isValid,
@@ -158,8 +147,6 @@ class ResumeDataLoader {
      * @returns {Promise<{success: boolean, data: object, error: string|null}>}
      */
     async getPersonalInfo() {
-        console.log('+++===+++ Getting personal info section');
-
         const result = await this.loadResumeData();
         if (!result.success) {
             return result;
@@ -177,8 +164,6 @@ class ResumeDataLoader {
      * @returns {Promise<{success: boolean, data: array, error: string|null}>}
      */
     async getExperience() {
-        console.log('+++===+++ Getting work experience section');
-
         const result = await this.loadResumeData();
         if (!result.success) {
             return {
@@ -200,8 +185,6 @@ class ResumeDataLoader {
      * @returns {Promise<{success: boolean, data: object, error: string|null}>}
      */
     async getSkills() {
-        console.log('+++===+++ Getting skills section');
-
         const result = await this.loadResumeData();
         if (!result.success) {
             return result;
@@ -219,8 +202,6 @@ class ResumeDataLoader {
      * @returns {Promise<{success: boolean, data: array, error: string|null}>}
      */
     async getEducation() {
-        console.log('+++===+++ Getting education section');
-
         const result = await this.loadResumeData();
         if (!result.success) {
             return {
@@ -242,8 +223,6 @@ class ResumeDataLoader {
      * @returns {Promise<{success: boolean, data: array, error: string|null}>}
      */
     async getCertificates() {
-        console.log('+++===+++ Getting certificates section');
-
         const result = await this.loadResumeData();
         if (!result.success) {
             return {
@@ -265,8 +244,6 @@ class ResumeDataLoader {
      * @returns {Promise<{success: boolean, data: array, error: string|null}>}
      */
     async getLanguages() {
-        console.log('+++===+++ Getting languages section');
-
         const result = await this.loadResumeData();
         if (!result.success) {
             return {
@@ -287,7 +264,6 @@ class ResumeDataLoader {
      * Clears cached data (useful for testing or forced refresh)
      */
     clearCache() {
-        console.log('+++===+++ Clearing resume data cache');
         this.dataCache = null;
     }
 }

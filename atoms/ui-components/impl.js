@@ -31,7 +31,6 @@ class UIComponents {
                 lg: '0.75rem'
             }
         };
-        console.log('+++===+++ UIComponents initialized');
     }
 
     /**
@@ -42,8 +41,6 @@ class UIComponents {
      * @returns {{success: boolean, htmlContent: string, error: string|null}}
      */
     renderHeader(personalInfo, navigationItems, options = {}) {
-        console.log('+++===+++ Rendering header component');
-
         try {
             const defaultOptions = {
                 showNavigation: true,
@@ -77,7 +74,6 @@ class UIComponents {
                 </header>
             `.trim();
 
-            console.log('+++===+++ Header rendered successfully');
             return {
                 success: true,
                 htmlContent: htmlContent,
@@ -85,7 +81,6 @@ class UIComponents {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error rendering header:', error);
             return {
                 success: false,
                 htmlContent: '',
@@ -102,8 +97,6 @@ class UIComponents {
      * @returns {{success: boolean, htmlContent: string, error: string|null}}
      */
     renderFooter(socialLinks, footerText = '', options = {}) {
-        console.log('+++===+++ Rendering footer component');
-
         try {
             const defaultOptions = {
                 showSocialIcons: true,
@@ -132,7 +125,6 @@ class UIComponents {
                 </footer>
             `.trim();
 
-            console.log('+++===+++ Footer rendered successfully');
             return {
                 success: true,
                 htmlContent: htmlContent,
@@ -140,7 +132,6 @@ class UIComponents {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error rendering footer:', error);
             return {
                 success: false,
                 htmlContent: '',
@@ -157,8 +148,6 @@ class UIComponents {
      * @returns {{success: boolean, htmlContent: string, error: string|null}}
      */
     renderSocialLinks(socialData, style = 'horizontal', showLabels = false) {
-        console.log('+++===+++ Rendering social links component');
-
         try {
             const socialPlatforms = {
                 linkedin: { label: 'LinkedIn', icon: 'in' },
@@ -194,7 +183,6 @@ class UIComponents {
                 </div>
             `.trim();
 
-            console.log(`+++===+++ Social links rendered successfully (${socialLinksArray.length} links)`);
             return {
                 success: true,
                 htmlContent: htmlContent,
@@ -202,7 +190,6 @@ class UIComponents {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error rendering social links:', error);
             return {
                 success: false,
                 htmlContent: '',
@@ -219,8 +206,6 @@ class UIComponents {
      * @returns {{success: boolean, htmlContent: string, error: string|null}}
      */
     renderSkillTags(skills, category, options = {}) {
-        console.log(`+++===+++ Rendering skill tags for category: ${category}`);
-
         try {
             const defaultOptions = {
                 style: 'pill',
@@ -246,7 +231,6 @@ class UIComponents {
                 </div>
             `.trim();
 
-            console.log(`+++===+++ Skill tags rendered successfully (${skills.length} skills)`);
             return {
                 success: true,
                 htmlContent: htmlContent,
@@ -254,7 +238,6 @@ class UIComponents {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error rendering skill tags:', error);
             return {
                 success: false,
                 htmlContent: '',
@@ -270,8 +253,6 @@ class UIComponents {
      * @returns {{success: boolean, htmlContent: string, error: string|null}}
      */
     renderExperienceCard(experience, options = {}) {
-        console.log(`+++===+++ Rendering experience card for: ${experience.position}`);
-
         try {
             const defaultOptions = {
                 showCompanyDescription: true,
@@ -320,7 +301,6 @@ class UIComponents {
                 </div>
             `.trim();
 
-            console.log('+++===+++ Experience card rendered successfully');
             return {
                 success: true,
                 htmlContent: htmlContent,
@@ -328,7 +308,6 @@ class UIComponents {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error rendering experience card:', error);
             return {
                 success: false,
                 htmlContent: '',
@@ -345,8 +324,6 @@ class UIComponents {
      * @returns {{success: boolean, htmlContent: string, error: string|null}}
      */
     renderResumeSection(sectionType, sectionData, options = {}) {
-        console.log(`+++===+++ Rendering resume section: ${sectionType}`);
-
         try {
             const defaultOptions = {
                 showTitle: true,
@@ -407,7 +384,6 @@ class UIComponents {
                 </div>
             `.trim();
 
-            console.log(`+++===+++ Resume section ${sectionType} rendered successfully`);
             return {
                 success: true,
                 htmlContent: htmlContent,
@@ -415,7 +391,6 @@ class UIComponents {
             };
 
         } catch (error) {
-            console.error(`+++===+++ Error rendering resume section ${sectionType}:`, error);
             return {
                 success: false,
                 htmlContent: '',
@@ -602,7 +577,6 @@ class UIComponents {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error rendering button:', error);
             return {
                 success: false,
                 htmlContent: '',

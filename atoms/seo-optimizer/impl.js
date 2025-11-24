@@ -11,7 +11,6 @@ class SEOOptimizer {
             language: 'en',
             favicon: 'assets/favicon.svg'
         };
-        console.log('+++===+++ SEOOptimizer initialized');
     }
 
     /**
@@ -22,8 +21,6 @@ class SEOOptimizer {
      * @returns {{success: boolean, metaTags: string, error: string|null}}
      */
     generateMetaTags(pageType, pageData, siteConfig) {
-        console.log(`+++===+++ Generating meta tags for page type: ${pageType}`);
-
         try {
             const config = {...this.defaultConfig, ...siteConfig};
             let metaTags = '';
@@ -37,7 +34,6 @@ class SEOOptimizer {
             // Viewport and mobile optimization
             metaTags += this.generateViewportTags();
 
-            console.log('+++===+++ Meta tags generated successfully');
             return {
                 success: true,
                 metaTags: metaTags,
@@ -45,7 +41,6 @@ class SEOOptimizer {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error generating meta tags:', error);
             return {
                 success: false,
                 metaTags: '',
@@ -198,8 +193,6 @@ class SEOOptimizer {
      * @returns {{success: boolean, structuredData: string, error: string|null}}
      */
     createStructuredData(schemaType, data, context = 'https://schema.org') {
-        console.log(`+++===+++ Creating structured data for schema type: ${schemaType}`);
-
         try {
             let structuredData = {};
 
@@ -222,7 +215,6 @@ class SEOOptimizer {
 
             const jsonLD = `<script type="application/ld+json">\n${JSON.stringify(structuredData, null, 2)}\n</script>`;
 
-            console.log('+++===+++ Structured data created successfully');
             return {
                 success: true,
                 structuredData: jsonLD,
@@ -230,7 +222,6 @@ class SEOOptimizer {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error creating structured data:', error);
             return {
                 success: false,
                 structuredData: '',
@@ -346,8 +337,6 @@ class SEOOptimizer {
      * @returns {{success: boolean, socialTags: string, error: string|null}}
      */
     setSocialMediaTags(pageData, socialConfig) {
-        console.log('+++===+++ Generating social media meta tags');
-
         try {
             const config = {...this.defaultConfig, ...socialConfig};
             let socialTags = '';
@@ -358,7 +347,6 @@ class SEOOptimizer {
             // Twitter Card tags
             socialTags += this.generateTwitterCardTags(pageData, config);
 
-            console.log('+++===+++ Social media tags generated successfully');
             return {
                 success: true,
                 socialTags: socialTags,
@@ -366,7 +354,6 @@ class SEOOptimizer {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error generating social media tags:', error);
             return {
                 success: false,
                 socialTags: '',
@@ -430,8 +417,6 @@ class SEOOptimizer {
      * @returns {{success: boolean, optimizedTitle: string, error: string|null}}
      */
     optimizePageTitles(baseTitle, pageType, additionalContext = '') {
-        console.log(`+++===+++ Optimizing page title: ${baseTitle}`);
-
         try {
             let optimizedTitle = baseTitle;
             const maxLength = 60; // Google's recommended title length
@@ -454,7 +439,6 @@ class SEOOptimizer {
                 }
             }
 
-            console.log(`+++===+++ Title optimized: ${optimizedTitle}`);
             return {
                 success: true,
                 optimizedTitle: optimizedTitle,
@@ -462,7 +446,6 @@ class SEOOptimizer {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error optimizing title:', error);
             return {
                 success: false,
                 optimizedTitle: baseTitle,
@@ -478,8 +461,6 @@ class SEOOptimizer {
      * @returns {{success: boolean, sitemapXml: string, error: string|null}}
      */
     generateSitemap(pages, siteUrl) {
-        console.log(`+++===+++ Generating sitemap for ${pages.length} pages`);
-
         try {
             const header = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
@@ -501,7 +482,6 @@ class SEOOptimizer {
             const footer = '</urlset>';
             const sitemapXml = `${header}\n${urls}\n${footer}`;
 
-            console.log('+++===+++ Sitemap generated successfully');
             return {
                 success: true,
                 sitemapXml: sitemapXml,
@@ -509,7 +489,6 @@ class SEOOptimizer {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error generating sitemap:', error);
             return {
                 success: false,
                 sitemapXml: '',

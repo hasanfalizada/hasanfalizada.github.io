@@ -5,7 +5,6 @@
 class PDFGenerator {
     constructor() {
         this.isGenerating = false;
-        console.log('PDFGenerator initialized (JSON→pdfmake, no rasterization)');
     }
 
     /**
@@ -41,7 +40,6 @@ class PDFGenerator {
             window.pdfMake.createPdf(doc).download(filename);
             return {success: true};
         } catch (e) {
-            console.error('PDF generation failed:', e);
             return {success: false, error: String(e && e.message || e)};
         } finally {
             this.isGenerating = false;
@@ -55,7 +53,6 @@ class PDFGenerator {
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             return await res.json();
         } catch (e) {
-            console.error('Failed to load data/resume.json:', e);
             return null;
         }
     }

@@ -5,36 +5,29 @@
  */
 class App {
     constructor() {
-        console.log('+++===+++ App constructor called');
         this.atoms = {};
         this.isInitialized = false;
         this.currentSection = 'resume'; // Changed default from 'home' to 'resume'
     }
 
     async renderHeaderSocialLinks() {
-        console.log('+++===+++ Rendering dynamic header social links from resume.json');
-
         try {
             // Load resume data
             const result = await this.atoms.resumeDataLoader.loadResumeData();
             if (!result.success) {
-                console.error('+++===+++ Failed to load resume data for header social links:', result.error);
                 return;
             }
 
             const socialLinks = result.data.personal_info?.social_links || {};
-            console.log('+++===+++ Social links loaded:', Object.keys(socialLinks));
 
             // Find the header social links container
             const socialLinksContainer = document.querySelector('.nav-center .social-links');
             if (!socialLinksContainer) {
-                console.error('+++===+++ Header social links container not found');
                 return;
             }
 
             // Clear existing hardcoded links
             socialLinksContainer.innerHTML = '';
-            console.log('+++===+++ Cleared hardcoded social links');
 
             // Social platform configuration with SVG icons
             const socialPlatforms = {
@@ -103,20 +96,17 @@ class App {
                 .map(([platform, url]) => {
                     const config = socialPlatforms[platform];
                     if (!config) {
-                        console.warn(`+++===+++ Unknown social platform: ${platform}`);
                         return null;
                     }
 
                     const normalizedUrl = normalizeUrl(url, platform);
                     if (!normalizedUrl) return null;
 
-                    console.log(`+++===+++ Creating link for ${platform}: ${normalizedUrl}`);
-
                     return `
-        <a href="${normalizedUrl}" 
-           target="_blank" 
+        <a href="${normalizedUrl}"
+           target="_blank"
            rel="noopener noreferrer"
-           class="social-link" 
+           class="social-link"
            aria-label="${config.label}"
            data-platform="${platform}">
             <svg width="24" height="24" viewBox="0 0 24 24" style="fill: ${config.color};">
@@ -130,7 +120,6 @@ class App {
 
             // Insert dynamic social links
             socialLinksContainer.innerHTML = socialLinksHtml;
-            console.log(`+++===+++ Generated ${Object.keys(socialLinks).length} dynamic social links in header`);
 
             // Add hover effects via JavaScript since we can't easily inject CSS
             const socialLinkElements = socialLinksContainer.querySelectorAll('.social-link');
@@ -168,10 +157,7 @@ class App {
                 });
             });
 
-            console.log('+++===+++ Header social links rendered successfully from resume.json');
-
         } catch (error) {
-            console.error('+++===+++ Error rendering header social links:', error);
         }
     }
 
@@ -180,11 +166,8 @@ class App {
      */
     async initialize() {
         if (this.isInitialized) {
-            console.log('+++===+++ Application already initialized, skipping');
             return;
         }
-
-        console.log('+++===+++ Starting application initialization');
 
         try {
             // Initialize atomic modules
@@ -206,10 +189,8 @@ class App {
 
 
             this.isInitialized = true;
-            console.log('+++===+++ Application initialization completed successfully');
 
         } catch (error) {
-            console.error('+++===+++ Application initialization failed:', error);
             this.showError('Failed to initialize application. Please refresh the page.');
         }
     }
@@ -218,49 +199,38 @@ class App {
      * Initialize all atomic modules
      */
     async initializeAtoms() {
-        console.log('+++===+++ Initializing atomic modules');
-
         try {
             // Load resume data loader atom
             if (typeof ResumeDataLoader === 'undefined') {
-                console.log('+++===+++ Loading ResumeDataLoader script');
                 await this.loadScript('atoms/resume-data-loader/impl.js');
                 // Wait for class to be available
                 await this.waitForGlobal('ResumeDataLoader');
             }
             if (!this.atoms.resumeDataLoader) {
                 this.atoms.resumeDataLoader = new ResumeDataLoader();
-                console.log('+++===+++ Resume data loader atom initialized');
             }
 
             // Load PDF generator atom
             if (typeof PDFGenerator === 'undefined') {
-                console.log('+++===+++ Loading PDFGenerator script');
                 await this.loadScript('atoms/pdf-generator/impl.js');
                 // Wait for class to be available
                 await this.waitForGlobal('PDFGenerator');
             }
             if (!this.atoms.pdfGenerator) {
                 this.atoms.pdfGenerator = new PDFGenerator();
-                console.log('+++===+++ PDF generator atom initialized');
             }
 
             // Load blog renderer atom
             if (typeof BlogRenderer === 'undefined') {
-                console.log('+++===+++ Loading BlogRenderer script');
                 await this.loadScript('atoms/blog-renderer/impl.js');
                 // Wait for class to be available
                 await this.waitForGlobal('BlogRenderer');
             }
             if (!this.atoms.blogRenderer) {
                 this.atoms.blogRenderer = new BlogRenderer();
-                console.log('+++===+++ Blog renderer atom initialized');
             }
 
-            console.log('+++===+++ All available atoms initialized');
-
         } catch (error) {
-            console.error('+++===+++ Error initializing atoms:', error);
             throw error;
         }
     }
@@ -272,8 +242,6 @@ class App {
      * REPLACE the setupNavigation() method in main.js with this improved version:
      */
     setupNavigation() {
-        console.log('+++===+++ Setting up navigation system');
-
         // Add event listeners to navigation links with improved reliability
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
@@ -286,7 +254,6 @@ class App {
                 e.stopPropagation();
 
                 const sectionId = link.getAttribute('data-section');
-                console.log(`+++===+++ Navigation click: ${sectionId}`);
 
                 // Ensure navigation happens immediately
                 this.navigateToSection(sectionId);
@@ -317,8 +284,6 @@ class App {
      * Setup event listeners
      */
     setupEventListeners() {
-        console.log('+++===+++ Setting up event listeners');
-
         // PDF generation buttons
         const pdfButtons = document.querySelectorAll('#generate-pdf-btn, #download-pdf-btn, #fab-pdf');
         pdfButtons.forEach(button => {
@@ -343,8 +308,6 @@ class App {
      * Load initial content
      */
     async loadInitialContent() {
-        console.log('+++===+++ Loading initial content');
-
         try {
             // Load resume content
             await this.loadResumeContent();
@@ -352,10 +315,7 @@ class App {
             // Load blog content
             await this.loadBlogContent();
 
-            console.log('+++===+++ Initial content loaded successfully');
-
         } catch (error) {
-            console.error('+++===+++ Error loading initial content:', error);
             // Don't throw - app should still work with partial content
         }
     }
@@ -364,8 +324,6 @@ class App {
      * Load resume content using resume data loader atom
      */
     async loadResumeContent() {
-        console.log('+++===+++ Loading resume content');
-
         const resumeContentContainer = document.getElementById('resume-content');
         if (!resumeContentContainer) return;
 
@@ -380,10 +338,7 @@ class App {
             const resumeHtml = this.generateResumeHTML(result.data);
             resumeContentContainer.innerHTML = resumeHtml;
 
-            console.log('+++===+++ Resume content rendered successfully');
-
         } catch (error) {
-            console.error('+++===+++ Error loading resume content:', error);
             resumeContentContainer.innerHTML = `
                 <div class="error">
                     <p>Failed to load resume content. Please try again later.</p>
@@ -402,8 +357,6 @@ class App {
     function
 
     renderEducationItem(ed, idx) {
-        console.log('+++===+++ [renderEducationItem] idx=%d institution=%s', idx, ed?.institution);
-
         const degree = ed?.degree ? String(ed.degree) : '';
         const school = ed?.institution ? String(ed.institution) : '';
         const location = ed?.location ? String(ed.location) : '';
@@ -432,7 +385,6 @@ class App {
 
     renderEducationSection(education) {
         const list = Array.isArray(education) ? education : [];
-        console.log('+++===+++ [renderEducationSection] items=%d', list.length);
         const items = list.map((ed, i) => this.renderEducationItem(ed, i)).join('');
         return `
     <div class="resume-section">
@@ -452,7 +404,6 @@ class App {
     function
 
     renderLanguageItem(lang, idx) {
-        console.log('+++===+++ [renderLanguageItem] idx=%d name=%s level=%s', idx, lang?.name, lang?.level);
         const name = lang?.name ? String(lang.name) : '';
         const level = lang?.level ? String(lang.level) : '';
         return `
@@ -472,7 +423,6 @@ class App {
 
     renderLanguagesSection(languages) {
         const list = Array.isArray(languages) ? languages : [];
-        console.log('+++===+++ [renderLanguagesSection] items=%d', list.length);
         const items = list.map((l, i) => this.renderLanguageItem(l, i)).join('');
         return `
     <div class="resume-section">
@@ -494,7 +444,6 @@ class App {
         const direct = Number(lang?.score ?? lang?.proficiency ?? lang?.levelScore);
         if (!Number.isNaN(direct)) {
             const clamped = Math.max(0, Math.min(5, Math.round(direct)));
-            console.log('+++===+++ [languageLevelToScore] direct=%s -> %d', direct, clamped);
             return clamped;
         }
 
@@ -511,7 +460,6 @@ class App {
         else if (/(basic|beginner|a1)/.test(s)) score = 1;
         else score = 0;
 
-        console.log('+++===+++ [languageLevelToScore] level="%s" -> %d', s, score);
         return score;
     }
 
@@ -524,7 +472,6 @@ class App {
     renderLanguageRowDots(lang, idx) {
         const name = lang?.name ? String(lang.name) : '';
         const score = this.languageLevelToScore(lang);
-        console.log('+++===+++ [renderLanguageRowDots] idx=%d name=%s score=%d', idx, name, score);
 
         const MAX = 5;
         const dots = Array.from({length: MAX}, (_, i) =>
@@ -546,7 +493,6 @@ class App {
 
     renderLanguagesSectionDots(languages) {
         const list = Array.isArray(languages) ? languages : [];
-        console.log('+++===+++ [renderLanguagesSectionDots] items=%d', list.length);
         const mid = Math.ceil(list.length / 2);
         const left = list.slice(0, mid);
         const right = list.slice(mid);
@@ -576,7 +522,6 @@ class App {
     renderCertificateItem(cert, idx) {
         const name = cert?.name ? String(cert.name) : '';
         const period = cert?.period ? String(cert.period) : '';
-        console.log('+++===+++ [renderCertificateItem] idx=%d name="%s" hasPeriod=%s', idx, name, Boolean(period));
 
         return `
     <li class="cert-row">
@@ -595,7 +540,6 @@ class App {
 
     renderCertificatesSection(certs) {
         const list = Array.isArray(certs) ? certs : [];
-        console.log('+++===+++ [renderCertificatesSection] items=%d', list.length);
         const items = list.map((c, i) => this.renderCertificateItem(c, i)).join('');
         return `
     <div class="resume-section">
@@ -616,8 +560,6 @@ class App {
     function
 
     renderExperienceItem(exp, idx) {
-        console.log('+++===+++ [renderExperienceItem] start idx=%d payload=%o', idx, exp);
-
         const position = (exp && exp.position) ? String(exp.position) : '';
         const company = (exp && exp.company) ? String(exp.company) : '';
         const location = (exp && exp.location) ? String(exp.location) : '';
@@ -625,15 +567,10 @@ class App {
         const companyDesc = (exp && exp.company_description ? String(exp.company_description).trim() : '');
         const logo = (exp && exp.company_logo) ? String(exp.company_logo).trim() : '';
 
-        console.log('+++===+++ [renderExperienceItem] meta position="%s" company="%s" period="%s" location="%s" hasLogo=%s',
-            position, company, period, location, Boolean(logo));
-
         const achievements = Array.isArray(exp && exp.achievements) ? exp.achievements : [];
-        console.log('+++===+++ [renderExperienceItem] achievements_count=%d', achievements.length);
 
         const achievementsHtml = achievements.map((a, i) => {
             const text = (a == null) ? '' : String(a);
-            console.log('+++===+++ [renderExperienceItem] bullet idx=%d chars=%d', i, text.length);
             return `<li>${text}</li>`;
         }).join('');
 
@@ -657,7 +594,6 @@ class App {
     </div>
   `;
 
-        console.log('+++===+++ [renderExperienceItem] done idx=%d', idx);
         return html;
     }
 
@@ -671,7 +607,6 @@ class App {
 
     renderWorkExperienceSection(experiences) {
         const list = Array.isArray(experiences) ? experiences : [];
-        console.log('+++===+++ [renderWorkExperienceSection] items=%d', list.length);
 
         const itemsHtml = list.map((exp, idx) => this.renderExperienceItem(exp, idx)).join('');
 
@@ -682,7 +617,6 @@ class App {
     </div>
   `;
 
-        console.log('+++===+++ [renderWorkExperienceSection] done');
         return section;
     }
 
@@ -694,12 +628,9 @@ class App {
      * @returns {string}
      */
     generateResumeHTML(data) {
-        console.log('+++===+++ [generateResumeHTML] Start');
-
         let html = '';
 
         // ===== HERO HEADER =====
-        console.log('+++===+++ [generateResumeHTML] Hero');
         const p = data.personal_info || {};
         const photoUrl = (p.photo_url || '').trim();
         const summaryHtml = (typeof p.summary_html === 'string' && p.summary_html.trim().length)
@@ -718,7 +649,6 @@ class App {
   `;
 
         // ===== CONTACTS & SOCIALS (NEW, before SKILLS) =====
-        console.log('+++===+++ [generateResumeHTML] Contacts & Socials');
         const contact = p.contact || {};
         const socials = p.social_links || {};
 
@@ -826,7 +756,6 @@ class App {
   `;
 
         // ===== SKILLS (pills) =====
-        console.log('+++===+++ [generateResumeHTML] SKILLS');
         const profSkills = (data.skills?.professional || []).map(s => `<li>${s}</li>`).join('');
         html += `
     <div class="resume-section">
@@ -836,7 +765,6 @@ class App {
   `;
 
         // ===== TECHNICAL SKILLS (2 columns, label: value) =====
-        console.log('+++===+++ [generateResumeHTML] TECHNICAL SKILLS (2-col)');
         const t = data.skills?.technical || {};
         const langList = [...(t.languages?.primary || []), ...(t.languages?.additional || [])];
 
@@ -855,7 +783,6 @@ class App {
 
         const renderTechRow = (pair, idx, side) => {
             const arr = Array.isArray(pair.items) ? pair.items : [];
-            console.log(`+++===+++ [generateResumeHTML] TechRow(${side})[${idx}] ${pair.label} count=${arr.length}`);
             if (!arr.length) return '';
             const value = arr.join(', ');
             return `
@@ -878,32 +805,26 @@ class App {
   `;
 
         // ===== WORK EXPERIENCE =====
-        console.log('+++===+++ [generateResumeHTML] WORK EXPERIENCE');
         const experiences = Array.isArray(data.work_experience) ? data.work_experience : [];
         // Uses helper provided earlier; ask if you need this inlined.
         html += this.renderWorkExperienceSection(experiences);
 
         // ===== EDUCATION =====
-        console.log('+++===+++ [generateResumeHTML] EDUCATION');
 
         // ===== EDUCATION =====
-        console.log('+++===+++ [generateResumeHTML] EDUCATION');
         const education = Array.isArray(data.education) ? data.education : [];
         html += this.renderEducationSection(education);
 
 // ===== CERTIFICATES =====
-        console.log('+++===+++ [generateResumeHTML] CERTIFICATES');
         const certs = Array.isArray(data.certificates) ? data.certificates : [];
         html += this.renderCertificatesSection(certs);
 
 
 // ===== LANGUAGES =====
-        console.log('+++===+++ [generateResumeHTML] LANGUAGES');
         const languages = Array.isArray(data.languages) ? data.languages : [];
         html += this.renderLanguagesSectionDots(languages);
 
 
-        console.log('+++===+++ [generateResumeHTML] Finished');
         return html;
     }
 
@@ -912,8 +833,6 @@ class App {
      * Load blog content using blog renderer atom
      */
     async loadBlogContent() {
-        console.log('+++===+++ Loading blog content');
-
         const blogContentContainer = document.getElementById('blog-content');
         if (!blogContentContainer) return;
 
@@ -932,11 +851,8 @@ class App {
             }
 
             blogContentContainer.innerHTML = linksResult.htmlLinks;
-            console.log('+++===+++ Blog content rendered successfully');
 
         } catch (error) {
-            console.error('+++===+++ Error loading blog content:', error);
-
             // Fallback content
             const fallbackHtml = `
                 <div class="articles-list">
@@ -951,7 +867,7 @@ class App {
                             </div>
                         </div>
                         <p class="article-description">
-                            Welcome to my technical blog where I share insights about enterprise architecture, 
+                            Welcome to my technical blog where I share insights about enterprise architecture,
                             system design, and modern development practices.
                         </p>
                     </div>
@@ -972,18 +888,14 @@ class App {
      * REPLACE the navigateToSection() method in main.js with this improved version:
      */
     navigateToSection(sectionId) {
-        console.log(`+++===+++ Navigating to section: ${sectionId}`);
-
         // Validate section exists
         const targetSection = document.getElementById(sectionId);
         if (!targetSection) {
-            console.error(`+++===+++ Section ${sectionId} not found`);
             return;
         }
 
         // Prevent navigation to same section
         if (sectionId === this.currentSection) {
-            console.log(`+++===+++ Already on section: ${sectionId}`);
             return;
         }
 
@@ -999,16 +911,12 @@ class App {
 
         // Update current section
         this.currentSection = sectionId;
-
-        console.log(`+++===+++ Navigation completed to: ${sectionId}`);
     }
 
     /**
      * Update active section visibility
      */
     updateActiveSection(sectionId) {
-        console.log(`+++===+++ Updating active section to: ${sectionId}`);
-
         // Hide all sections
         const sections = document.querySelectorAll('.section');
         sections.forEach(section => {
@@ -1026,8 +934,6 @@ class App {
      * Update active navigation link
      */
     updateActiveNavigation(sectionId) {
-        console.log(`+++===+++ Updating active navigation for: ${sectionId}`);
-
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.classList.remove('active');
@@ -1044,8 +950,6 @@ class App {
      * REPLACE handleInitialRoute() method in main.js with this:
      */
     handleInitialRoute() {
-        console.log('+++===+++ Handling initial route');
-
         const hash = window.location.hash.substring(1);
         const sectionId = hash || 'blog'; // Default to blog
 
@@ -1053,19 +957,13 @@ class App {
         this.updateActiveSection(sectionId);
         this.updateActiveNavigation(sectionId);
         this.currentSection = sectionId;
-
-        console.log(`+++===+++ Initial route set to: ${sectionId}`);
     }
 
     handleHashChange() {
-        console.log('+++===+++ Handling hash change');
-
         const hash = window.location.hash.substring(1);
         const sectionId = hash || 'blog'; // Default to blog
 
         if (sectionId !== this.currentSection) {
-            console.log(`+++===+++ Hash change: ${this.currentSection} → ${sectionId}`);
-
             // Force immediate UI updates
             this.updateActiveSection(sectionId);
             this.updateActiveNavigation(sectionId);
@@ -1077,8 +975,6 @@ class App {
      * Generate PDF using HTML-to-PDF approach for perfect website parity
      */
     async generatePDF() {
-        console.log('+++===+++ PDF generation requested with HTML-to-PDF approach');
-
         try {
             // Show loading state on all PDF buttons
             const buttons = document.querySelectorAll('#generate-pdf-btn, #download-pdf-btn, #fab-pdf');
@@ -1090,7 +986,6 @@ class App {
                 }
             });
 
-            console.log('+++===+++ Setting loading state on PDF buttons');
             buttons.forEach(btn => {
                 if (btn.textContent && btn.textContent.trim()) {
                     btn.textContent = 'Generating PDF...';
@@ -1102,8 +997,6 @@ class App {
                 btn.style.opacity = '0.6';
             });
 
-            console.log('+++===+++ Starting HTML-to-PDF generation process');
-
             // Use the generateAndDownload method which handles everything
             const result = await this.atoms.pdfGenerator.generateAndDownload(null, {
                 filename: 'Hasan_Alizada_Resume.pdf',
@@ -1114,8 +1007,6 @@ class App {
             if (!result.success) {
                 throw new Error(`Failed to generate PDF: ${result.error}`);
             }
-
-            console.log('+++===+++ Canvas-to-PDF generation and download completed successfully');
 
             // Show success message briefly
             buttons.forEach(btn => {
@@ -1143,8 +1034,6 @@ class App {
             }, 2000);
 
         } catch (error) {
-            console.error('+++===+++ HTML-to-PDF generation failed:', error.message);
-
             // Reset button states on error
             const buttons = document.querySelectorAll('#generate-pdf-btn, #download-pdf-btn, #fab-pdf');
             buttons.forEach(btn => {
@@ -1188,19 +1077,16 @@ class App {
      * @returns {Promise}
      */
     waitForGlobal(globalName, timeout = 5000) {
-        console.log(`+++===+++ Waiting for global ${globalName} to be available`);
         return new Promise((resolve, reject) => {
             const startTime = Date.now();
 
             const checkGlobal = () => {
                 if (typeof window[globalName] !== 'undefined') {
-                    console.log(`+++===+++ Global ${globalName} is now available`);
                     resolve();
                     return;
                 }
 
                 if (Date.now() - startTime > timeout) {
-                    console.error(`+++===+++ Timeout waiting for global ${globalName}`);
                     reject(new Error(`Timeout waiting for ${globalName} to load`));
                     return;
                 }
@@ -1236,8 +1122,6 @@ class App {
      * Show error message to user
      */
     showError(message) {
-        console.error(`+++===+++ Showing error to user: ${message}`);
-
         const errorContainer = document.createElement('div');
         errorContainer.className = 'error-notification';
         errorContainer.textContent = message;

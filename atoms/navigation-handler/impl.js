@@ -19,7 +19,6 @@ class NavigationHandler {
             debounceDelay: 100
         };
         this.debounceTimer = null;
-        console.log('+++===+++ NavigationHandler initialized');
     }
 
     /**
@@ -30,13 +29,10 @@ class NavigationHandler {
      * @returns {{success: boolean, currentSection: string, error: string|null}}
      */
     routeToSection(sectionId, updateHistory = true, smoothScroll = true) {
-        console.log(`+++===+++ Routing to section: ${sectionId}`);
-
         try {
             // Validate section exists
             const targetSection = document.getElementById(sectionId);
             if (!targetSection && sectionId !== 'resume') {
-                console.warn(`+++===+++ Section ${sectionId} not found, defaulting to resume`);
                 sectionId = 'resume';
             }
 
@@ -63,7 +59,6 @@ class NavigationHandler {
                 this.scrollToSection(sectionId, this.config.scrollOffset, 'smooth');
             }
 
-            console.log(`+++===+++ Successfully routed to section: ${sectionId}`);
             return {
                 success: true,
                 currentSection: sectionId,
@@ -71,7 +66,6 @@ class NavigationHandler {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error routing to section:', error);
             return {
                 success: false,
                 currentSection: this.navigationState.currentSection,
@@ -88,8 +82,6 @@ class NavigationHandler {
      * @returns {{success: boolean, currentUrl: string, error: string|null}}
      */
     updateURL(hash, title = '', replaceState = false) {
-        console.log(`+++===+++ Updating URL to: ${hash}`);
-
         try {
             const cleanHash = hash.startsWith('#') ? hash : `#${hash}`;
             const newUrl = `${window.location.origin}${window.location.pathname}${cleanHash}`;
@@ -113,7 +105,6 @@ class NavigationHandler {
                 }
             }
 
-            console.log('+++===+++ URL updated successfully');
             return {
                 success: true,
                 currentUrl: newUrl,
@@ -121,7 +112,6 @@ class NavigationHandler {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error updating URL:', error);
             return {
                 success: false,
                 currentUrl: window.location.href,
@@ -135,8 +125,6 @@ class NavigationHandler {
      * @returns {{success: boolean, currentHash: string, error: string|null}}
      */
     handleBrowserNavigation() {
-        console.log('+++===+++ Handling browser navigation');
-
         try {
             const hash = window.location.hash.substring(1);
             const sectionId = hash || 'resume'; // Default to resume if no hash
@@ -157,7 +145,6 @@ class NavigationHandler {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error handling browser navigation:', error);
             return {
                 success: false,
                 currentHash: '',
@@ -175,8 +162,6 @@ class NavigationHandler {
      * @returns {{success: boolean, scrollPosition: number, error: string|null}}
      */
     scrollToSection(targetId, offset = 0, behavior = 'smooth', duration = this.config.animationDuration) {
-        console.log(`+++===+++ Scrolling to section: ${targetId}`);
-
         try {
             const targetElement = document.getElementById(targetId);
             if (!targetElement) {
@@ -201,7 +186,6 @@ class NavigationHandler {
 
             this.navigationState.scrollPosition = targetPosition;
 
-            console.log(`+++===+++ Scrolled to section: ${targetId} at position ${targetPosition}`);
             return {
                 success: true,
                 scrollPosition: targetPosition,
@@ -209,7 +193,6 @@ class NavigationHandler {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error scrolling to section:', error);
             return {
                 success: false,
                 scrollPosition: window.pageYOffset,
@@ -255,8 +238,6 @@ class NavigationHandler {
      * @returns {{success: boolean, activeRoute: string, error: string|null}}
      */
     initializeRouting(routes, defaultRoute = 'resume') { // Changed default from 'home' to 'resume'
-        console.log('+++===+++ Initializing routing system');
-
         try {
             // Store routes
             routes.forEach(route => {
@@ -272,7 +253,6 @@ class NavigationHandler {
 
             this.routeToSection(initialRoute, false, false);
 
-            console.log(`+++===+++ Routing system initialized with ${routes.length} routes`);
             return {
                 success: true,
                 activeRoute: initialRoute,
@@ -280,7 +260,6 @@ class NavigationHandler {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error initializing routing:', error);
             return {
                 success: false,
                 activeRoute: defaultRoute,
@@ -293,8 +272,6 @@ class NavigationHandler {
      * Setup event listeners for navigation
      */
     setupEventListeners() {
-        console.log('+++===+++ Setting up navigation event listeners');
-
         // Hash change event
         window.addEventListener('hashchange', () => {
             this.handleBrowserNavigation();
@@ -339,8 +316,6 @@ class NavigationHandler {
      * @returns {{success: boolean, updatedElements: number, error: string|null}}
      */
     updateActiveNavigation(activeSection, navigationSelector = 'nav a[href^="#"], nav a[data-section]') {
-        console.log(`+++===+++ Updating active navigation for: ${activeSection}`);
-
         try {
             const navLinks = document.querySelectorAll(navigationSelector);
             let updatedCount = 0;
@@ -360,7 +335,6 @@ class NavigationHandler {
                 updatedCount++;
             });
 
-            console.log(`+++===+++ Updated ${updatedCount} navigation elements`);
             return {
                 success: true,
                 updatedElements: updatedCount,
@@ -368,7 +342,6 @@ class NavigationHandler {
             };
 
         } catch (error) {
-            console.error('+++===+++ Error updating navigation:', error);
             return {
                 success: false,
                 updatedElements: 0,
@@ -382,8 +355,6 @@ class NavigationHandler {
      * @param {string} activeSection - Active section ID
      */
     updateSectionVisibility(activeSection) {
-        console.log(`+++===+++ Updating section visibility for: ${activeSection}`);
-
         const sections = document.querySelectorAll('.section');
         sections.forEach(section => {
             if (section.id === activeSection) {
@@ -454,7 +425,6 @@ class NavigationHandler {
      */
     updateConfig(newConfig) {
         this.config = {...this.config, ...newConfig};
-        console.log('+++===+++ Navigation configuration updated');
     }
 }
 

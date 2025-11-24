@@ -149,7 +149,6 @@ This pattern is optimized for AI-friendly coding workflows
     let appInitialized = false; // Prevent double initialization
 
     document.addEventListener('DOMContentLoaded', function () {
-        console.log('+++===+++ Application loading started');
 
         // Wait for all scripts to load, then initialize
         const checkAndInitialize = () => {
@@ -160,7 +159,6 @@ This pattern is optimized for AI-friendly coding workflows
             if (typeof App !== 'undefined' && typeof window.App !== 'undefined') {
                 appInitialized = true;
                 window.App.initialize();
-                console.log('+++===+++ Application initialized successfully');
             } else {
                 // Retry after a short delay
                 setTimeout(checkAndInitialize, 100);
