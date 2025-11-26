@@ -114,9 +114,10 @@
     },
     "dependencies": {
         "external_libs": [
-            "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
-            "https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"
-        ]
+            "assets/js/jspdf.min.js",
+            "assets/js/marked.min.js"
+        ],
+        "lib_notes": "All external libraries are vendored locally (not CDN)"
     },
     "build_targets": {
         "main": "index.html",
