@@ -163,7 +163,7 @@ class App {
     }
 
     /**
-     * Initialize application and all atomic modules
+     * +++===+++ 2025-11-26 UTC — Hasan Alizada — Initialize with resume data first (single source of truth)
      */
     async initialize() {
         if (this.isInitialized) {
@@ -171,8 +171,19 @@ class App {
         }
 
         try {
-            // Initialize atomic modules
-            await this.initializeAtoms();
+            // +++===+++ STEP 1: Load resume data FIRST (single source of truth)
+            const resumeResult = await this.loadResumeData();
+            if (!resumeResult.success) {
+                throw new Error('Failed to load resume data: ' + resumeResult.error);
+            }
+            this.resumeData = resumeResult.data;
+
+            // +++===+++ STEP 2: Initialize atomic modules with resume data
+            await this.initializeAtoms(this.resumeData);
+
+            // +++===+++ STEP 3: Update header/footer dynamically from resume data
+            this.updateHeaderFromResumeData(this.resumeData);
+            this.updateFooterFromResumeData(this.resumeData);
 
             // Setup navigation using navigation-handler atom
             this.setupNavigation();
@@ -189,6 +200,9 @@ class App {
             // Render header social links
             await this.renderHeaderSocialLinks();
 
+            // +++===+++ 2025-11-26 UTC — Hasan Alizada — Display enthusiastic console message
+            this.displayConsoleWelcome();
+
             this.isInitialized = true;
 
         } catch (error) {
@@ -198,9 +212,55 @@ class App {
     }
 
     /**
-     * +++===+++ 2025-11-26 UTC — Hasan Alizada — Initialize all atomic modules including previously unused atoms
+     * +++===+++ 2025-11-26 UTC — Hasan Alizada — Load resume data (single source of truth)
      */
-    async initializeAtoms() {
+    async loadResumeData() {
+        try {
+            const response = await fetch('data/resume.json', { cache: 'no-store' });
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            const data = await response.json();
+            return { success: true, data: data, error: null };
+        } catch (error) {
+            return { success: false, data: null, error: error.message };
+        }
+    }
+
+    /**
+     * +++===+++ 2025-11-26 UTC — Hasan Alizada — Update header dynamically
+     */
+    updateHeaderFromResumeData(resumeData) {
+        const pi = resumeData.personal_info || {};
+        const brandName = document.querySelector('.brand-name');
+        if (brandName) brandName.textContent = pi.name || 'Portfolio';
+
+        const brandTitle = document.querySelector('.brand-title');
+        if (brandTitle) {
+            // +++===+++ 2025-11-26 UTC — Hasan Alizada — Fixed: Always show "Technology Principal" in header
+            // The pi.title field contains credentials (AWS®, TOGAF®, etc), not job title
+            // Job title "Technology Principal" is extracted from summary or hardcoded for header display
+            brandTitle.textContent = 'Technology Principal';
+        }
+
+        document.title = pi.name && pi.title ? `${pi.name} - ${pi.title}` : (pi.name || 'Portfolio');
+    }
+
+    /**
+     * +++===+++ 2025-11-26 UTC — Hasan Alizada — Update footer dynamically
+     */
+    updateFooterFromResumeData(resumeData) {
+        const pi = resumeData.personal_info || {};
+        const footerText = document.querySelector('.footer-text p');
+        if (footerText) {
+            footerText.innerHTML = `&copy; ${new Date().getFullYear()} ${pi.name || ''}. All rights reserved.`;
+        }
+    }
+
+    /**
+     * +++===+++ 2025-11-26 UTC — Hasan Alizada — Initialize all atoms with resume data
+     */
+    async initializeAtoms(resumeData) {
         try {
             // Load resume data loader atom
             if (typeof ResumeDataLoader === 'undefined') {
@@ -229,16 +289,17 @@ class App {
                 this.atoms.blogRenderer = new BlogRenderer();
             }
 
-            // +++===+++ 2025-11-26 UTC — Hasan Alizada — Load SEO optimizer atom (previously unused)
+            // +++===+++ Load SEO optimizer atom and initialize with resume data
             if (typeof SEOOptimizer === 'undefined') {
                 await this.loadScript('atoms/seo-optimizer/impl.js');
                 await this.waitForGlobal('SEOOptimizer');
             }
             if (!this.atoms.seoOptimizer) {
                 this.atoms.seoOptimizer = new SEOOptimizer();
+                this.atoms.seoOptimizer.initialize(resumeData);
             }
 
-            // +++===+++ 2025-11-26 UTC — Hasan Alizada — Load UI components atom (previously unused)
+            // +++===+++ Load UI components atom
             if (typeof UIComponents === 'undefined') {
                 await this.loadScript('atoms/ui-components/impl.js');
                 await this.waitForGlobal('UIComponents');
@@ -247,13 +308,14 @@ class App {
                 this.atoms.uiComponents = new UIComponents();
             }
 
-            // +++===+++ 2025-11-26 UTC — Hasan Alizada — Load navigation handler atom (previously unused)
+            // +++===+++ Load navigation handler atom and initialize with resume data
             if (typeof NavigationHandler === 'undefined') {
                 await this.loadScript('atoms/navigation-handler/impl.js');
                 await this.waitForGlobal('NavigationHandler');
             }
             if (!this.atoms.navigationHandler) {
                 this.atoms.navigationHandler = new NavigationHandler();
+                this.atoms.navigationHandler.initialize(resumeData);
             }
 
         } catch (error) {
@@ -1112,6 +1174,15 @@ class App {
             script.onerror = reject;
             document.head.appendChild(script);
         });
+    }
+
+    /**
+     * +++===+++ 2025-11-26 UTC — Hasan Alizada — Display cool console message
+     */
+    displayConsoleWelcome() {
+        console.log(`
+     Thanks for checking the console! - Hasan Alizada :)
+        `);
     }
 
     /**

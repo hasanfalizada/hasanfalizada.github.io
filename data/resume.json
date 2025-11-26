@@ -21,6 +21,24 @@
     },
     "photo_url": "assets/img/profile.jpg"
   },
+  "site_config": {
+    "url": "https://hasanfalizada.github.io",
+    "language": "en",
+    "favicon": "assets/favicon.svg",
+    "theme": "light",
+    "keywords": [
+      "technology principal",
+      "TOGAF",
+      "hasan alizada",
+      "IT architecture",
+      "system design",
+      "enterprise architecture",
+      "AWS",
+      "microservices",
+      "cloud architecture",
+      "digital transformation"
+    ]
+  },
   "skills": {
     "professional": [
       "TOGAF® Framework & ADM",

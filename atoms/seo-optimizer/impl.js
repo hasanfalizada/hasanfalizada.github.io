@@ -2,15 +2,31 @@
 
 class SEOOptimizer {
     constructor() {
+        // +++===+++ 2025-11-26 UTC — Hasan Alizada — Removed hardcoded defaults, will be loaded from resume.json
+        this.defaultConfig = null;
+        this.isInitialized = false;
+    }
+
+    /**
+     * +++===+++ 2025-11-26 UTC — Hasan Alizada — Initialize with resume data (single source of truth)
+     * @param {object} resumeData - Data from resume.json
+     */
+    initialize(resumeData) {
+        const pi = resumeData.personal_info || {};
+        const sc = resumeData.site_config || {};
+
         this.defaultConfig = {
-            siteName: 'Hasan Alizada Portfolio',
-            siteUrl: 'https://hasanfalizada.github.io',
-            siteDescription: 'Technology Principal with extensive experience in scalable and fault-tolerant architectures',
-            author: 'Hasan Alizada',
-            keywords: ['technology principal', 'TOGAF', 'hasan alizada', 'IT architecture', 'system design'],
-            language: 'en',
-            favicon: 'assets/favicon.svg'
+            siteName: `${pi.name || 'Portfolio'} Portfolio`,
+            siteUrl: sc.url || 'https://localhost',
+            siteDescription: pi.summary || '',
+            author: pi.name || '',
+            keywords: sc.keywords || [],
+            language: sc.language || 'en',
+            favicon: sc.favicon || 'assets/favicon.svg'
         };
+
+        this.isInitialized = true;
+        return this.defaultConfig;
     }
 
     /**
@@ -103,7 +119,7 @@ class SEOOptimizer {
     }
 
     /**
-     * Generate page title based on type and data
+     * +++===+++ 2025-11-26 UTC — Hasan Alizada — Generate page title from resume data (no hardcoding)
      * @param {string} pageType - Page type
      * @param {object} pageData - Page data
      * @param {object} config - Site config
@@ -112,13 +128,15 @@ class SEOOptimizer {
     generatePageTitle(pageType, pageData, config) {
         switch (pageType) {
             case 'resume':
-                return `${config.author} - Technology Principal | AWS® SA, TOGAF®, PMP®, ITIL®, OCP®`;
+                // Format: "Resume - Name" (similar to blog)
+                return `Resume - ${config.author}`;
             case 'blog':
-                return `Technical Blog - ${config.author}`;
+                return `Blog - ${config.author}`;
             case 'article':
                 return pageData.title ? `${pageData.title} - ${config.author}` : `Article - ${config.author}`;
             default:
-                return `${config.author} - Technology Principal | AWS® SA, TOGAF®, PMP®, ITIL®, OCP®`; // Default to resume
+                // Default to resume format
+                return `Resume - ${config.author}`;
         }
     }
 
@@ -134,7 +152,7 @@ class SEOOptimizer {
             case 'resume':
                 return `Professional resume of ${config.author}, Technology Principal with expertise in TOGAF, system design, and digital transformation.`;
             case 'blog':
-                return `Technical blog by ${config.author} covering enterprise architecture, system design, and modern development practices.`;
+                return `Blog by ${config.author} covering enterprise architecture, system design, and modern development practices.`;
             case 'article':
                 return pageData.description || pageData.summary || config.siteDescription;
             default:
@@ -156,7 +174,7 @@ class SEOOptimizer {
             case 'resume':
                 return [...baseKeywords, 'resume', 'CV', 'professional experience', 'skills'];
             case 'blog':
-                return [...baseKeywords, 'technical blog', 'articles', 'insights'];
+                return [...baseKeywords, 'blog', 'articles', 'insights'];
             case 'article':
                 const articleKeywords = pageData.tags || [];
                 return [...baseKeywords, ...articleKeywords, 'technical article'];
@@ -236,35 +254,26 @@ class SEOOptimizer {
      * @param {string} context - Schema context
      * @returns {object}
      */
+    /**
+     * +++===+++ 2025-11-26 UTC — Hasan Alizada — Removed hardcoded values, use data or defaults from config
+     */
     createPersonSchema(data, context) {
         return {
             '@context': context,
             '@type': 'Person',
-            'name': data.name || 'Hasan Alizada',
-            'jobTitle': data.jobTitle || 'Technology Principal',
-            'description': data.description || this.defaultConfig.siteDescription,
-            'url': data.url || this.defaultConfig.siteUrl,
-            'email': data.email || 'ha@hasanalizada.net',
-            'telephone': data.telephone || '+994702011302',
-            'address': {
+            'name': data.name || (this.defaultConfig ? this.defaultConfig.author : ''),
+            'jobTitle': data.jobTitle || '',
+            'description': data.description || (this.defaultConfig ? this.defaultConfig.siteDescription : ''),
+            'url': data.url || (this.defaultConfig ? this.defaultConfig.siteUrl : ''),
+            'email': data.email || '',
+            'telephone': data.telephone || '',
+            'address': data.address || {
                 '@type': 'PostalAddress',
-                'addressLocality': data.addressLocality || 'Baku',
-                'addressCountry': data.addressCountry || 'Azerbaijan'
+                'addressLocality': data.addressLocality || '',
+                'addressCountry': data.addressCountry || ''
             },
-            'sameAs': data.sameAs || [
-                'https://linkedin.com/in/hasanalizada',
-                'https://twitter.com/hasanfalizada',
-                'https://github.com/hasanfalizada'
-            ],
-            'knowsAbout': data.knowsAbout || [
-                'Enterprise Architecture',
-                'TOGAF',
-                'System Design',
-                'Java Development',
-                'Spring Boot',
-                'Microservices',
-                'Cloud Architecture'
-            ]
+            'sameAs': data.sameAs || [],
+            'knowsAbout': data.knowsAbout || []
         };
     }
 
@@ -282,7 +291,7 @@ class SEOOptimizer {
             'description': data.description,
             'author': {
                 '@type': 'Person',
-                'name': data.author || 'Hasan Alizada'
+                'name': data.author || (this.defaultConfig ? this.defaultConfig.author : '')
             },
             'datePublished': data.datePublished || data.date,
             'dateModified': data.dateModified || data.date,
