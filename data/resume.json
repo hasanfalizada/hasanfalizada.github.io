@@ -1,8 +1,12 @@
 {
   "personal_info": {
     "name": "Hasan Alizada",
-    "title": "AWS® SA, TOGAF® 10, PMP®, ITIL®, OCP®",
+    "title": {
+      "text": "AWS® SA, TOGAF® 10, PMP®, ITIL®, OCP®",
+      "to_render": false
+    },
     "headline": "Enterprise & Solution Architect",
+    "positioning": "18 years in banking, payments and national-scale IT — from card processing to enterprise architecture",
     "summary": {
       "text": "Enterprise and solution architect with extensive experience in scalable and fault–tolerant architectures. Passionate about optimizing enterprise IT landscapes, strengthening system resilience, and driving digital transformation to align technology with business goals.",
       "to_render": false
@@ -387,7 +391,8 @@
   },
   "work_experience": [
     {
-      "position": "Sr. Client Consulting Manager, Visa Consulting & Analytics (VCA) Implementation Services (VIS) CEMEA",
+      "position": "Senior Client Consulting Manager, Visa Consulting & Analytics",
+      "position_full": "Sr. Client Consulting Manager, Visa Consulting & Analytics (VCA) Implementation Services (VIS) CEMEA",
       "company": "Visa",
       "location": {
         "text": "Baku, Azerbaijan",
@@ -396,6 +401,15 @@
       "period": "12/2025 – Present",
       "company_description": "",
       "achievements": [
+        "Led implementation projects for banks in CEMEA end-to-end, from concept and architecture to delivery, building solutions from scratch with a cross-functional team",
+        {
+          "text": "Lead AI-related implementation projects for banks in CEMEA, building solutions from scratch with a cross-functional team",
+          "to_render": false
+        },
+        {
+          "text": "Lead implementation of digital banking and payment transformations for banks in CEMEA.",
+          "to_render": false
+        },
         {
           "text": "Lead regional delivery of complex, multi-stakeholder technical transformations across CEMEA, driving high-quality execution and measurable business outcomes.",
           "to_render": false
@@ -431,9 +445,22 @@
         "to_render": false
       },
       "period": "09/2023 – 12/2025",
-      "company_description": "National rail transport operator in Azerbaijan",
+      "company_description": {
+        "text": "National rail transport operator in Azerbaijan",
+        "to_render": false
+      },
       "company_logo": "assets/img/logos/ady.png",
       "achievements": [
+        "Took part in implementing the company's digital transformation strategy; multi-million IT programs",
+        {
+          "text": "Architecture for the implementation of the company's digital transformation strategy; multi-million IT programs.",
+          "to_render": false
+        },
+        "Re-architecture of the existing nationwide passenger mobile app",
+        {
+          "text": "Architecture of the new nationwide passenger mobile app.",
+          "to_render": false
+        },
         {
           "text": "Led cost-saving projects resulting in a 30% reduction in operational expenses through process optimization and technology implementation.",
           "to_render": false
@@ -468,9 +495,34 @@
         "to_render": false
       },
       "period": "04/2022 – 09/2023",
-      "company_description": "Largest private bank in Azerbaijan",
+      "company_description": {
+        "text": "Largest private bank in Azerbaijan",
+        "to_render": false
+      },
       "company_logo": "assets/img/logos/kb.png",
       "achievements": [
+        "Led a team of 12 backend engineers",
+        {
+          "text": "Led a team of 12 backend engineers.",
+          "to_render": false
+        },
+        {
+          "text": "Architecture, backend development and delivery of BirBank modules (Cashback, Statements) and TaxRefund (ƏDVGeriAl)",
+          "links": [
+            {
+              "text": "BirBank",
+              "url": "https://birbank.az/"
+            },
+            {
+              "text": "TaxRefund (ƏDVGeriAl)",
+              "url": "https://edvgerial.kapitalbank.az/"
+            }
+          ]
+        },
+        {
+          "text": "Architecture, backend development and delivery of BirBank, the bank's flagship mobile app, and TaxRefund (ƏDVGeriAl).",
+          "to_render": false
+        },
         {
           "text": "Implemented Apache Kafka for real-time data processing, increasing throughput and reducing latency.",
           "to_render": false
@@ -541,9 +593,30 @@
         "to_render": false
       },
       "period": "06/2016 – 04/2022",
-      "company_description": "Largest private bank in Azerbaijan",
+      "company_description": {
+        "text": "Largest private bank in Azerbaijan",
+        "to_render": false
+      },
       "company_logo": "assets/img/logos/kb.png",
       "achievements": [
+        "Led a team of 10 developers for card processing (Compass Plus TranzWare CMS / TWO)",
+        {
+          "text": "Led a team of 10 developers for card processing (Compass Plus TranzWare CMS / TWO).",
+          "to_render": false
+        },
+        {
+          "text": "Tech lead of MüştəriBank (now BirBank Business)",
+          "links": [
+            {
+              "text": "MüştəriBank (now BirBank Business)",
+              "url": "https://birbank.business/"
+            }
+          ]
+        },
+        {
+          "text": "Delivered MüştəriBank (now BirBank Business).",
+          "to_render": false
+        },
         {
           "text": "Led development of Compass Plus CMS and TWO platforms, improving card management capabilities.",
           "to_render": false
@@ -574,7 +647,10 @@
         "to_render": false
       },
       "period": "04/2021 – 04/2022",
-      "company_description": "Largest private bank in Azerbaijan",
+      "company_description": {
+        "text": "Largest private bank in Azerbaijan",
+        "to_render": false
+      },
       "company_logo": "assets/img/logos/kb.png",
       "achievements": [
         {
@@ -608,7 +684,10 @@
         "to_render": false
       },
       "period": "03/2018 – 04/2021",
-      "company_description": "Largest private bank in Azerbaijan",
+      "company_description": {
+        "text": "Largest private bank in Azerbaijan",
+        "to_render": false
+      },
       "company_logo": "assets/img/logos/kb.png",
       "achievements": [
         {
@@ -658,7 +737,10 @@
         "to_render": false
       },
       "period": "07/2017 – 03/2018",
-      "company_description": "Largest private bank in Azerbaijan",
+      "company_description": {
+        "text": "Largest private bank in Azerbaijan",
+        "to_render": false
+      },
       "company_logo": "assets/img/logos/kb.png",
       "achievements": [],
       "to_render": false
@@ -671,7 +753,10 @@
         "to_render": false
       },
       "period": "06/2016 – 07/2017",
-      "company_description": "Largest private bank in Azerbaijan",
+      "company_description": {
+        "text": "Largest private bank in Azerbaijan",
+        "to_render": false
+      },
       "company_logo": "assets/img/logos/kb.png",
       "achievements": [],
       "to_render": false
@@ -918,7 +1003,8 @@
       "period": "02/2022",
       "authority": "Oracle",
       "url": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=D5809C541494A32D1CD23C6E0B032CAEEDC2F52A738F4E38B9CD950F9757464B",
-      "license_number": "244010733OCICAP2021OPN"
+      "license_number": "244010733OCICAP2021OPN",
+      "to_render": false
     },
     {
       "name": "Oracle Cloud Infrastructure 2021 Certified Architect Associate",
@@ -939,13 +1025,15 @@
       "name": "Oracle Database PL/SQL Developer Certified Professional",
       "period": "07/2018",
       "authority": "Oracle",
-      "url": "https://www.youracclaim.com/badges/707fb3ca-a5d4-435b-9142-30ad6e611dbf/linked_in_profile"
+      "url": "https://www.youracclaim.com/badges/707fb3ca-a5d4-435b-9142-30ad6e611dbf/linked_in_profile",
+      "to_render": false
     },
     {
       "name": "Oracle Database SQL Certified Expert",
       "period": "04/2017",
       "authority": "Oracle",
-      "url": "https://www.credly.com/earner/earned/badge/2be25256-a726-47c0-9f5b-d44ac688b90f"
+      "url": "https://www.credly.com/earner/earned/badge/2be25256-a726-47c0-9f5b-d44ac688b90f",
+      "to_render": false
     },
     {
       "name": "Oracle Certified Associate, Java SE 8 Programmer",
@@ -1132,21 +1220,24 @@
       "description": {
         "text": "Top 1 free finance on the App Store and Google Play.",
         "to_render": false
-      }
+      },
+      "to_render": false
     },
     {
       "name": "MüştəriBank (now BirBank Business)",
       "period": "01/2018 – 03/2020",
-      "url": "",
+      "url": "https://birbank.business/",
       "description": "",
-      "description_az": "BirBank Business - Azərbaycanın ən iri rəqəmsal banklarından biri olan BirBank tərəfindən təqdim olunan bir korporativ mobil bankçılıq xidmətidir. Kiçik və orta müəssisələrə öz maliyyə əməliyyatlarını rahat və təhlükəsiz şəkildə idarə etmək imkanı yaradır. İstifadəçilər BirBank Business vasitəsilə ödənişləri həyata keçirə, pul köçürmələri edə, hesabatları izləyə və digər bank xidmətlərindən yararlana bilərlər."
+      "description_az": "BirBank Business - Azərbaycanın ən iri rəqəmsal banklarından biri olan BirBank tərəfindən təqdim olunan bir korporativ mobil bankçılıq xidmətidir. Kiçik və orta müəssisələrə öz maliyyə əməliyyatlarını rahat və təhlükəsiz şəkildə idarə etmək imkanı yaradır. İstifadəçilər BirBank Business vasitəsilə ödənişləri həyata keçirə, pul köçürmələri edə, hesabatları izləyə və digər bank xidmətlərindən yararlana bilərlər.",
+      "to_render": false
     },
     {
       "name": "TaxRefund (ƏDVGeriAl)",
       "period": "12/2021 – Present",
       "url": "https://edvgerial.kapitalbank.az/",
       "description": "",
-      "description_az": "Fiziki şəxs olan istehlakçılar tərəfindən Azərbaycanda pərakəndə ticarət və ya ictimai iaşə fəaliyyəti göstərən şəxslərdən alınmış mallara (neft və qaz məhsulları istisna olmaqla) görə ödənilmiş ƏDV-nin qaytarılmalı olan hissəsi nağdsız ödənişlər üzrə 15%, nağd ödənişlər üzrə isə 10% həcmində müəyyən edilmişdir."
+      "description_az": "Fiziki şəxs olan istehlakçılar tərəfindən Azərbaycanda pərakəndə ticarət və ya ictimai iaşə fəaliyyəti göstərən şəxslərdən alınmış mallara (neft və qaz məhsulları istisna olmaqla) görə ödənilmiş ƏDV-nin qaytarılmalı olan hissəsi nağdsız ödənişlər üzrə 15%, nağd ödənişlər üzrə isə 10% həcmində müəyyən edilmişdir.",
+      "to_render": false
     },
     {
       "name": "UmicoBank",
@@ -1211,7 +1302,6 @@
   ],
   "metadata": {
     "last_updated": "2026-10-09",
-    "version": "1.6.2",
-    "notes": "+++===+++ 2025-08-27 16:20 Asia/Baku — Hasan Alizada — Filled work_experience, education, certificates, languages; preserved existing header/socials/skills | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.headline (job headline for header/SEO/PDF; TEMP value, to be finalized from LinkedIn export) | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Merged full LinkedIn export; added to_render visibility flags (missing = true); Visa added; ADY period closed | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — headline = Enterprise & Solution Architect; Visa logo; AWS SA Associate | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Replaced \"Technology principal\" with \"Enterprise and solution architect\"; AWS SA period | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Phone removed; full LinkedIn data export merged: certificates (url/authority/license), projects, memberships, courses, skills, publications | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added skills.technical_labels (display names of technical skill groups, shared by site and PDF) | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Simplification: hidden (not deleted) locations, XING/Facebook/Instagram/YouTube, SKILLS block, Visa bullets, generic bullets, BirBank description, courses, memberships, German, 4 minor certificates; \"– Present\" dropped from certificate periods | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — summary and summary_html hidden (kept in source) | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — skills.technical hidden; all achievements hidden (kept in source)"
+    "version": "1.8.2"
   }
 }

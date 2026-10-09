@@ -238,6 +238,10 @@
                     },
                     "social_links": {
                         "$ref": "#/schemas/SocialLinks"
+                    },
+                    "positioning": {
+                        "type": "string",
+                        "description": "One-line factual positioning statement shown under the headline (PDF)"
                     }
                 },
                 "required": [
@@ -398,8 +402,50 @@
                     "achievements": {
                         "type": "array",
                         "items": {
-                            "type": "string"
-                        }
+                            "oneOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "text": {
+                                            "type": "string"
+                                        },
+                                        "to_render": {
+                                            "type": "boolean"
+                                        },
+                                        "links": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "text": {
+                                                        "type": "string",
+                                                        "description": "Exact substring of text to turn into a link"
+                                                    },
+                                                    "url": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "text",
+                                                    "url"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "text"
+                                    ]
+                                }
+                            ]
+                        },
+                        "description": "Bullet = string, or {text, to_render?, links?}. links[].text parts are rendered as hyperlinks (site and PDF)"
+                    },
+                    "position_full": {
+                        "type": "string",
+                        "description": "Full official title, stored only; `position` holds the displayed (short) title"
                     }
                 },
                 "required": [
@@ -583,6 +629,6 @@
             "browser_compatibility": "ES6+",
             "no_external_apis": true
         },
-        "notes": "+++===+++ 2025-08-26 15:30 UTC — Hasan Alizada — Contract for resume data loader atom with complete JSON schema validation | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.headline; sourceUrl constructor param; single source of truth constraint | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added to_render visibility flag and filterRenderable | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Phone optional (removed from data); added Project, Membership, Course, Publication schemas; certificate url/authority/license_number | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added skills.technical_labels | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — to_render now applies to object fields too (e.g. contact.location, social_links.*)"
+        "notes": "+++===+++ 2025-08-26 15:30 UTC — Hasan Alizada — Contract for resume data loader atom with complete JSON schema validation | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.headline; sourceUrl constructor param; single source of truth constraint | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added to_render visibility flag and filterRenderable | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Phone optional (removed from data); added Project, Membership, Course, Publication schemas; certificate url/authority/license_number | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added skills.technical_labels | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — to_render now applies to object fields too (e.g. contact.location, social_links.*) | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.positioning and work_experience[].position_full | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — achievements items may carry links[{text,url}]"
     }
 }

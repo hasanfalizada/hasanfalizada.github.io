@@ -37,7 +37,7 @@
             ],
             "impl_ref": "atoms/pdf-generator/impl.js",
             "tests_ref": "atoms/pdf-generator/tests.js",
-            "hash": "b3:002d",
+            "hash": "b3:002j",
             "notes": "Uses local pdfmake 0.2.10, works entirely in browser; receives ResumeDataLoader via constructor"
         },
         "blog-renderer": {

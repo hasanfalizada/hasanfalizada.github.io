@@ -150,6 +150,8 @@ class PDFGenerator {
             // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Two lines under the name: headline, then credentials (same as site hero)
             title: clean(pi.headline || ''),
             credentials: clean(pi.title || ''),           // e.g., "AWS® SA, TOGAF® 10, PMP® ..."
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — One-line positioning statement under the headline
+            positioning: clean(pi.positioning || ''),
         };
 
         // ---- CONTACT + SOCIALS ----
@@ -231,8 +233,13 @@ class PDFGenerator {
             location: clean(e.location || ''),
             period: clean(e.period || ''), // already "MM/YYYY – MM/YYYY" in your data
             description: clean(e.company_description || ''),
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Bullet = string or {text, links:[{text, url}]} → normalized {text, links}
             bullets: Array.isArray(e.achievements)
-                ? e.achievements.map(clean).filter(Boolean)
+                ? e.achievements
+                    .map(a => (a && typeof a === 'object')
+                        ? {text: clean(a.text), links: Array.isArray(a.links) ? a.links.filter(l => l && l.text && l.url) : []}
+                        : {text: clean(a), links: []})
+                    .filter(b => b.text)
                 : []
         })).filter(j => j.company || j.position || j.description || (j.bullets && j.bullets.length)) : [];
 
@@ -301,7 +308,8 @@ class PDFGenerator {
             title: {fontSize: 12, color: '#000000', margin: [0, 2, 0, 2]},
             creds: {fontSize: 10, color: '#000000', italics: true, margin: [0, 0, 0, 6]},
 
-            h2: {fontSize: 11, bold: true, color: '#000000', margin: [0, compact ? 8 : 12, 0, 6], lineHeight: 1.1},
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Section title top margin 12 → 8 (one-page resume)
+            h2: {fontSize: 11, bold: true, color: '#000000', margin: [0, 8, 0, 6], lineHeight: 1.1},
 
             meta: {fontSize: 9, color: '#000000'},
             small: {fontSize: compact ? 9 : 10, color: '#000000'},
@@ -342,6 +350,24 @@ class PDFGenerator {
         };
 
         const joinLine = (...parts) => parts.filter(Boolean).join(' ');
+
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Split bullet text into plain spans and link spans (by b.links[].text)
+        const bulletSpans = (b) => {
+            const spans = [];
+            let rest = b.text;
+            (b.links || []).forEach(l => {
+                const i = rest.indexOf(l.text);
+                if (i < 0) {
+                    console.debug('[PDFGenerator] bullet link text not found:', l.text);
+                    return;
+                }
+                if (i > 0) spans.push({text: rest.slice(0, i)});
+                spans.push({text: l.text, link: l.url, color: '#0B57D0'});
+                rest = rest.slice(i + l.text.length);
+            });
+            if (rest) spans.push({text: rest});
+            return spans;
+        };
 
         const unbreakableCard = (stack) => ({
             table: {widths: ['*'], body: [[{stack}]]},
@@ -400,6 +426,9 @@ class PDFGenerator {
         const content = [{text: fullName, style: 'name'}];
         if (m.profile.title) content.push({text: m.profile.title, style: 'title'});
         if (m.profile.credentials) content.push({text: m.profile.credentials, style: 'creds'});
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — positioning line (personal_info.positioning)
+        if (m.profile.positioning) content.push({text: m.profile.positioning, style: 'small', margin: [0, 0, 0, 6]});
+        console.debug('[PDFGenerator] header lines', {title: m.profile.title, credentials: m.profile.credentials, positioning: m.profile.positioning});
 
         const labelFor = (s) => {
             const t = (s || '').toLowerCase();
@@ -573,7 +602,8 @@ class PDFGenerator {
             content.push({text: 'Experience', style: 'h2'});
 
             m.experience.forEach(job => {
-                const headerLine = joinLine(job.company || '', job.position ? '— ' + job.position : '');
+                // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Position first, then company
+                const headerLine = joinLine(job.position || '', job.company ? '— ' + job.company : '');
                 const metaTop = joinLine(job.location || '');
                 const metaBelow = joinLine(job.period || '');
 
@@ -584,7 +614,8 @@ class PDFGenerator {
 
                 if (job.description) block.push({text: job.description, style: 'small', margin: [0, 2, 0, 2]});
                 if (job.bullets && job.bullets.length) {
-                    block.push({ul: job.bullets.map(b => ({text: b, style: 'bullet'}))});
+                    // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Parts of a bullet listed in b.links become hyperlinks
+                    block.push({ul: job.bullets.map(b => ({text: bulletSpans(b), style: 'bullet'}))});
                 }
 
                 content.push(unbreakableCard(block)); // prevents splitting across pages
@@ -612,7 +643,8 @@ class PDFGenerator {
                 if (ed.degree) parts.push('— ' + ed.degree);
                 const main = parts.join(' ');
                 const line = joinLine(main, ed.year ? `(${ed.year})` : '');
-                content.push(unbreakableCard([{text: line, style: 'small'}]));
+                // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Plain compact line instead of card (one-line items; fits resume on one page)
+                content.push({text: line, style: 'small', margin: [0, 1, 0, 1]});
             });
         }
 
@@ -627,7 +659,8 @@ class PDFGenerator {
                 const main = parts.join(' ');
                 const line = [c.url ? linkItem(main, c.url) : {text: main, style: 'small'}];
                 if (c.year) line.push({text: ` (${c.year})`, style: 'small'});
-                content.push(unbreakableCard([{text: line, style: 'small'}]));
+                // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Plain compact line instead of card (one-line items; fits resume on one page)
+                content.push({text: line, style: 'small', margin: [0, 1, 0, 1]});
             });
         }
 
@@ -648,36 +681,36 @@ class PDFGenerator {
             });
         }
 
-        // ---------- languages (dotted leaders; two columns if long) ----------
+        // ---------- languages ----------
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — One line, comma-separated: "Azerbaijani (Native), Russian (Native), ..."
+        // (previous dotted-leader layout via langRow is kept in code but no longer used here)
         if (m.languages && m.languages.length) {
             content.push({text: 'Languages', style: 'h2'});
-            const labels = m.languages.map(l => ({name: l.name, level: l.level}));
-            if (labels.length <= 8) {
-                labels.forEach(l => content.push(langRow(l.name, l.level)));
-            } else {
-                const half = Math.ceil(labels.length / 2);
-                const left = labels.slice(0, half).map(l => langRow(l.name, l.level));
-                const right = labels.slice(half).map(l => langRow(l.name, l.level));
-                content.push({columns: [{width: '*', stack: left}, {width: '*', stack: right}], columnGap: 16});
-            }
+            const line = m.languages
+                .map(l => l.level ? `${l.name} (${l.level})` : l.name)
+                .join(', ');
+            console.debug('[PDFGenerator] languages line =', line);
+            content.push({text: line, style: 'small'});
         }
 
         // ---------- return ----------
         return {
             pageSize: 'A4',
-            pageMargins: compact ? [30, 34, 30, 40] : [36, 44, 36, 48],
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Equal 36pt margins (bottom 48 was reserved for page numbers, now off)
+            pageMargins: compact ? [30, 34, 30, 40] : [36, 36, 36, 36],
             // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Ligatures off: "fi"/"ffi" glyphs broke text extraction (ATS, copy-paste)
             defaultStyle: {fontSize: compact ? 9 : 10, lineHeight: 1.35, color: '#000000', fontFeatures: {liga: false, clig: false}},
             styles,
             content,
-            footer: (current, total) => ({
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Page numbers off (opts.pageNumbers === true brings them back)
+            footer: opts.pageNumbers === true ? (current, total) => ({
                 columns: [{text: '', width: '*'}, {
                     text: `${current} / ${total}`,
                     style: 'meta',
                     alignment: 'right',
                     margin: [0, 0, 12, 0]
                 }]
-            })
+            }) : undefined
         };
     }
 

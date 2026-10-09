@@ -760,7 +760,18 @@ class App {
 
         const achievements = Array.isArray(exp && exp.achievements) ? exp.achievements : [];
 
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Bullet = string or {text, links:[{text, url}]}; link parts open in a new tab
         const achievementsHtml = achievements.map((a, i) => {
+            if (a && typeof a === 'object') {
+                let html = String(a.text || '');
+                (Array.isArray(a.links) ? a.links : []).forEach(l => {
+                    if (l && l.text && l.url && html.includes(l.text)) {
+                        html = html.replace(l.text, `<a href="${l.url}" target="_blank" rel="noopener">${l.text}</a>`);
+                    }
+                });
+                console.debug('[App] renderExperienceItem bullet with links', idx, i, a.links);
+                return `<li>${html}</li>`;
+            }
             const text = (a == null) ? '' : String(a);
             return `<li>${text}</li>`;
         }).join('');
@@ -833,6 +844,7 @@ class App {
         <h1 class="resume-header__name">${p.name || ''}</h1>
         ${p.headline ? `<div class="resume-header__title">${p.headline}</div>` : ''}
         ${p.title ? `<div class="resume-header__title">${p.title}</div>` : ''}
+        ${p.positioning ? `<div class="resume-header__summary">${p.positioning}</div>` : ''}
         ${summaryHtml ? `<div class="resume-header__summary">${summaryHtml}</div>` : ''}
       </div>
     </div>
