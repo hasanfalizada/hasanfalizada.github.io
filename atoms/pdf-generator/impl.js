@@ -302,26 +302,50 @@ class PDFGenerator {
     _buildDocDefinition(m, opts = {}) {
         const compact = !!opts.compact;
 
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Design "accent" (default): one navy accent, uppercase section titles
+        // with a hairline, position bold + dates right-aligned, company in grey. opts.design = 'classic' restores the previous look.
+        // Only presentation changes — text content is identical.
+        const ACCENT_DESIGN = opts.design !== 'classic';
+        const ACCENT = '#1F3A5F';
+        const GREY = '#5F6B7A';
+        const LINK = ACCENT_DESIGN ? ACCENT : '#0B57D0';
+        const CONTENT_WIDTH = 595.28 - 36 * 2; // A4 width minus left/right margins
+        console.debug('[PDFGenerator] design =', ACCENT_DESIGN ? 'accent' : 'classic');
+
         // ---------- styles (black everywhere except hyperlinks) ----------
         const styles = {
-            name: {fontSize: 22, bold: true, lineHeight: 1.05, color: '#000000'},
-            title: {fontSize: 12, color: '#000000', margin: [0, 2, 0, 2]},
+            name: ACCENT_DESIGN
+                ? {fontSize: 24, bold: true, lineHeight: 1.05, color: ACCENT}
+                : {fontSize: 22, bold: true, lineHeight: 1.05, color: '#000000'},
+            title: {fontSize: 12, color: ACCENT_DESIGN ? '#222222' : '#000000', margin: [0, 2, 0, 2]},
             creds: {fontSize: 10, color: '#000000', italics: true, margin: [0, 0, 0, 6]},
 
             // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Section title top margin 12 → 8 (one-page resume)
-            h2: {fontSize: 11, bold: true, color: '#000000', margin: [0, 8, 0, 6], lineHeight: 1.1},
+            h2: ACCENT_DESIGN
+                ? {fontSize: 10, bold: true, color: ACCENT, characterSpacing: 1.2, margin: [0, 8, 0, 2], lineHeight: 1.1}
+                : {fontSize: 11, bold: true, color: '#000000', margin: [0, 8, 0, 6], lineHeight: 1.1},
 
             meta: {fontSize: 9, color: '#000000'},
             small: {fontSize: compact ? 9 : 10, color: '#000000'},
             bullet: {margin: [0, 1, 0, 1], fontSize: compact ? 9 : 10, color: '#000000'},
 
             jobHeader: {bold: true, fontSize: 10, margin: [0, 1, 0, 0], color: '#000000'},
-            jobSub: {fontSize: 9, color: '#000000', margin: [0, 1, 0, 4]},
+            jobSub: {fontSize: 9, color: ACCENT_DESIGN ? GREY : '#000000', margin: [0, 1, 0, 4]},
 
-            contactLink: {fontSize: 9, color: '#0B57D0'}, // hyperlinks ONLY
-            contactText: {fontSize: 9, color: '#000000'},
+            contactLink: {fontSize: 9, color: LINK}, // hyperlinks ONLY
+            contactText: {fontSize: 9, color: ACCENT_DESIGN ? GREY : '#000000'},
             sep: {fontSize: 9, color: '#000000'}
         };
+
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Section title: accent = UPPERCASE + hairline under it; classic = plain
+        const sectionTitle = (t) => ACCENT_DESIGN
+            ? {
+                stack: [
+                    {text: String(t).toUpperCase(), style: 'h2'},
+                    {canvas: [{type: 'line', x1: 0, y1: 0, x2: CONTENT_WIDTH, y2: 0, lineWidth: 0.6, lineColor: ACCENT}], margin: [0, 0, 0, 5]}
+                ]
+            }
+            : {text: t, style: 'h2'};
 
         // ---------- helpers ----------
         const fullName = [m.profile.firstName, m.profile.lastName].filter(Boolean).join(' ') || m.profile.name || 'Resume';
@@ -329,7 +353,8 @@ class PDFGenerator {
         const linkItem = (text, url) => url ? {text, link: url, style: 'contactLink'} : {text, style: 'contactText'};
 
         const makeHr = (margin = [0, 8, 0, 12]) => ({
-            canvas: [{type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1, lineColor: '#e8e8e8'}],
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — accent design: full content width (aligned with section hairlines)
+            canvas: [{type: 'line', x1: 0, y1: 0, x2: ACCENT_DESIGN ? CONTENT_WIDTH : 515, y2: 0, lineWidth: 1, lineColor: '#e8e8e8'}],
             margin
         });
 
@@ -362,7 +387,7 @@ class PDFGenerator {
                     return;
                 }
                 if (i > 0) spans.push({text: rest.slice(0, i)});
-                spans.push({text: l.text, link: l.url, color: '#0B57D0'});
+                spans.push({text: l.text, link: l.url, color: LINK});
                 rest = rest.slice(i + l.text.length);
             });
             if (rest) spans.push({text: rest});
@@ -511,7 +536,7 @@ class PDFGenerator {
 
         // ---------- summary (HTML supported) ----------
         if (m.summary) {
-            content.push({text: 'Summary', style: 'h2'});
+            content.push(sectionTitle('Summary'));
             const spans = /<\s*\/?\s*(strong|b|em|i|br|p)\b/i.test(m.summary)
                 ? htmlToSpans(m.summary)
                 : [{text: m.summary, style: 'small'}];
@@ -520,7 +545,7 @@ class PDFGenerator {
 
         /// ---------- skills (3 columns, individual items, no commas) ----------
         if (m.skills && m.skills.length) {
-            content.push({text: 'Skills', style: 'h2'});
+            content.push(sectionTitle('Skills'));
 
             if (typeof m.skills[0] === 'string') {
                 // flat list (professional skills)
@@ -567,7 +592,7 @@ class PDFGenerator {
 
         // ---------- technical skills (2-column structured layout) ----------
         if (m.technical && m.technical.length) {
-            content.push({text: 'Technical Skills', style: 'h2'});
+            content.push(sectionTitle('Technical Skills'));
 
             // Turn each entry into a "label: value" row
             const rows = m.technical.map(row => {
@@ -599,7 +624,7 @@ class PDFGenerator {
 
         // ---------- experience (dates UNDER workplace; no card split) ----------
         if (m.experience && m.experience.length) {
-            content.push({text: 'Experience', style: 'h2'});
+            content.push(sectionTitle('Experience'));
 
             m.experience.forEach(job => {
                 // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Position first, then company
@@ -608,14 +633,29 @@ class PDFGenerator {
                 const metaBelow = joinLine(job.period || '');
 
                 const block = [];
-                if (headerLine) block.push({text: headerLine, style: 'jobHeader'});
-                if (metaTop) block.push({text: metaTop, style: 'jobSub'});   // location
-                if (metaBelow) block.push({text: metaBelow, style: 'jobSub'}); // dates under workplace
+                if (ACCENT_DESIGN) {
+                    // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — accent: position (bold) + dates right on one line; company in grey below
+                    block.push({
+                        columns: [
+                            {width: '*', text: job.position || '', style: 'jobHeader'},
+                            {width: 'auto', text: job.period || '', fontSize: 9, color: GREY, margin: [0, 1, 0, 0]}
+                        ],
+                        columnGap: 12
+                    });
+                    const companyLine = joinLine(job.company || '', metaTop ? `· ${metaTop}` : '');
+                    if (companyLine) block.push({text: companyLine, style: 'jobSub', margin: [0, 0, 0, 2]});
+                } else {
+                    if (headerLine) block.push({text: headerLine, style: 'jobHeader'});
+                    if (metaTop) block.push({text: metaTop, style: 'jobSub'});   // location
+                    if (metaBelow) block.push({text: metaBelow, style: 'jobSub'}); // dates under workplace
+                }
 
                 if (job.description) block.push({text: job.description, style: 'small', margin: [0, 2, 0, 2]});
                 if (job.bullets && job.bullets.length) {
                     // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Parts of a bullet listed in b.links become hyperlinks
-                    block.push({ul: job.bullets.map(b => ({text: bulletSpans(b), style: 'bullet'}))});
+                    const ul = {ul: job.bullets.map(b => ({text: bulletSpans(b), style: 'bullet'}))};
+                    if (ACCENT_DESIGN) ul.markerColor = ACCENT;
+                    block.push(ul);
                 }
 
                 content.push(unbreakableCard(block)); // prevents splitting across pages
@@ -624,7 +664,7 @@ class PDFGenerator {
 
         // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — projects (name links to url)
         if (m.projects && m.projects.length) {
-            content.push({text: 'Projects', style: 'h2'});
+            content.push(sectionTitle('Projects'));
             m.projects.forEach(pr => {
                 const line = [pr.url ? linkItem(pr.name, pr.url) : {text: pr.name, style: 'small'}];
                 if (pr.period) line.push({text: ` (${pr.period})`, style: 'small'});
@@ -636,7 +676,7 @@ class PDFGenerator {
 
         // ---------- education (no stray "—") ----------
         if (m.education && m.education.length) {
-            content.push({text: 'Education', style: 'h2'});
+            content.push(sectionTitle('Education'));
             m.education.forEach(ed => {
                 const parts = [];
                 if (ed.school) parts.push(ed.school);
@@ -650,7 +690,7 @@ class PDFGenerator {
 
         // ---------- certifications ----------
         if (m.certifications && m.certifications.length) {
-            content.push({text: 'Certifications', style: 'h2'});
+            content.push(sectionTitle('Certifications'));
             // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — name links to verification url when present
             m.certifications.forEach(c => {
                 const parts = [];
@@ -666,13 +706,13 @@ class PDFGenerator {
 
         // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — courses
         if (m.courses && m.courses.length) {
-            content.push({text: 'Courses', style: 'h2'});
+            content.push(sectionTitle('Courses'));
             m.courses.forEach(c => content.push(unbreakableCard([{text: c.name, style: 'small'}])));
         }
 
         // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — memberships
         if (m.memberships && m.memberships.length) {
-            content.push({text: 'Memberships', style: 'h2'});
+            content.push(sectionTitle('Memberships'));
             m.memberships.forEach(mb => {
                 const line = [mb.url ? linkItem(mb.name, mb.url) : {text: mb.name, style: 'small'}];
                 if (mb.position) line.push({text: ` — ${mb.position}`, style: 'small'});
@@ -685,7 +725,7 @@ class PDFGenerator {
         // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — One line, comma-separated: "Azerbaijani (Native), Russian (Native), ..."
         // (previous dotted-leader layout via langRow is kept in code but no longer used here)
         if (m.languages && m.languages.length) {
-            content.push({text: 'Languages', style: 'h2'});
+            content.push(sectionTitle('Languages'));
             const line = m.languages
                 .map(l => l.level ? `${l.name} (${l.level})` : l.name)
                 .join(', ');
