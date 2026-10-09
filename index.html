@@ -44,36 +44,119 @@ This pattern is optimized for AI-friendly coding workflows
             "@type": "Person",
             "name": "Hasan Alizada",
             "jobTitle": "Enterprise & Solution Architect",
-            "description": "Enterprise and solution architect with extensive experience in scalable and fault-tolerant architectures. Passionate about optimizing enterprise IT landscapes, strengthening system resilience, and driving digital transformation.",
             "url": "https://hasanfalizada.github.io",
             "email": "ha@hasanalizada.net",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Baku",
-                "addressCountry": "Azerbaijan"
-            },
             "sameAs": [
                 "https://linkedin.com/in/hasanalizada",
-                "https://twitter.com/hasanfalizada",
+                "https://x.com/hasanfalizada",
                 "https://github.com/hasanfalizada"
             ],
-            "knowsAbout": [
-                "Enterprise Architecture",
-                "TOGAF",
-                "System Design",
-                "Java Development",
-                "Spring Boot",
-                "Microservices",
-                "Cloud Architecture"
+            "worksFor": [
+                {
+                    "@type": "Organization",
+                    "name": "Visa"
+                }
+            ],
+            "alumniOf": [
+                {
+                    "@type": "CollegeOrUniversity",
+                    "name": "Baku State University"
+                }
+            ],
+            "hasCredential": [
+                {
+                    "@type": "EducationalOccupationalCredential",
+                    "name": "AWS Certified Solutions Architect – Associate",
+                    "recognizedBy": {
+                        "@type": "Organization",
+                        "name": "Amazon Web Services (AWS)"
+                    },
+                    "url": "https://www.credly.com/badges/bc9879c7-74c2-495c-af43-c32cde0c997f/linked_in_profile"
+                },
+                {
+                    "@type": "EducationalOccupationalCredential",
+                    "name": "The Open Group Certified: TOGAF® Enterprise Architecture Practitioner",
+                    "recognizedBy": {
+                        "@type": "Organization",
+                        "name": "The Open Group"
+                    },
+                    "url": "https://www.credly.com/badges/50e166eb-f4e8-4b28-9cc3-485da324a1d3/linked_in_profile"
+                },
+                {
+                    "@type": "EducationalOccupationalCredential",
+                    "name": "Project Management Professional (PMP)®",
+                    "recognizedBy": {
+                        "@type": "Organization",
+                        "name": "Project Management Institute"
+                    },
+                    "url": "https://www.credly.com/badges/2bf63b56-a54f-4a2c-8303-2fa4940a5930/linked_in_profile"
+                },
+                {
+                    "@type": "EducationalOccupationalCredential",
+                    "name": "ITIL® Foundation Certificate in IT Service Management",
+                    "recognizedBy": {
+                        "@type": "Organization",
+                        "name": "PeopleCert"
+                    },
+                    "url": "https://www.peoplecert.org/for-corporations/certificate-verification-service"
+                },
+                {
+                    "@type": "EducationalOccupationalCredential",
+                    "name": "Oracle Cloud Infrastructure 2021 Certified Architect Professional",
+                    "recognizedBy": {
+                        "@type": "Organization",
+                        "name": "Oracle"
+                    },
+                    "url": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=D5809C541494A32D1CD23C6E0B032CAEEDC2F52A738F4E38B9CD950F9757464B"
+                },
+                {
+                    "@type": "EducationalOccupationalCredential",
+                    "name": "Oracle Database PL/SQL Developer Certified Professional",
+                    "recognizedBy": {
+                        "@type": "Organization",
+                        "name": "Oracle"
+                    },
+                    "url": "https://www.youracclaim.com/badges/707fb3ca-a5d4-435b-9142-30ad6e611dbf/linked_in_profile"
+                },
+                {
+                    "@type": "EducationalOccupationalCredential",
+                    "name": "Oracle Database SQL Certified Expert",
+                    "recognizedBy": {
+                        "@type": "Organization",
+                        "name": "Oracle"
+                    },
+                    "url": "https://www.credly.com/earner/earned/badge/2be25256-a726-47c0-9f5b-d44ac688b90f"
+                }
+            ],
+            "knowsLanguage": [
+                {
+                    "@type": "Language",
+                    "name": "Azerbaijani"
+                },
+                {
+                    "@type": "Language",
+                    "name": "Russian"
+                },
+                {
+                    "@type": "Language",
+                    "name": "English"
+                },
+                {
+                    "@type": "Language",
+                    "name": "Turkish"
+                }
             ]
         }
     </script>
+
+    <!-- +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Machine-readable resume (single source of truth) discoverable by bots without JS -->
+    <link rel="alternate" type="application/json" href="data/resume.json" title="Hasan Alizada — resume data (JSON)">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="assets/css/main.css?v=2026-10-09.1">
+    <link rel="stylesheet" href="assets/css/main.css?v=2026-10-09.6">
 
     <!-- Local Libraries -->
     <!-- +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — jsPDF no longer loaded (unused); PDF uses local pdfmake, loaded on demand by PDFGenerator -->
@@ -102,7 +185,8 @@ This pattern is optimized for AI-friendly coding workflows
 
             <div class="nav-links">
                 <a href="#blog" class="nav-link active" data-section="blog">Blog</a>
-                <a href="#resume" class="nav-link" data-section="resume">Resume</a>
+                <!-- +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — "Resume" now downloads the PDF (resume page is not shown) -->
+                <a href="#" id="download-pdf-btn" class="nav-link" title="Download resume (PDF)">Resume</a>
             </div>
         </nav>
     </div>
@@ -147,7 +231,7 @@ This pattern is optimized for AI-friendly coding workflows
 
 <!-- Main Application Script -->
 <!-- +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Bump ?v= on main.css AND main.js on every deploy that changes CSS/JS; atoms inherit it -->
-<script src="assets/js/main.js?v=2026-10-09.1" defer></script>
+<script src="assets/js/main.js?v=2026-10-09.6" defer></script>
 
 <!-- Application Initialization -->
 <script>
@@ -175,8 +259,10 @@ This pattern is optimized for AI-friendly coding workflows
     });
 </script>
 <!-- +++===+++ 2025-08-27 13:40 Asia/Baku — Hasan Alizada — Floating PDF FAB replacing legacy button -->
+<!-- +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — FAB hidden: the "Resume" menu item is the single PDF entry point -->
 <a id="fab-pdf"
    class="fab-pdf"
+   style="display: none;"
    href="#"
    aria-label="Generate PDF"
    title="Generate PDF">

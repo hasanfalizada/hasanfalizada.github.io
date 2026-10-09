@@ -3,21 +3,42 @@
     "name": "Hasan Alizada",
     "title": "AWS® SA, TOGAF® 10, PMP®, ITIL®, OCP®",
     "headline": "Enterprise & Solution Architect",
-    "summary": "Enterprise and solution architect with extensive experience in scalable and fault–tolerant architectures. Passionate about optimizing enterprise IT landscapes, strengthening system resilience, and driving digital transformation to align technology with business goals.",
-    "summary_html": "Enterprise and solution architect with extensive experience in <strong>scalable and fault–tolerant architectures</strong>. Passionate about <strong>optimizing enterprise IT landscapes</strong>, <strong>strengthening system resilience</strong>, and <strong>driving digital transformation</strong> to align technology with business goals.",
+    "summary": {
+      "text": "Enterprise and solution architect with extensive experience in scalable and fault–tolerant architectures. Passionate about optimizing enterprise IT landscapes, strengthening system resilience, and driving digital transformation to align technology with business goals.",
+      "to_render": false
+    },
+    "summary_html": {
+      "text": "Enterprise and solution architect with extensive experience in <strong>scalable and fault–tolerant architectures</strong>. Passionate about <strong>optimizing enterprise IT landscapes</strong>, <strong>strengthening system resilience</strong>, and <strong>driving digital transformation</strong> to align technology with business goals.",
+      "to_render": false
+    },
     "contact": {
       "email": "ha@hasanalizada.net",
-      "location": "Baku, Azerbaijan",
+      "location": {
+        "text": "Baku, Azerbaijan",
+        "to_render": false
+      },
       "website": "hasanfalizada.github.io"
     },
     "social_links": {
       "linkedin": "linkedin.com/in/hasanalizada",
       "twitter": "x.com/hasanfalizada",
       "github": "github.com/hasanfalizada",
-      "facebook": "facebook.com/hasanfalizada",
-      "youtube": "youtube.com/@HasanAlizada",
-      "instagram": "instagram.com/hasanfalizada/",
-      "xing": "xing.com/profile/Hasan_Alizada/"
+      "facebook": {
+        "text": "facebook.com/hasanfalizada",
+        "to_render": false
+      },
+      "youtube": {
+        "text": "youtube.com/@HasanAlizada",
+        "to_render": false
+      },
+      "instagram": {
+        "text": "instagram.com/hasanfalizada/",
+        "to_render": false
+      },
+      "xing": {
+        "text": "xing.com/profile/Hasan_Alizada/",
+        "to_render": false
+      }
     },
     "photo_url": "assets/img/profile.jpg",
     "summary_linkedin": "As a strategist, I support organizations across CEMEA in leveraging data, analytics, and payment innovation to achieve sustainable growth. My work focuses on bridging business strategy with technology execution to deliver scalable, secure, and customer-centric solutions. I bring strong experience in enterprise architecture and digital transformation, having led large-scale modernization programs that improved system resilience, operational efficiency, and speed-to-market. I apply a consultative, analytical, and execution-oriented approach to create measurable client impact."
@@ -42,15 +63,42 @@
   },
   "skills": {
     "professional": [
-      "TOGAF® Framework & ADM",
-      "IT Strategy & Business Alignment",
-      "Enterprise IT Governance",
-      "Solution & Technology Architecture",
-      "IT Project & Program Management",
-      "Agile & Scrum Methodologies",
-      "Risk Management & Mitigation",
-      "Budgeting & Cost Optimization",
-      "Cross-Functional Team Leadership",
+      {
+        "text": "TOGAF® Framework & ADM",
+        "to_render": false
+      },
+      {
+        "text": "IT Strategy & Business Alignment",
+        "to_render": false
+      },
+      {
+        "text": "Enterprise IT Governance",
+        "to_render": false
+      },
+      {
+        "text": "Solution & Technology Architecture",
+        "to_render": false
+      },
+      {
+        "text": "IT Project & Program Management",
+        "to_render": false
+      },
+      {
+        "text": "Agile & Scrum Methodologies",
+        "to_render": false
+      },
+      {
+        "text": "Risk Management & Mitigation",
+        "to_render": false
+      },
+      {
+        "text": "Budgeting & Cost Optimization",
+        "to_render": false
+      },
+      {
+        "text": "Cross-Functional Team Leadership",
+        "to_render": false
+      },
       {
         "text": "Client Consulting & Advisory",
         "to_render": false
@@ -323,7 +371,8 @@
         "Prometheus",
         "Grafana",
         "ELK Stack"
-      ]
+      ],
+      "to_render": false
     },
     "technical_labels": {
       "languages": "Languages",
@@ -340,51 +389,120 @@
     {
       "position": "Sr. Client Consulting Manager, Visa Consulting & Analytics (VCA) Implementation Services (VIS) CEMEA",
       "company": "Visa",
-      "location": "Baku, Azerbaijan",
+      "location": {
+        "text": "Baku, Azerbaijan",
+        "to_render": false
+      },
       "period": "12/2025 – Present",
       "company_description": "",
       "achievements": [
-        "Lead regional delivery of complex, multi-stakeholder technical transformations across CEMEA, driving high-quality execution and measurable business outcomes.",
-        "Build and maintain trusted client relationships to understand business priorities, technical requirements, and strategic objectives.",
-        "Oversee integration of digital banking and payments technologies, including APIs, cloud platforms, and enterprise applications.",
-        "Coordinate cross-functional teams—architects, engineers, UX practitioners, and business analysts—to deliver scalable, seamless solutions.",
-        "Provide subject matter expertise across payments, digital banking, software engineering, and financial services technology, translating complexity into actionable insights for stakeholders.",
-        "Mentor and guide technical delivery teams, fostering a culture of excellence, accountability, and continuous learning."
+        {
+          "text": "Lead regional delivery of complex, multi-stakeholder technical transformations across CEMEA, driving high-quality execution and measurable business outcomes.",
+          "to_render": false
+        },
+        {
+          "text": "Build and maintain trusted client relationships to understand business priorities, technical requirements, and strategic objectives.",
+          "to_render": false
+        },
+        {
+          "text": "Oversee integration of digital banking and payments technologies, including APIs, cloud platforms, and enterprise applications.",
+          "to_render": false
+        },
+        {
+          "text": "Coordinate cross-functional teams—architects, engineers, UX practitioners, and business analysts—to deliver scalable, seamless solutions.",
+          "to_render": false
+        },
+        {
+          "text": "Provide subject matter expertise across payments, digital banking, software engineering, and financial services technology, translating complexity into actionable insights for stakeholders.",
+          "to_render": false
+        },
+        {
+          "text": "Mentor and guide technical delivery teams, fostering a culture of excellence, accountability, and continuous learning.",
+          "to_render": false
+        }
       ],
       "company_logo": "assets/img/logos/visa.svg"
     },
     {
       "position": "Enterprise Architect",
       "company": "Azerbaijan Railways CJSC",
-      "location": "Baku, Azerbaijan",
+      "location": {
+        "text": "Baku, Azerbaijan",
+        "to_render": false
+      },
       "period": "09/2023 – 12/2025",
       "company_description": "National rail transport operator in Azerbaijan",
       "company_logo": "assets/img/logos/ady.png",
       "achievements": [
-        "Led cost-saving projects resulting in a 30% reduction in operational expenses through process optimization and technology implementation.",
-        "Managed large-scale IT projects, delivering them on time and within budget, involving team coordination and resource management.",
-        "Introduced mobile app new architecture to modernize and improve railway operations, resulting in increased efficiency and customer satisfaction.",
-        "Ensured IT systems and processes adhered to industry standards, effectively managing risks and achieving compliance with government.",
-        "Collaborated with various stakeholders (department heads, vendors, government agencies) to align IT strategies with the company’s objectives, leading to improved service delivery.",
-        "Played a key role in digital transformation initiatives, including transitioning to cloud-based systems, resulting in enhanced operational agility."
+        {
+          "text": "Led cost-saving projects resulting in a 30% reduction in operational expenses through process optimization and technology implementation.",
+          "to_render": false
+        },
+        {
+          "text": "Managed large-scale IT projects, delivering them on time and within budget, involving team coordination and resource management.",
+          "to_render": false
+        },
+        {
+          "text": "Introduced mobile app new architecture to modernize and improve railway operations, resulting in increased efficiency and customer satisfaction.",
+          "to_render": false
+        },
+        {
+          "text": "Ensured IT systems and processes adhered to industry standards, effectively managing risks and achieving compliance with government.",
+          "to_render": false
+        },
+        {
+          "text": "Collaborated with various stakeholders (department heads, vendors, government agencies) to align IT strategies with the company’s objectives, leading to improved service delivery.",
+          "to_render": false
+        },
+        {
+          "text": "Played a key role in digital transformation initiatives, including transitioning to cloud-based systems, resulting in enhanced operational agility.",
+          "to_render": false
+        }
       ]
     },
     {
       "position": "Chapter Lead of Backend Development",
       "company": "Kapital Bank OJSC",
-      "location": "Baku, Azerbaijan",
+      "location": {
+        "text": "Baku, Azerbaijan",
+        "to_render": false
+      },
       "period": "04/2022 – 09/2023",
       "company_description": "Largest private bank in Azerbaijan",
       "company_logo": "assets/img/logos/kb.png",
       "achievements": [
-        "Implemented Apache Kafka for real-time data processing, increasing throughput and reducing latency.",
-        "Optimized message queuing by incorporating RabbitMQ, improving reliability and scalability.",
-        "Implemented Redis for caching, reducing average response times by 20% and enhancing user experience.",
-        "Enhanced security by integrating Keycloak for IAM, reducing unauthorized access incidents.",
-        "Developed and deployed microservices using Java and Spring, significantly reducing service downtime.",
-        "Optimized Oracle PL/SQL performance; introduced MongoDB and PostgreSQL for targeted use cases, cutting costs and improving efficiency.",
-        "Led and mentored a backend team, fostering collaboration and delivery quality.",
-        "Aligned backend development with business goals through cross-functional collaboration.",
+        {
+          "text": "Implemented Apache Kafka for real-time data processing, increasing throughput and reducing latency.",
+          "to_render": false
+        },
+        {
+          "text": "Optimized message queuing by incorporating RabbitMQ, improving reliability and scalability.",
+          "to_render": false
+        },
+        {
+          "text": "Implemented Redis for caching, reducing average response times by 20% and enhancing user experience.",
+          "to_render": false
+        },
+        {
+          "text": "Enhanced security by integrating Keycloak for IAM, reducing unauthorized access incidents.",
+          "to_render": false
+        },
+        {
+          "text": "Developed and deployed microservices using Java and Spring, significantly reducing service downtime.",
+          "to_render": false
+        },
+        {
+          "text": "Optimized Oracle PL/SQL performance; introduced MongoDB and PostgreSQL for targeted use cases, cutting costs and improving efficiency.",
+          "to_render": false
+        },
+        {
+          "text": "Led and mentored a backend team, fostering collaboration and delivery quality.",
+          "to_render": false
+        },
+        {
+          "text": "Aligned backend development with business goals through cross-functional collaboration.",
+          "to_render": false
+        },
         {
           "text": "Implemented Apache Kafka for real-time data processing, resulting in an increase in data throughput and reduced latency. Optimized message queuing by incorporating RabbitMQ, improving system reliability and scalability. Implemented Redis for caching, reducing average response times by 20% and enhancing user experience.",
           "to_render": false
@@ -418,58 +536,127 @@
     {
       "position": "Chapter Lead of System Development",
       "company": "Kapital Bank OJSC",
-      "location": "Baku, Azerbaijan",
+      "location": {
+        "text": "Baku, Azerbaijan",
+        "to_render": false
+      },
       "period": "06/2016 – 04/2022",
       "company_description": "Largest private bank in Azerbaijan",
       "company_logo": "assets/img/logos/kb.png",
       "achievements": [
-        "Led development of Compass Plus CMS and TWO platforms, improving card management capabilities.",
-        "Integrated internal systems with the cards processing platform, enabling reliable transactions.",
-        "Optimized Oracle PL/SQL for card processing, reducing processing time by ~20% and improving data integrity.",
-        "Managed upgrades and maintenance, ensuring high availability and standards compliance.",
-        "Led a system development team, driving successful outcomes and collaboration."
+        {
+          "text": "Led development of Compass Plus CMS and TWO platforms, improving card management capabilities.",
+          "to_render": false
+        },
+        {
+          "text": "Integrated internal systems with the cards processing platform, enabling reliable transactions.",
+          "to_render": false
+        },
+        {
+          "text": "Optimized Oracle PL/SQL for card processing, reducing processing time by ~20% and improving data integrity.",
+          "to_render": false
+        },
+        {
+          "text": "Managed upgrades and maintenance, ensuring high availability and standards compliance.",
+          "to_render": false
+        },
+        {
+          "text": "Led a system development team, driving successful outcomes and collaboration.",
+          "to_render": false
+        }
       ]
     },
     {
       "position": "Chapter Lead of System Development",
       "company": "Kapital Bank OJSC",
-      "location": "Baku, Azerbaijan",
+      "location": {
+        "text": "Baku, Azerbaijan",
+        "to_render": false
+      },
       "period": "04/2021 – 04/2022",
       "company_description": "Largest private bank in Azerbaijan",
       "company_logo": "assets/img/logos/kb.png",
       "achievements": [
-        "Led the successful development of Compass Plus's CMS and TWO platforms enhancing card management capabilities and improving operational efficiency.",
-        "Spearheaded the integration of the internal systems with the cards processing platform, facilitating seamless transaction processing and bolstering system reliability.",
-        "Oversaw the optimization of Oracle databases stored PL/SQL software for card processing, resulting in a significant reduction in processing time by 20% and improved data integrity.",
-        "Managed regular system upgrades and maintenance, ensuring high system availability and compliance with the standards.",
-        "Led a team of system developers fostering a collaborative environment and driving successful project outcomes."
+        {
+          "text": "Led the successful development of Compass Plus's CMS and TWO platforms enhancing card management capabilities and improving operational efficiency.",
+          "to_render": false
+        },
+        {
+          "text": "Spearheaded the integration of the internal systems with the cards processing platform, facilitating seamless transaction processing and bolstering system reliability.",
+          "to_render": false
+        },
+        {
+          "text": "Oversaw the optimization of Oracle databases stored PL/SQL software for card processing, resulting in a significant reduction in processing time by 20% and improved data integrity.",
+          "to_render": false
+        },
+        {
+          "text": "Managed regular system upgrades and maintenance, ensuring high system availability and compliance with the standards.",
+          "to_render": false
+        },
+        {
+          "text": "Led a team of system developers fostering a collaborative environment and driving successful project outcomes.",
+          "to_render": false
+        }
       ],
       "to_render": false
     },
     {
       "position": "Software Engineer",
       "company": "Kapital Bank OJSC",
-      "location": "Baku, Azerbaijan",
+      "location": {
+        "text": "Baku, Azerbaijan",
+        "to_render": false
+      },
       "period": "03/2018 – 04/2021",
       "company_description": "Largest private bank in Azerbaijan",
       "company_logo": "assets/img/logos/kb.png",
       "achievements": [
-        "Full lifecycle software development with Scrum",
-        "Lead a development team of 12 people to develop, manage, operate, and support the corporate internet banking platform",
-        "Improved the performance of straight-through processing by tuning database applications",
-        "Core banking and card processing integration using Compass Plus TranzWare CMS and TranzWare TWO API",
-        "Ongoing maintenance, support and enhancements in existing systems",
-        "Collaborating with business users, project managers and other engineers",
-        "Integrated proprietary software components with commercial off-the-shelf software product",
-        "Professional Oracle PL/SQL backend development",
-        "3rd party API oriented development"
+        {
+          "text": "Full lifecycle software development with Scrum",
+          "to_render": false
+        },
+        {
+          "text": "Lead a development team of 12 people to develop, manage, operate, and support the corporate internet banking platform",
+          "to_render": false
+        },
+        {
+          "text": "Improved the performance of straight-through processing by tuning database applications",
+          "to_render": false
+        },
+        {
+          "text": "Core banking and card processing integration using Compass Plus TranzWare CMS and TranzWare TWO API",
+          "to_render": false
+        },
+        {
+          "text": "Ongoing maintenance, support and enhancements in existing systems",
+          "to_render": false
+        },
+        {
+          "text": "Collaborating with business users, project managers and other engineers",
+          "to_render": false
+        },
+        {
+          "text": "Integrated proprietary software components with commercial off-the-shelf software product",
+          "to_render": false
+        },
+        {
+          "text": "Professional Oracle PL/SQL backend development",
+          "to_render": false
+        },
+        {
+          "text": "3rd party API oriented development",
+          "to_render": false
+        }
       ],
       "to_render": false
     },
     {
       "position": "Processing Business Solutions Leading Specialist",
       "company": "Kapital Bank OJSC",
-      "location": "Baku, Azerbaijan",
+      "location": {
+        "text": "Baku, Azerbaijan",
+        "to_render": false
+      },
       "period": "07/2017 – 03/2018",
       "company_description": "Largest private bank in Azerbaijan",
       "company_logo": "assets/img/logos/kb.png",
@@ -479,7 +666,10 @@
     {
       "position": "Processing and Bank Services Specialist",
       "company": "Kapital Bank OJSC",
-      "location": "Azerbaijan",
+      "location": {
+        "text": "Azerbaijan",
+        "to_render": false
+      },
       "period": "06/2016 – 07/2017",
       "company_description": "Largest private bank in Azerbaijan",
       "company_logo": "assets/img/logos/kb.png",
@@ -489,73 +679,157 @@
     {
       "position": "Various technical positions",
       "company": "Azerfon LLC / British American Tobacco / Bank Standard OJSC",
-      "location": "Baku, Azerbaijan",
+      "location": {
+        "text": "Baku, Azerbaijan",
+        "to_render": false
+      },
       "period": "03/2008 – 06/2016",
       "company_description": "",
       "company_logo": "assets/img/logos/vp.webp",
       "achievements": [
-        "Managed and monitored IT operations, ensuring 99.9% uptime.",
-        "Ran incident management, reducing average resolution time for critical issues.",
-        "Contributed to major system upgrades with minimal downtime during transitions.",
-        "Acted as liaison between IT, network, and database teams for efficient problem-solving.",
-        "Prepared reports on infrastructure performance to support strategic decisions."
+        {
+          "text": "Managed and monitored IT operations, ensuring 99.9% uptime.",
+          "to_render": false
+        },
+        {
+          "text": "Ran incident management, reducing average resolution time for critical issues.",
+          "to_render": false
+        },
+        {
+          "text": "Contributed to major system upgrades with minimal downtime during transitions.",
+          "to_render": false
+        },
+        {
+          "text": "Acted as liaison between IT, network, and database teams for efficient problem-solving.",
+          "to_render": false
+        },
+        {
+          "text": "Prepared reports on infrastructure performance to support strategic decisions.",
+          "to_render": false
+        }
       ]
     },
     {
       "position": "Backoffice Systems Administration Leading Specialist",
       "company": "Bank Standard Azerbaijan",
-      "location": "Baku, Azerbaijan",
+      "location": {
+        "text": "Baku, Azerbaijan",
+        "to_render": false
+      },
       "period": "01/2016 – 06/2016",
       "company_description": "",
       "company_logo": "",
       "achievements": [
-        "Payment cards processing systems administration: CMS, system customizations, monitoring and analyzing technical issues",
-        "Accounting fees settings (fees, charges, Interchange and currency conversion fees) for international payment systems",
-        "Interaction with appropriate Bank departments aimed at taking measures to solve emerging incidents",
-        "Transactions, Clearing and EOD processes monitoring, Report Management",
-        "Administration of TSYS Web User Interface, TSYS Prime and TSYS Online",
-        "Operating with payment systems: VISA (CTF), MasterCard (IPM) (ISO 8583)",
-        "SQL and PL/SQL development",
-        "Incident and Service Management in liaison with third party vendor and business operations",
-        "Configuration Management to ensure functional enhancements as per requirement maintaining optimal system performance",
-        "Ensuring successful development, testing and deployment of packages involving data fix, scheme compliance and regulations"
+        {
+          "text": "Payment cards processing systems administration: CMS, system customizations, monitoring and analyzing technical issues",
+          "to_render": false
+        },
+        {
+          "text": "Accounting fees settings (fees, charges, Interchange and currency conversion fees) for international payment systems",
+          "to_render": false
+        },
+        {
+          "text": "Interaction with appropriate Bank departments aimed at taking measures to solve emerging incidents",
+          "to_render": false
+        },
+        {
+          "text": "Transactions, Clearing and EOD processes monitoring, Report Management",
+          "to_render": false
+        },
+        {
+          "text": "Administration of TSYS Web User Interface, TSYS Prime and TSYS Online",
+          "to_render": false
+        },
+        {
+          "text": "Operating with payment systems: VISA (CTF), MasterCard (IPM) (ISO 8583)",
+          "to_render": false
+        },
+        {
+          "text": "SQL and PL/SQL development",
+          "to_render": false
+        },
+        {
+          "text": "Incident and Service Management in liaison with third party vendor and business operations",
+          "to_render": false
+        },
+        {
+          "text": "Configuration Management to ensure functional enhancements as per requirement maintaining optimal system performance",
+          "to_render": false
+        },
+        {
+          "text": "Ensuring successful development, testing and deployment of packages involving data fix, scheme compliance and regulations",
+          "to_render": false
+        }
       ],
       "to_render": false
     },
     {
       "position": "Trade Marketing Database Coordinator",
       "company": "British American Tobacco",
-      "location": "Azerbaijan",
+      "location": {
+        "text": "Azerbaijan",
+        "to_render": false
+      },
       "period": "08/2013 – 08/2015",
       "company_description": "",
       "company_logo": "",
       "achievements": [
-        "Field force business processes automatization",
-        "Trade coverage plan development and support",
-        "File data collection",
-        "DWH administration"
+        {
+          "text": "Field force business processes automatization",
+          "to_render": false
+        },
+        {
+          "text": "Trade coverage plan development and support",
+          "to_render": false
+        },
+        {
+          "text": "File data collection",
+          "to_render": false
+        },
+        {
+          "text": "DWH administration",
+          "to_render": false
+        }
       ],
       "to_render": false
     },
     {
       "position": "Performance Improvement and Statistics Specialist",
       "company": "Azerfon LLC",
-      "location": "Azerbaijan",
+      "location": {
+        "text": "Azerbaijan",
+        "to_render": false
+      },
       "period": "10/2012 – 08/2013",
       "company_description": "",
       "company_logo": "",
       "achievements": [
-        "Various positions including Billing Administrator and Performance Monitoring specialist",
-        "Data monitoring and analytics",
-        "CBOSS API",
-        "24/7 IT infrastructure monitoring and support"
+        {
+          "text": "Various positions including Billing Administrator and Performance Monitoring specialist",
+          "to_render": false
+        },
+        {
+          "text": "Data monitoring and analytics",
+          "to_render": false
+        },
+        {
+          "text": "CBOSS API",
+          "to_render": false
+        },
+        {
+          "text": "24/7 IT infrastructure monitoring and support",
+          "to_render": false
+        }
       ],
       "to_render": false
     },
     {
       "position": "Intellectual Network Administrator",
       "company": "Azerfon LLC",
-      "location": "Azerbaijan",
+      "location": {
+        "text": "Azerbaijan",
+        "to_render": false
+      },
       "period": "01/2011 – 10/2012",
       "company_description": "",
       "company_logo": "",
@@ -565,7 +839,10 @@
     {
       "position": "Performance Monitoring Operator",
       "company": "Azerfon LLC",
-      "location": "Azerbaijan",
+      "location": {
+        "text": "Azerbaijan",
+        "to_render": false
+      },
       "period": "04/2010 – 12/2010",
       "company_description": "",
       "company_logo": "",
@@ -575,7 +852,10 @@
     {
       "position": "Subscription and Archive Specialist",
       "company": "Azerfon LLC",
-      "location": "Azerbaijan",
+      "location": {
+        "text": "Azerbaijan",
+        "to_render": false
+      },
       "period": "03/2008 – 04/2010",
       "company_description": "",
       "company_logo": "",
@@ -587,14 +867,20 @@
     {
       "degree": "Applied Mathematics and Cybernetics",
       "institution": "Baku State University",
-      "location": "Baku, Azerbaijan",
+      "location": {
+        "text": "Baku, Azerbaijan",
+        "to_render": false
+      },
       "period": "09/2007 – 06/2011",
       "degree_linkedin": "Bachelor of Applied Science (B.A.Sc.), Computational and Applied Mathematics"
     },
     {
       "degree": "High school, Information Technology",
       "institution": "'Intellect' Math-Informatics Lyceum",
-      "location": "Baku, Azerbaijan",
+      "location": {
+        "text": "Baku, Azerbaijan",
+        "to_render": false
+      },
       "period": "1996 – 2007",
       "to_render": false
     }
@@ -608,7 +894,7 @@
     },
     {
       "name": "The Open Group Certified: TOGAF® Enterprise Architecture Practitioner",
-      "period": "03/2024 – Present",
+      "period": "03/2024",
       "authority": "The Open Group",
       "url": "https://www.credly.com/badges/50e166eb-f4e8-4b28-9cc3-485da324a1d3/linked_in_profile",
       "license_number": "178525"
@@ -629,93 +915,97 @@
     },
     {
       "name": "Oracle Cloud Infrastructure 2021 Certified Architect Professional",
-      "period": "02/2022 – Present",
+      "period": "02/2022",
       "authority": "Oracle",
       "url": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=D5809C541494A32D1CD23C6E0B032CAEEDC2F52A738F4E38B9CD950F9757464B",
       "license_number": "244010733OCICAP2021OPN"
     },
     {
       "name": "Oracle Cloud Infrastructure 2021 Certified Architect Associate",
-      "period": "02/2022 – Present",
+      "period": "02/2022",
       "authority": "Oracle",
       "url": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=F5F6690957BFAF40914DBDEE4D59232FC6AC2DBAC25CBD97BCDD2B1D1047FBAA",
-      "license_number": "244010733OCIAA2021CA"
+      "license_number": "244010733OCIAA2021CA",
+      "to_render": false
     },
     {
       "name": "Oracle Cloud Infrastructure 2023 AI Certified Foundations Associate",
-      "period": "09/2023 – Present",
+      "period": "09/2023",
       "authority": "Oracle",
-      "url": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=7AF95EE1D4C8D8BEA13FECD61196454352809E6622A15001694C95600D67AEC2"
+      "url": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=7AF95EE1D4C8D8BEA13FECD61196454352809E6622A15001694C95600D67AEC2",
+      "to_render": false
     },
     {
       "name": "Oracle Database PL/SQL Developer Certified Professional",
-      "period": "07/2018 – Present",
+      "period": "07/2018",
       "authority": "Oracle",
       "url": "https://www.youracclaim.com/badges/707fb3ca-a5d4-435b-9142-30ad6e611dbf/linked_in_profile"
     },
     {
       "name": "Oracle Database SQL Certified Expert",
-      "period": "04/2017 – Present",
+      "period": "04/2017",
       "authority": "Oracle",
       "url": "https://www.credly.com/earner/earned/badge/2be25256-a726-47c0-9f5b-d44ac688b90f"
     },
     {
       "name": "Oracle Certified Associate, Java SE 8 Programmer",
-      "period": "02/2019 – Present",
+      "period": "02/2019",
       "authority": "Oracle",
-      "url": "https://www.youracclaim.com/badges/11e5c343-f77c-4e0f-80c0-1c0378a41579/linked_in_profile"
+      "url": "https://www.youracclaim.com/badges/11e5c343-f77c-4e0f-80c0-1c0378a41579/linked_in_profile",
+      "to_render": false
     },
     {
       "name": "IBM Enterprise Design Thinking Practitioner",
-      "period": "01/2019 – Present",
+      "period": "01/2019",
       "authority": "IBM",
-      "url": "https://www.youracclaim.com/badges/02e95406-7e60-41b4-998e-adf0189499aa/linked_in_profile"
+      "url": "https://www.youracclaim.com/badges/02e95406-7e60-41b4-998e-adf0189499aa/linked_in_profile",
+      "to_render": false
     },
     {
       "name": "McKinsey Forward Program",
-      "period": "07/2024 – Present",
+      "period": "07/2024",
       "authority": "McKinsey & Company",
       "url": "https://www.credly.com/badges/7a7ceb1c-5617-4af6-adf1-911ab3c030a6/linked_in_profile",
       "to_render": false
     },
     {
       "name": "GridGain Developer Essentials: Apache Ignite",
-      "period": "11/2022 – Present",
+      "period": "11/2022",
       "authority": "GridGain Systems",
       "url": "https://www.credly.com/badges/59e79520-8321-41a2-b96a-b48d1480b761/linked_in_profile",
       "to_render": false
     },
     {
       "name": "Enterprise Design Thinking Co-Creator",
-      "period": "07/2019 – Present",
+      "period": "07/2019",
       "authority": "IBM",
       "url": "https://www.youracclaim.com/badges/4c9087f2-d46d-47d4-bcd8-a9e5e453d634/linked_in_profile",
       "to_render": false
     },
     {
       "name": "Enterprise Design Thinking - Team Essentials for AI",
-      "period": "07/2019 – Present",
+      "period": "07/2019",
       "authority": "IBM",
       "url": "https://www.youracclaim.com/badges/08c67e6f-3870-47c6-a6ed-faca3b243af5/linked_in_profile",
       "to_render": false
     },
     {
       "name": "z/OS Mainframe Practitioner",
-      "period": "10/2019 – Present",
+      "period": "10/2019",
       "authority": "Coursera",
       "url": "https://www.youracclaim.com/badges/2fc0d9fc-255c-4681-992a-98c5120f65ec/linked_in_profile",
       "to_render": false
     },
     {
       "name": "Getting Started on Mainframe with z/OS Commands and Panels",
-      "period": "10/2019 – Present",
+      "period": "10/2019",
       "authority": "Coursera",
       "url": "https://www.youracclaim.com/badges/95171857-c6db-49bc-96ad-cad8aa42add0/linked_in_profile",
       "to_render": false
     },
     {
       "name": "Introduction to Enterprise Computing",
-      "period": "09/2019 – Present",
+      "period": "09/2019",
       "authority": "Coursera",
       "url": "https://www.youracclaim.com/badges/38cbe6d4-3215-4c88-9816-9e6854cc2763/linked_in_profile",
       "to_render": false
@@ -743,35 +1033,35 @@
     },
     {
       "name": "CBOSSrtb MG Administration",
-      "period": "08/2010 – Present",
+      "period": "08/2010",
       "authority": "CBOSS",
       "license_number": "6225",
       "to_render": false
     },
     {
       "name": "CBOSSrtb Administration. TP. Part I.",
-      "period": "08/2010 – Present",
+      "period": "08/2010",
       "authority": "CBOSS",
       "license_number": "6215",
       "to_render": false
     },
     {
       "name": "Introduction to CBOSS.",
-      "period": "05/2010 – Present",
+      "period": "05/2010",
       "authority": "CBOSS",
       "license_number": "6054",
       "to_render": false
     },
     {
       "name": "Customer Care on the phone",
-      "period": "12/2009 – Present",
+      "period": "12/2009",
       "authority": "Allianz Group",
       "license_number": "1500",
       "to_render": false
     },
     {
       "name": "Global Business Ethics Program",
-      "period": "05/2005 – Present",
+      "period": "05/2005",
       "authority": "Junior Achievement Azerbaijan",
       "to_render": false
     }
@@ -800,7 +1090,8 @@
     {
       "name": "German",
       "level": "Basic",
-      "level_linkedin": "Elementary"
+      "level_linkedin": "Elementary",
+      "to_render": false
     }
   ],
   "publications": [
@@ -838,7 +1129,10 @@
       "name": "BirBank",
       "period": "12/2021 – 09/2023",
       "url": "https://birbank.az/",
-      "description": "Top 1 free finance on the App Store and Google Play."
+      "description": {
+        "text": "Top 1 free finance on the App Store and Google Play.",
+        "to_render": false
+      }
     },
     {
       "name": "MüştəriBank (now BirBank Business)",
@@ -889,29 +1183,35 @@
       "position": "Individual Member",
       "period": "03/2024 – Present",
       "url": "https://www.globalaea.org/",
-      "description": "A global network of Enterprise Architecture professionals who are working together to advance Enterprise Architecture and promote professional excellence."
+      "description": "A global network of Enterprise Architecture professionals who are working together to advance Enterprise Architecture and promote professional excellence.",
+      "to_render": false
     }
   ],
   "courses": [
     {
-      "name": "Oracle Database 11g: Program with PL/SQL"
+      "name": "Oracle Database 11g: Program with PL/SQL",
+      "to_render": false
     },
     {
-      "name": "Oracle Database 11g: SQL Fundamentals I-II"
+      "name": "Oracle Database 11g: SQL Fundamentals I-II",
+      "to_render": false
     },
     {
-      "name": "Oracle Database 11g: SQL Tuning Workshop"
+      "name": "Oracle Database 11g: SQL Tuning Workshop",
+      "to_render": false
     },
     {
-      "name": "Mastercard Academy - Authorization processing"
+      "name": "Mastercard Academy - Authorization processing",
+      "to_render": false
     },
     {
-      "name": "Data Analysis, Forecasting and Economic Policy Design"
+      "name": "Data Analysis, Forecasting and Economic Policy Design",
+      "to_render": false
     }
   ],
   "metadata": {
     "last_updated": "2026-10-09",
-    "version": "1.5.1",
-    "notes": "+++===+++ 2025-08-27 16:20 Asia/Baku — Hasan Alizada — Filled work_experience, education, certificates, languages; preserved existing header/socials/skills | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.headline (job headline for header/SEO/PDF; TEMP value, to be finalized from LinkedIn export) | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Merged full LinkedIn export; added to_render visibility flags (missing = true); Visa added; ADY period closed | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — headline = Enterprise & Solution Architect; Visa logo; AWS SA Associate | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Replaced \"Technology principal\" with \"Enterprise and solution architect\"; AWS SA period | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Phone removed; full LinkedIn data export merged: certificates (url/authority/license), projects, memberships, courses, skills, publications | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added skills.technical_labels (display names of technical skill groups, shared by site and PDF)"
+    "version": "1.6.2",
+    "notes": "+++===+++ 2025-08-27 16:20 Asia/Baku — Hasan Alizada — Filled work_experience, education, certificates, languages; preserved existing header/socials/skills | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.headline (job headline for header/SEO/PDF; TEMP value, to be finalized from LinkedIn export) | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Merged full LinkedIn export; added to_render visibility flags (missing = true); Visa added; ADY period closed | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — headline = Enterprise & Solution Architect; Visa logo; AWS SA Associate | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Replaced \"Technology principal\" with \"Enterprise and solution architect\"; AWS SA period | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Phone removed; full LinkedIn data export merged: certificates (url/authority/license), projects, memberships, courses, skills, publications | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added skills.technical_labels (display names of technical skill groups, shared by site and PDF) | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Simplification: hidden (not deleted) locations, XING/Facebook/Instagram/YouTube, SKILLS block, Visa bullets, generic bullets, BirBank description, courses, memberships, German, 4 minor certificates; \"– Present\" dropped from certificate periods | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — summary and summary_html hidden (kept in source) | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — skills.technical hidden; all achievements hidden (kept in source)"
   }
 }

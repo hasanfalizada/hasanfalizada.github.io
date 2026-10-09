@@ -69,7 +69,7 @@
                     "type": "any",
                     "description": "Copy without hidden items"
                 },
-                "description": "Visibility rules: array item object with to_render=false is removed; {text, to_render} item becomes its text string; missing to_render means true; to_render key is stripped"
+                "description": "Visibility rules: object with to_render=false is removed (array item or object field); {text, to_render} becomes its text string; missing to_render means true; to_render key is stripped"
             },
             "getPersonalInfo": {
                 "input": {},
@@ -579,10 +579,10 @@
         "constraints": {
             "data_source": "static JSON file (configurable via constructor sourceUrl, default data/resume.json)",
             "single_source_of_truth": "All consumers must obtain resume data only through this atom",
-            "visibility_flag": "to_render (boolean, optional, default true) on any array item; achievements/skills items may be string or {text, to_render}",
+            "visibility_flag": "to_render (boolean, optional, default true). Any object with to_render=false is hidden: array item removed, or object field removed. Any value (array item or field) may be {text, to_render}. Nothing is deleted from source; hiding only in filterRenderable",
             "browser_compatibility": "ES6+",
             "no_external_apis": true
         },
-        "notes": "+++===+++ 2025-08-26 15:30 UTC — Hasan Alizada — Contract for resume data loader atom with complete JSON schema validation | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.headline; sourceUrl constructor param; single source of truth constraint | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added to_render visibility flag and filterRenderable | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Phone optional (removed from data); added Project, Membership, Course, Publication schemas; certificate url/authority/license_number | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added skills.technical_labels"
+        "notes": "+++===+++ 2025-08-26 15:30 UTC — Hasan Alizada — Contract for resume data loader atom with complete JSON schema validation | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.headline; sourceUrl constructor param; single source of truth constraint | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added to_render visibility flag and filterRenderable | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Phone optional (removed from data); added Project, Membership, Course, Publication schemas; certificate url/authority/license_number | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added skills.technical_labels | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — to_render now applies to object fields too (e.g. contact.location, social_links.*)"
     }
 }

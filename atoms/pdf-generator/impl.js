@@ -147,9 +147,9 @@ class PDFGenerator {
             firstName,
             lastName,
             name: fullName,
-            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — "headline | credentials", same as site hero
-            title: [clean(pi.headline || ''), clean(pi.title || '')].filter(Boolean).join(' | '),
-            credentials: '',                              // keep empty unless you add a dedicated field
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Two lines under the name: headline, then credentials (same as site hero)
+            title: clean(pi.headline || ''),
+            credentials: clean(pi.title || ''),           // e.g., "AWS® SA, TOGAF® 10, PMP® ..."
         };
 
         // ---- CONTACT + SOCIALS ----

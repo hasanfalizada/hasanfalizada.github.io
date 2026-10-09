@@ -470,6 +470,6 @@
                 "blog": "Technical articles and insights"
             }
         },
-        "notes": "+++===+++ 2025-08-26 15:35 UTC — Hasan Alizada — Contract for SEO optimizer atom with comprehensive metadata and structured data support | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added applyToDocument(pageType): writes title, meta, OG, Twitter, Person JSON-LD from resume data; no hardcoded personal values"
+        "notes": "+++===+++ 2025-08-26 15:35 UTC — Hasan Alizada — Contract for SEO optimizer atom with comprehensive metadata and structured data support | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added applyToDocument(pageType): writes title, meta, OG, Twitter, Person JSON-LD from resume data; no hardcoded personal values | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Person JSON-LD extended: worksFor (current job), alumniOf, hasCredential, knowsLanguage; empty fields/objects dropped"
     }
 }

@@ -177,36 +177,49 @@ class ResumeDataLoader {
 
     /**
      * +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Visibility filter (single place for to_render logic)
+     * +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Same rules now apply to object FIELDS, not only array items
      * Rules (applied recursively, input is not mutated):
-     *  - array item that is an object with to_render === false → removed
-     *  - array item of shape {text, to_render} → replaced by its text string
+     *  - any object with to_render === false → removed (from an array, or the field is removed from its parent object)
+     *  - value of shape {text, to_render} → replaced by its text string (array item or object field)
      *  - missing to_render → treated as true (backward compatible)
      *  - to_render key is stripped from output objects
+     * Principle: nothing is ever deleted from the source; hiding is done only here.
      * @param {*} node - raw resume data (or any subtree)
+     * @param {string} path - current path, for logging
      * @returns {*} renderable copy
      */
-    filterRenderable(node) {
+    filterRenderable(node, path = '') {
+        const isPlainObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+        const isHidden = (v) => isPlainObject(v) && v.to_render === false;
+        const isTextValue = (v) => isPlainObject(v)
+            && typeof v.text === 'string'
+            && Object.keys(v).every(k => k === 'text' || k === 'to_render');
+
         if (Array.isArray(node)) {
-            const before = node.length;
             const result = node
-                .filter(item => !(item && typeof item === 'object' && !Array.isArray(item) && item.to_render === false))
-                .map(item => {
-                    const isTextItem = item && typeof item === 'object' && !Array.isArray(item)
-                        && typeof item.text === 'string'
-                        && Object.keys(item).every(k => k === 'text' || k === 'to_render');
-                    return isTextItem ? item.text : this.filterRenderable(item);
-                });
-            if (result.length !== before) {
-                console.debug(`[ResumeDataLoader] filterRenderable: hidden ${before - result.length} of ${before} items`);
-            }
+                .filter((item, i) => {
+                    if (isHidden(item)) {
+                        console.debug(`[ResumeDataLoader] filterRenderable: hidden ${path}[${i}]`);
+                        return false;
+                    }
+                    return true;
+                })
+                .map((item, i) => isTextValue(item) ? item.text : this.filterRenderable(item, `${path}[${i}]`));
             return result;
         }
-        if (node && typeof node === 'object') {
+        if (isPlainObject(node)) {
             const out = {};
             Object.keys(node).forEach(k => {
-                if (k !== 'to_render') {
-                    out[k] = this.filterRenderable(node[k]);
+                if (k === 'to_render') {
+                    return;
                 }
+                const value = node[k];
+                const childPath = path ? `${path}.${k}` : k;
+                if (isHidden(value)) {
+                    console.debug(`[ResumeDataLoader] filterRenderable: hidden field ${childPath}`);
+                    return;
+                }
+                out[k] = isTextValue(value) ? value.text : this.filterRenderable(value, childPath);
             });
             return out;
         }

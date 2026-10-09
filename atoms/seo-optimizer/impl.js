@@ -49,7 +49,25 @@ class SEOOptimizer {
                     'addressCountry': locationParts[locationParts.length - 1] || ''
                 },
                 sameAs: Object.values(socials).filter(Boolean).map(toUrl),
-                knowsAbout: (resumeData.skills && Array.isArray(resumeData.skills.professional)) ? resumeData.skills.professional : []
+                knowsAbout: (resumeData.skills && Array.isArray(resumeData.skills.professional)) ? resumeData.skills.professional : [],
+                // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Career data for search engines (only visible items: data is already filtered by to_render)
+                worksFor: (Array.isArray(resumeData.work_experience) ? resumeData.work_experience : [])
+                    .filter(j => /present$/i.test(String(j.period || '').trim()))
+                    .map(j => ({'@type': 'Organization', 'name': j.company})),
+                alumniOf: (Array.isArray(resumeData.education) ? resumeData.education : [])
+                    .filter(e => e.institution)
+                    .map(e => ({'@type': 'CollegeOrUniversity', 'name': e.institution})),
+                hasCredential: (Array.isArray(resumeData.certificates) ? resumeData.certificates : [])
+                    .filter(c => c.name)
+                    .map(c => {
+                        const cred = {'@type': 'EducationalOccupationalCredential', 'name': c.name};
+                        if (c.authority) cred.recognizedBy = {'@type': 'Organization', 'name': c.authority};
+                        if (c.url) cred.url = c.url;
+                        return cred;
+                    }),
+                knowsLanguage: (Array.isArray(resumeData.languages) ? resumeData.languages : [])
+                    .filter(l => l.name)
+                    .map(l => ({'@type': 'Language', 'name': l.name}))
             }
         };
 
@@ -121,9 +139,13 @@ class SEOOptimizer {
                 document.head.appendChild(ld);
             }
             // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Drop empty fields (e.g. telephone when phone is absent in data)
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Also drops objects whose all non-"@" values are empty (e.g. address when location is hidden)
+            const isEmpty = (v) => v === '' || v == null
+                || (Array.isArray(v) && v.length === 0)
+                || (typeof v === 'object' && !Array.isArray(v) && Object.keys(v).filter(x => !x.startsWith('@')).every(x => isEmpty(v[x])));
             const person = this.createPersonSchema(config.person, 'https://schema.org');
             Object.keys(person).forEach(k => {
-                if (person[k] === '' || (Array.isArray(person[k]) && person[k].length === 0)) {
+                if (!k.startsWith('@') && isEmpty(person[k])) {
                     console.debug('[SEOOptimizer] JSON-LD: dropping empty field', k);
                     delete person[k];
                 }
@@ -388,7 +410,12 @@ class SEOOptimizer {
                 'addressCountry': data.addressCountry || ''
             },
             'sameAs': data.sameAs || [],
-            'knowsAbout': data.knowsAbout || []
+            'knowsAbout': data.knowsAbout || [],
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — worksFor, alumniOf, hasCredential, knowsLanguage (empty ones are dropped in applyToDocument)
+            'worksFor': data.worksFor || [],
+            'alumniOf': data.alumniOf || [],
+            'hasCredential': data.hasCredential || [],
+            'knowsLanguage': data.knowsLanguage || []
         };
     }
 

@@ -20,7 +20,7 @@
             "deps": [],
             "impl_ref": "atoms/resume-data-loader/impl.js",
             "tests_ref": "atoms/resume-data-loader/tests.js",
-            "hash": "b3:001e",
+            "hash": "b3:001f",
             "notes": "Pure static data loading, no external dependencies. Single source of truth: the only atom that knows the resume data source"
         },
         "pdf-generator": {
@@ -72,7 +72,7 @@
             ],
             "impl_ref": "atoms/seo-optimizer/impl.js",
             "tests_ref": "atoms/seo-optimizer/tests.js",
-            "hash": "b3:004d",
+            "hash": "b3:004f",
             "notes": "Schema.org markup for professional profile, Open Graph tags"
         },
         "ui-components": {

@@ -10,6 +10,10 @@ const APP_VERSION = (() => {
 })();
 console.debug('[App] APP_VERSION =', APP_VERSION);
 
+// +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Resume page on the site is disabled: "Resume" menu item downloads the PDF.
+// Rendering code is kept; set to true (and restore the nav link / FAB in index.html) to bring the page back.
+const SHOW_RESUME_PAGE = false;
+
 /**
  * Main Application Class - Orchestrates all atomic modules
  */
@@ -82,6 +86,13 @@ class App {
                     color: '#026466',
                     hoverColor: '#014a4c',
                     icon: `<rect width="24" height="24" rx="4" fill="#026466"/><g transform="translate(1,1)"><path fill="white" d="M13.741 0c-.34 0-.609.146-.768.432l-5.447 9.632a.708.708 0 0 0 0 .709l3.441 5.983c.158.286.419.437.754.437h3.264c.278 0 .479-.1.599-.295a.69.69 0 0 0-.018-.726l-3.374-5.861 5.384-9.482c.123-.211.125-.424.012-.62a.717.717 0 0 0-.625-.309H13.74zm-8.68 4.38c-.28 0-.482.101-.61.307a.64.64 0 0 0 .009.617l1.71 2.969-2.663 4.69c-.121.212-.123.426-.007.63.114.204.322.309.604.309h2.684c.337 0 .594-.15.76-.446l2.647-4.685-1.687-2.947c-.164-.287-.42-.444-.74-.444H5.06z"/></g>`
+                },
+                // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Email (envelope) icon in header, placed after social links
+                email: {
+                    label: 'Email',
+                    color: '#333',
+                    hoverColor: '#000',
+                    icon: `<path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5L4 8V6l8 5 8-5v2z"/>`
                 }
             };
 
@@ -91,8 +102,8 @@ class App {
 
                 const cleanUrl = String(url).trim();
 
-                // If already has protocol, return as is
-                if (/^https?:\/\//i.test(cleanUrl)) {
+                // If already has protocol, return as is (+++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — mailto: too)
+                if (/^(https?:\/\/|mailto:)/i.test(cleanUrl)) {
                     return cleanUrl;
                 }
 
@@ -100,9 +111,14 @@ class App {
                 return `https://${cleanUrl}`;
             };
 
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Email from personal_info.contact.email appended after socials
+            const email = result.data.personal_info?.contact?.email || '';
+            const headerEntries = [...Object.entries(socialLinks), ...(email ? [['email', `mailto:${email}`]] : [])];
+            console.debug('[App] header links =', headerEntries.map(([p]) => p));
+
             // Generate dynamic social links
-            const socialLinksHtml = Object.entries(socialLinks)
-                .filter(([platform, url]) => url && url.trim() !== '')
+            const socialLinksHtml = headerEntries
+                .filter(([platform, url]) => url && String(url).trim() !== '')
                 .map(([platform, url]) => {
                     const config = socialPlatforms[platform];
                     if (!config) {
@@ -114,8 +130,7 @@ class App {
 
                     return `
         <a href="${normalizedUrl}"
-           target="_blank"
-           rel="noopener noreferrer"
+           ${platform === 'email' ? '' : 'target="_blank" rel="noopener noreferrer"'}
            class="social-link"
            aria-label="${config.label}"
            data-platform="${platform}">
@@ -400,7 +415,11 @@ class App {
     async loadInitialContent() {
         try {
             // Load resume content
-            await this.loadResumeContent();
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Resume page rendered only when SHOW_RESUME_PAGE (PDF is the resume now)
+            if (SHOW_RESUME_PAGE) {
+                await this.loadResumeContent();
+            }
+            console.debug('[App] loadInitialContent: resume page rendered =', SHOW_RESUME_PAGE);
 
             // Load blog content
             await this.loadBlogContent();
@@ -473,6 +492,8 @@ class App {
      */
     renderEducationSection(education) {
         const list = Array.isArray(education) ? education : [];
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Section skipped when empty (all items hidden via to_render)
+        if (!list.length) return '';
         const items = list.map((ed, i) => this.renderEducationItem(ed, i)).join('');
         return `
     <div class="resume-section">
@@ -565,6 +586,8 @@ class App {
      */
     renderLanguagesSectionDots(languages) {
         const list = Array.isArray(languages) ? languages : [];
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Section skipped when empty (all items hidden via to_render)
+        if (!list.length) return '';
         const mid = Math.ceil(list.length / 2);
         const left = list.slice(0, mid);
         const right = list.slice(mid);
@@ -710,6 +733,8 @@ class App {
      */
     renderCertificatesSection(certs) {
         const list = Array.isArray(certs) ? certs : [];
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Section skipped when empty (all items hidden via to_render)
+        if (!list.length) return '';
         const items = list.map((c, i) => this.renderCertificateItem(c, i)).join('');
         return `
     <div class="resume-section">
@@ -770,6 +795,8 @@ class App {
      */
     renderWorkExperienceSection(experiences) {
         const list = Array.isArray(experiences) ? experiences : [];
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Section skipped when empty (all items hidden via to_render)
+        if (!list.length) return '';
 
         const itemsHtml = list.map((exp, idx) => this.renderExperienceItem(exp, idx)).join('');
 
@@ -794,7 +821,8 @@ class App {
         // ===== HERO HEADER =====
         const p = data.personal_info || {};
         const photoUrl = (p.photo_url || '').trim();
-        const summaryHtml = (typeof p.summary_html === 'string' && p.summary_html.trim().length)
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Summary block rendered only when present (may be hidden via to_render)
+        const summaryHtml =(typeof p.summary_html === 'string' && p.summary_html.trim().length)
             ? p.summary_html
             : (p.summary || '');
 
@@ -803,8 +831,9 @@ class App {
       ${photoUrl ? `<img class="resume-photo" src="${photoUrl}" alt="${p.name || ''}">` : ''}
       <div class="resume-hero__text">
         <h1 class="resume-header__name">${p.name || ''}</h1>
-        <div class="resume-header__title">${[p.headline, p.title].filter(Boolean).join(' | ')}</div>
-        <div class="resume-header__summary">${summaryHtml || ''}</div>
+        ${p.headline ? `<div class="resume-header__title">${p.headline}</div>` : ''}
+        ${p.title ? `<div class="resume-header__title">${p.title}</div>` : ''}
+        ${summaryHtml ? `<div class="resume-header__summary">${summaryHtml}</div>` : ''}
       </div>
     </div>
   `;
@@ -907,7 +936,12 @@ class App {
     </div>
   `).join('');
 
-        html += `
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Site layout decision: contacts card is NOT shown on the site page
+        // (LinkedIn/X/GitHub/email are in the header). The PDF still renders all contacts. Set to true to bring the card back.
+        const SHOW_CONTACTS_CARD_ON_SITE = false;
+        console.debug('[App] contacts card on site =', SHOW_CONTACTS_CARD_ON_SITE, 'items =', items.map(it => it.key));
+        if (SHOW_CONTACTS_CARD_ON_SITE) {
+            html += `
     <div class="contacts-card">
       <div class="contacts-grid">
         <div class="contacts-col">${renderCol(left)}</div>
@@ -915,15 +949,20 @@ class App {
       </div>
     </div>
   `;
+        }
 
         // ===== SKILLS (pills) =====
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Section skipped when empty (all items hidden via to_render)
         const profSkills = (data.skills?.professional || []).map(s => `<li>${s}</li>`).join('');
-        html += `
+        console.debug('[App] SKILLS items =', (data.skills?.professional || []).length);
+        if (profSkills) {
+            html += `
     <div class="resume-section">
       <h3 class="resume-section__title">SKILLS</h3>
       <ul class="resume-list resume-list--skills">${profSkills}</ul>
     </div>
   `;
+        }
 
         // ===== TECHNICAL SKILLS (2 columns, label: value) =====
         const t = data.skills?.technical || {};
@@ -959,15 +998,21 @@ class App {
         };
         const renderTechSide = (pairs, side) => pairs.map((p, i) => renderTechRow(p, i, side)).join('');
 
-        html += `
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Section skipped when empty (hidden via to_render)
+        const techLeftHtml = renderTechSide(leftPairs, 'L');
+        const techRightHtml = renderTechSide(rightPairs, 'R');
+        console.debug('[App] TECHNICAL SKILLS rendered =', !!(techLeftHtml.trim() || techRightHtml.trim()));
+        if (techLeftHtml.trim() || techRightHtml.trim()) {
+            html += `
     <div class="resume-section">
       <h3 class="resume-section__title">TECHNICAL SKILLS</h3>
       <div class="tech-grid">
-        <div class="tech-col">${renderTechSide(leftPairs, 'L')}</div>
-        <div class="tech-col">${renderTechSide(rightPairs, 'R')}</div>
+        <div class="tech-col">${techLeftHtml}</div>
+        <div class="tech-col">${techRightHtml}</div>
       </div>
     </div>
   `;
+        }
 
         // ===== WORK EXPERIENCE =====
         const experiences = Array.isArray(data.work_experience) ? data.work_experience : [];
@@ -1124,11 +1169,29 @@ class App {
     }
 
     /**
+     * +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Section id from URL hash; '#resume' falls back to blog when the resume page is disabled
+     * (old links to /#resume keep working and land on the blog, hash is cleaned without adding a history entry)
+     * @returns {string} section id
+     */
+    resolveSectionFromHash() {
+        const hash = window.location.hash.substring(1);
+        let sectionId = hash || 'blog'; // Default to blog
+        console.debug('[App] resolveSectionFromHash: hash =', hash, 'SHOW_RESUME_PAGE =', SHOW_RESUME_PAGE);
+
+        if (sectionId === 'resume' && !SHOW_RESUME_PAGE) {
+            sectionId = 'blog';
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+            console.debug('[App] resolveSectionFromHash: resume page disabled → blog, hash cleared');
+        }
+        return sectionId;
+    }
+
+    /**
      * Handle initial route based on URL hash
      */
     handleInitialRoute() {
-        const hash = window.location.hash.substring(1);
-        const sectionId = hash || 'blog'; // Default to blog
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Section resolved via resolveSectionFromHash (resume page may be disabled)
+        const sectionId = this.resolveSectionFromHash();
 
         // Force immediate section updates
         this.updateActiveSection(sectionId);
@@ -1141,8 +1204,8 @@ class App {
      * Handle hash change events
      */
     handleHashChange() {
-        const hash = window.location.hash.substring(1);
-        const sectionId = hash || 'blog'; // Default to blog
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Section resolved via resolveSectionFromHash (resume page may be disabled)
+        const sectionId = this.resolveSectionFromHash();
 
         if (sectionId !== this.currentSection) {
             // Force immediate UI updates
