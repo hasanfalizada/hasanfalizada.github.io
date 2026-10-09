@@ -36,6 +36,9 @@ class PDFGenerator {
             // 3) Normalize JSON → internal model
             const m = this._normalize(data);
 
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — 3b) Company logos → PNG data URLs (opts.logos === false skips)
+            if (opts.logos !== false) await this._loadLogos(m);
+
             // 4) Build doc
             const doc = this._buildDocDefinition(m, opts);
 
@@ -63,6 +66,49 @@ class PDFGenerator {
         const result = await this.resumeDataLoader.loadResumeData();
         console.debug('[PDFGenerator] loader result success =', result.success, 'error =', result.error);
         return result.success ? result.data : null;
+    }
+
+    /**
+     * +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Load company logos (job.logo paths from resume data) and convert them
+     * to square PNG data URLs via canvas (pdfmake supports only PNG/JPEG; this also covers SVG and WebP).
+     * Sets job.logoData; a logo that fails to load is skipped (PDF is still generated).
+     * @param {object} m - normalized model (m.experience[].logo)
+     */
+    async _loadLogos(m) {
+        const SIZE = 128; // px, square canvas; logo fitted with preserved aspect ratio
+        const cache = {};
+        const toPng = (src) => new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+                try {
+                    const w = img.naturalWidth || SIZE, h = img.naturalHeight || SIZE;
+                    const scale = Math.min(SIZE / w, SIZE / h);
+                    const dw = w * scale, dh = h * scale;
+                    const canvas = document.createElement('canvas');
+                    canvas.width = SIZE;
+                    canvas.height = SIZE;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, (SIZE - dw) / 2, (SIZE - dh) / 2, dw, dh);
+                    console.debug('[PDFGenerator] logo converted', src, {w, h});
+                    resolve(canvas.toDataURL('image/png'));
+                } catch (e) {
+                    console.error('[PDFGenerator] logo conversion failed', src, e && e.message);
+                    resolve(null);
+                }
+            };
+            img.onerror = () => {
+                console.error('[PDFGenerator] logo load failed', src);
+                resolve(null);
+            };
+            img.src = src;
+        });
+
+        for (const job of (m.experience || [])) {
+            if (!job.logo) continue;
+            if (!(job.logo in cache)) cache[job.logo] = await toPng(job.logo);
+            job.logoData = cache[job.logo];
+        }
+        console.debug('[PDFGenerator] _loadLogos done', (m.experience || []).map(j => ({company: j.company, logo: !!j.logoData})));
     }
 
     // ---------- utils ----------
@@ -232,6 +278,7 @@ class PDFGenerator {
             position: clean(e.position || ''),
             location: clean(e.location || ''),
             period: clean(e.period || ''), // already "MM/YYYY – MM/YYYY" in your data
+            logo: clean(e.company_logo || ''), // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — logo path (may be hidden via to_render)
             description: clean(e.company_description || ''),
             // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Bullet = string or {text, links:[{text, url}]} → normalized {text, links}
             bullets: Array.isArray(e.achievements)
@@ -310,7 +357,10 @@ class PDFGenerator {
         const GREY = '#5F6B7A';
         const LINK = ACCENT_DESIGN ? ACCENT : '#0B57D0';
         const CONTENT_WIDTH = 595.28 - 36 * 2; // A4 width minus left/right margins
-        console.debug('[PDFGenerator] design =', ACCENT_DESIGN ? 'accent' : 'classic');
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — company logos (accent design only; at least one logo loaded)
+        const LOGO_SIZE = 26;
+        const SHOW_LOGOS = ACCENT_DESIGN && opts.logos !== false && (m.experience || []).some(j => j.logoData);
+        console.debug('[PDFGenerator] design =', ACCENT_DESIGN ? 'accent' : 'classic', 'logos =', SHOW_LOGOS);
 
         // ---------- styles (black everywhere except hyperlinks) ----------
         const styles = {
@@ -658,7 +708,16 @@ class PDFGenerator {
                     block.push(ul);
                 }
 
-                content.push(unbreakableCard(block)); // prevents splitting across pages
+                // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Logo column on the left (LinkedIn-like). Jobs without a logo
+                // get an empty column of the same width so all positions stay aligned. Off: opts.logos === false or classic design.
+                if (SHOW_LOGOS) {
+                    const logoCell = job.logoData
+                        ? {width: LOGO_SIZE, image: job.logoData, fit: [LOGO_SIZE, LOGO_SIZE], margin: [0, 2, 0, 0]}
+                        : {width: LOGO_SIZE, text: ''};
+                    content.push(unbreakableCard([{columns: [logoCell, {width: '*', stack: block}], columnGap: 10}]));
+                } else {
+                    content.push(unbreakableCard(block)); // prevents splitting across pages
+                }
             });
         }
 

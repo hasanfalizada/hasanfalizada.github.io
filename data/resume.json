@@ -435,7 +435,7 @@
           "to_render": false
         }
       ],
-      "company_logo": "assets/img/logos/visa.svg"
+      "company_logo": "assets/img/logos/visa_square.png"
     },
     {
       "position": "Enterprise Architect",
@@ -449,7 +449,7 @@
         "text": "National rail transport operator in Azerbaijan",
         "to_render": false
       },
-      "company_logo": "assets/img/logos/ady.png",
+      "company_logo": "assets/img/logos/ady_square.png",
       "achievements": [
         "Took part in implementing the company's digital transformation strategy; multi-million IT programs",
         {
@@ -499,7 +499,7 @@
         "text": "Largest private bank in Azerbaijan",
         "to_render": false
       },
-      "company_logo": "assets/img/logos/kb.png",
+      "company_logo": "assets/img/logos/kb_square.png",
       "achievements": [
         "Led a team of 12 backend engineers",
         {
@@ -597,7 +597,7 @@
         "text": "Largest private bank in Azerbaijan",
         "to_render": false
       },
-      "company_logo": "assets/img/logos/kb.png",
+      "company_logo": "assets/img/logos/kb_square.png",
       "achievements": [
         "Led a team of 10 developers for card processing (Compass Plus TranzWare CMS / TWO)",
         {
@@ -651,7 +651,7 @@
         "text": "Largest private bank in Azerbaijan",
         "to_render": false
       },
-      "company_logo": "assets/img/logos/kb.png",
+      "company_logo": "assets/img/logos/kb_square.png",
       "achievements": [
         {
           "text": "Led the successful development of Compass Plus's CMS and TWO platforms enhancing card management capabilities and improving operational efficiency.",
@@ -688,7 +688,7 @@
         "text": "Largest private bank in Azerbaijan",
         "to_render": false
       },
-      "company_logo": "assets/img/logos/kb.png",
+      "company_logo": "assets/img/logos/kb_square.png",
       "achievements": [
         {
           "text": "Full lifecycle software development with Scrum",
@@ -741,7 +741,7 @@
         "text": "Largest private bank in Azerbaijan",
         "to_render": false
       },
-      "company_logo": "assets/img/logos/kb.png",
+      "company_logo": "assets/img/logos/kb_square.png",
       "achievements": [],
       "to_render": false
     },
@@ -757,7 +757,7 @@
         "text": "Largest private bank in Azerbaijan",
         "to_render": false
       },
-      "company_logo": "assets/img/logos/kb.png",
+      "company_logo": "assets/img/logos/kb_square.png",
       "achievements": [],
       "to_render": false
     },
@@ -770,7 +770,10 @@
       },
       "period": "03/2008 – 06/2016",
       "company_description": "",
-      "company_logo": "assets/img/logos/vp.webp",
+      "company_logo": {
+        "text": "assets/img/logos/vp.webp",
+        "to_render": false
+      },
       "achievements": [
         {
           "text": "Managed and monitored IT operations, ensuring 99.9% uptime.",
@@ -1302,6 +1305,6 @@
   ],
   "metadata": {
     "last_updated": "2026-10-09",
-    "version": "1.8.2"
+    "version": "1.8.4"
   }
 }
