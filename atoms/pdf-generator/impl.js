@@ -810,7 +810,16 @@ class PDFGenerator {
         }
 
         // ---------- return ----------
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — PDF document properties (Title/Author/Subject) from resume data
+        const info = {
+            title: `${fullName} — Resume`,
+            author: fullName,
+            subject: m.profile.title || '',
+            creator: fullName
+        };
+        console.debug('[PDFGenerator] document info', info);
         return {
+            info,
             pageSize: 'A4',
             // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Equal 36pt margins (bottom 48 was reserved for page numbers, now off)
             pageMargins: compact ? [30, 34, 30, 40] : [36, 36, 36, 36],
