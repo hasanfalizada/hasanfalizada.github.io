@@ -6,7 +6,7 @@
       "to_render": false
     },
     "headline": "Enterprise & Solution Architect",
-    "positioning": "18 years in banking, payments and national-scale IT — from card processing to enterprise architecture",
+    "positioning": "In IT since 2008: telecom, banking, payments and national-scale systems",
     "summary": {
       "text": "Enterprise and solution architect with extensive experience in scalable and fault–tolerant architectures. Passionate about optimizing enterprise IT landscapes, strengthening system resilience, and driving digital transformation to align technology with business goals.",
       "to_render": false
@@ -451,7 +451,11 @@
       },
       "company_logo": "assets/img/logos/ady_square.png",
       "achievements": [
-        "Took part in implementing the company's digital transformation strategy; multi-million IT programs",
+        "Took part in implementing the company's digital transformation strategy",
+        {
+          "text": "Took part in implementing the company's digital transformation strategy; multi-million IT programs",
+          "to_render": false
+        },
         {
           "text": "Architecture for the implementation of the company's digital transformation strategy; multi-million IT programs.",
           "to_render": false
@@ -1305,6 +1309,6 @@
   ],
   "metadata": {
     "last_updated": "2026-10-09",
-    "version": "1.8.4"
+    "version": "1.8.9"
   }
 }
