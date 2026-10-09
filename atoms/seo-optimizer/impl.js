@@ -11,22 +11,123 @@ class SEOOptimizer {
      * +++===+++ 2025-11-26 UTC — Hasan Alizada — Initialize with resume data (single source of truth)
      * @param {object} resumeData - Data from resume.json
      */
+    // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added headline, twitterHandle, person (JSON-LD) — all derived from resume data
     initialize(resumeData) {
         const pi = resumeData.personal_info || {};
         const sc = resumeData.site_config || {};
+        const contact = pi.contact || {};
+        const socials = pi.social_links || {};
+        const toUrl = (v) => /^https?:\/\//i.test(String(v)) ? String(v) : `https://${String(v).replace(/^\/+/, '')}`;
+
+        // Twitter handle derived from social_links.twitter (e.g. "x.com/hasanfalizada" → "@hasanfalizada")
+        const twitterPath = socials.twitter ? String(socials.twitter).replace(/\/+$/, '').split('/').pop() : '';
+        const twitterHandle = twitterPath ? `@${twitterPath.replace(/^@/, '')}` : '';
+
+        // Location "City, Country" → locality / country
+        const locationParts = String(contact.location || '').split(',').map(s => s.trim()).filter(Boolean);
 
         this.defaultConfig = {
             siteName: `${pi.name || 'Portfolio'} Portfolio`,
             siteUrl: sc.url || 'https://localhost',
             siteDescription: pi.summary || '',
             author: pi.name || '',
+            headline: pi.headline || '',
+            twitterHandle: twitterHandle,
             keywords: sc.keywords || [],
             language: sc.language || 'en',
-            favicon: sc.favicon || 'assets/favicon.svg'
+            favicon: sc.favicon || 'assets/favicon.svg',
+            person: {
+                name: pi.name || '',
+                jobTitle: pi.headline || '',
+                description: pi.summary || '',
+                url: sc.url || '',
+                email: contact.email || '',
+                telephone: contact.phone || '',
+                address: {
+                    '@type': 'PostalAddress',
+                    'addressLocality': locationParts[0] || '',
+                    'addressCountry': locationParts[locationParts.length - 1] || ''
+                },
+                sameAs: Object.values(socials).filter(Boolean).map(toUrl),
+                knowsAbout: (resumeData.skills && Array.isArray(resumeData.skills.professional)) ? resumeData.skills.professional : []
+            }
         };
 
+        console.debug('[SEOOptimizer] initialized, config =', this.defaultConfig);
         this.isInitialized = true;
         return this.defaultConfig;
+    }
+
+    /**
+     * +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Apply SEO for a page type to the live document (title, meta, OG, Twitter, JSON-LD)
+     * Static tags in index.html are only a fallback for crawlers without JS; this overwrites them from resume data.
+     * @param {string} pageType - Page type (resume, blog)
+     * @returns {{success: boolean, error: string|null}}
+     */
+    applyToDocument(pageType) {
+        try {
+            if (!this.isInitialized) {
+                throw new Error('SEOOptimizer is not initialized');
+            }
+            const config = this.defaultConfig;
+
+            const title = this.generatePageTitle(pageType, {}, config);
+            const description = this.generatePageDescription(pageType, {}, config);
+            const keywords = this.generatePageKeywords(pageType, {}, config);
+            const canonicalUrl = this.generateCanonicalUrl(pageType, {}, config);
+            console.debug('[SEOOptimizer] applyToDocument', {pageType, title, description, canonicalUrl});
+
+            // Upsert <meta> by attribute name/property
+            const setMeta = (attr, key, content) => {
+                let el = document.head.querySelector(`meta[${attr}="${key}"]`);
+                if (!el) {
+                    el = document.createElement('meta');
+                    el.setAttribute(attr, key);
+                    document.head.appendChild(el);
+                }
+                el.setAttribute('content', content);
+            };
+
+            document.title = title;
+            setMeta('name', 'description', description);
+            setMeta('name', 'keywords', keywords.join(', '));
+            setMeta('name', 'author', config.author);
+
+            setMeta('property', 'og:title', title);
+            setMeta('property', 'og:description', description);
+            setMeta('property', 'og:url', canonicalUrl);
+            setMeta('property', 'og:site_name', config.siteName);
+
+            setMeta('name', 'twitter:title', title);
+            setMeta('name', 'twitter:description', description);
+            if (config.twitterHandle) {
+                setMeta('name', 'twitter:creator', config.twitterHandle);
+            }
+
+            let canonical = document.head.querySelector('link[rel="canonical"]');
+            if (!canonical) {
+                canonical = document.createElement('link');
+                canonical.setAttribute('rel', 'canonical');
+                document.head.appendChild(canonical);
+            }
+            canonical.setAttribute('href', canonicalUrl);
+
+            // Person JSON-LD
+            let ld = document.getElementById('structured-data-person');
+            if (!ld) {
+                ld = document.createElement('script');
+                ld.type = 'application/ld+json';
+                ld.id = 'structured-data-person';
+                document.head.appendChild(ld);
+            }
+            ld.textContent = JSON.stringify(this.createPersonSchema(config.person, 'https://schema.org'), null, 2);
+
+            console.debug('[SEOOptimizer] document updated');
+            return {success: true, error: null};
+        } catch (error) {
+            console.error('[SEOOptimizer] applyToDocument failed:', error.message);
+            return {success: false, error: error.message};
+        }
     }
 
     /**
@@ -150,7 +251,8 @@ class SEOOptimizer {
     generatePageDescription(pageType, pageData, config) {
         switch (pageType) {
             case 'resume':
-                return `Professional resume of ${config.author}, Technology Principal with expertise in TOGAF, system design, and digital transformation.`;
+                // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — headline from resume data instead of hardcoded text
+                return `Professional resume of ${config.author}${config.headline ? `, ${config.headline}` : ''}. ${config.siteDescription}`.trim();
             case 'blog':
                 return `Blog by ${config.author} covering enterprise architecture, system design, and modern development practices.`;
             case 'article':
@@ -184,23 +286,28 @@ class SEOOptimizer {
     }
 
     /**
-     * Generate canonical URL
+     * +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Fixed canonical: blog is the default section (root);
+     * sections are hash routes (#resume) of ONE document and search engines ignore fragments,
+     * so every section's canonical is the site root. Only articles have their own URL.
      * @param {string} pageType - Page type
      * @param {object} pageData - Page data
      * @param {object} config - Site config
      * @returns {string}
      */
     generateCanonicalUrl(pageType, pageData, config) {
+        const root = `${String(config.siteUrl || '').replace(/\/+$/, '')}/`;
+        let url;
         switch (pageType) {
-            case 'resume':
-                return config.siteUrl; // Resume is now the root
-            case 'blog':
-                return `${config.siteUrl}#blog`;
             case 'article':
-                return pageData.permalink || `${config.siteUrl}/articles/${pageData.slug}.html`;
+                url = pageData.permalink || `${root}articles/${pageData.slug}.html`;
+                break;
+            case 'blog':
+            case 'resume':
             default:
-                return config.siteUrl; // Default to root (resume)
+                url = root;
         }
+        console.debug('[SEOOptimizer] generateCanonicalUrl', pageType, '→', url);
+        return url;
     }
 
     /**
@@ -410,8 +517,8 @@ class SEOOptimizer {
         return `
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@hasanfalizada">
-    <meta name="twitter:creator" content="@hasanfalizada">
+    <meta name="twitter:site" content="${config.twitterHandle || ''}">
+    <meta name="twitter:creator" content="${config.twitterHandle || ''}">
     <meta name="twitter:title" content="${title}">
     <meta name="twitter:description" content="${description}">
     <meta name="twitter:image" content="${image}">
@@ -441,8 +548,10 @@ class SEOOptimizer {
             }
 
             // Ensure it ends with site branding for non-home pages
-            if (pageType !== 'home' && !optimizedTitle.includes('Hasan Alizada')) {
-                const brandSuffix = ' - Hasan Alizada';
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — brand from resume data instead of hardcoded name
+            const brand = (this.defaultConfig && this.defaultConfig.author) || '';
+            if (brand && pageType !== 'home' && !optimizedTitle.includes(brand)) {
+                const brandSuffix = ` - ${brand}`;
                 if (optimizedTitle.length + brandSuffix.length <= maxLength) {
                     optimizedTitle += brandSuffix;
                 }

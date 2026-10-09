@@ -2,9 +2,16 @@
 // SINGLE SOURCE OF TRUTH: reads data only from data/resume.json (no DOM).
 // Emits selectable text + live links using pdfmake. No rasterization.
 
+// +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Data now comes via injected ResumeDataLoader (declared dependency); pdfmake vendored locally
+
 class PDFGenerator {
-    constructor() {
+    /**
+     * @param {ResumeDataLoader} resumeDataLoader - single source of resume data
+     */
+    constructor(resumeDataLoader) {
+        this.resumeDataLoader = resumeDataLoader;
         this.isGenerating = false;
+        console.debug('[PDFGenerator] created, loader injected =', !!resumeDataLoader);
     }
 
     /**
@@ -47,14 +54,15 @@ class PDFGenerator {
     }
 
     // ---------- data load ----------
+    // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Read via ResumeDataLoader instead of own fetch
     async _loadResumeJson() {
-        try {
-            const res = await fetch('data/resume.json', {cache: 'no-store'});
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            return await res.json();
-        } catch (e) {
+        if (!this.resumeDataLoader) {
+            console.error('[PDFGenerator] no ResumeDataLoader injected');
             return null;
         }
+        const result = await this.resumeDataLoader.loadResumeData();
+        console.debug('[PDFGenerator] loader result success =', result.success, 'error =', result.error);
+        return result.success ? result.data : null;
     }
 
     // ---------- utils ----------
@@ -68,8 +76,11 @@ class PDFGenerator {
             s.onerror = () => rej(new Error('Failed to load ' + src));
             document.head.appendChild(s);
         });
-        await load('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js');
-        await load('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.js');
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — pdfmake 0.2.10 vendored locally (was CDN)
+        console.debug('[PDFGenerator] loading local pdfmake');
+        await load('assets/js/pdfmake.min.js');
+        await load('assets/js/vfs_fonts.js');
+        console.debug('[PDFGenerator] pdfmake loaded =', !!(window.pdfMake && window.pdfMake.createPdf));
         if (!window.pdfMake || !window.pdfMake.createPdf) throw new Error('pdfmake failed to initialize');
     }
 

@@ -26,7 +26,7 @@
                         "data"
                     ]
                 },
-                "description": "Loads complete resume data from JSON file"
+                "description": "Loads resume data from source and returns RENDERABLE data (filterRenderable applied). Raw data stays in dataCache"
             },
             "validateResumeStructure": {
                 "input": {
@@ -59,6 +59,11 @@
                     ]
                 },
                 "description": "Validates resume data structure integrity"
+            },
+            "filterRenderable": {
+                "input": {"type": "any", "description": "Raw resume data or subtree"},
+                "output": {"type": "any", "description": "Copy without hidden items"},
+                "description": "Visibility rules: array item object with to_render=false is removed; {text, to_render} item becomes its text string; missing to_render means true; to_render key is stripped"
             },
             "getPersonalInfo": {
                 "input": {},
@@ -187,7 +192,12 @@
                         "type": "string"
                     },
                     "title": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Credentials line, e.g. AWS® SA, TOGAF® 10"
+                    },
+                    "headline": {
+                        "type": "string",
+                        "description": "Job headline shown in header, SEO and structured data"
                     },
                     "summary": {
                         "type": "string"
@@ -202,6 +212,7 @@
                 "required": [
                     "name",
                     "title",
+                    "headline",
                     "summary",
                     "contact",
                     "social_links"
@@ -431,6 +442,7 @@
         },
         "capabilities": [
             "loadResumeData",
+            "filterRenderable",
             "validateResumeStructure",
             "getPersonalInfo",
             "getExperience",
@@ -438,10 +450,12 @@
         ],
         "dependencies": [],
         "constraints": {
-            "data_source": "static JSON file",
+            "data_source": "static JSON file (configurable via constructor sourceUrl, default data/resume.json)",
+            "single_source_of_truth": "All consumers must obtain resume data only through this atom",
+            "visibility_flag": "to_render (boolean, optional, default true) on any array item; achievements/skills items may be string or {text, to_render}",
             "browser_compatibility": "ES6+",
             "no_external_apis": true
         },
-        "notes": "+++===+++ 2025-08-26 15:30 UTC — Hasan Alizada — Contract for resume data loader atom with complete JSON schema validation"
+        "notes": "+++===+++ 2025-08-26 15:30 UTC — Hasan Alizada — Contract for resume data loader atom with complete JSON schema validation | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.headline; sourceUrl constructor param; single source of truth constraint | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added to_render visibility flag and filterRenderable"
     }
 }

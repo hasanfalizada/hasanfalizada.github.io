@@ -214,15 +214,22 @@ class App {
     /**
      * +++===+++ 2025-11-26 UTC — Hasan Alizada — Load resume data (single source of truth)
      */
+    // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Delegates to ResumeDataLoader atom (only place that knows the data source)
     async loadResumeData() {
         try {
-            const response = await fetch('data/resume.json', { cache: 'no-store' });
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
+            if (typeof ResumeDataLoader === 'undefined') {
+                console.debug('[App] loading ResumeDataLoader script');
+                await this.loadScript('atoms/resume-data-loader/impl.js');
+                await this.waitForGlobal('ResumeDataLoader');
             }
-            const data = await response.json();
-            return { success: true, data: data, error: null };
+            if (!this.atoms.resumeDataLoader) {
+                this.atoms.resumeDataLoader = new ResumeDataLoader();
+            }
+            const result = await this.atoms.resumeDataLoader.loadResumeData();
+            console.debug('[App] resume data loaded, success =', result.success, 'error =', result.error);
+            return result;
         } catch (error) {
+            console.error('[App] loadResumeData failed:', error.message);
             return { success: false, data: null, error: error.message };
         }
     }
@@ -239,11 +246,12 @@ class App {
         if (brandTitle) {
             // +++===+++ 2025-11-26 UTC — Hasan Alizada — Fixed: Always show "Technology Principal" in header
             // The pi.title field contains credentials (AWS®, TOGAF®, etc), not job title
-            // Job title "Technology Principal" is extracted from summary or hardcoded for header display
-            brandTitle.textContent = 'Technology Principal';
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Job title now from personal_info.headline (no hardcode)
+            brandTitle.textContent = pi.headline || '';
         }
 
-        document.title = pi.name && pi.title ? `${pi.name} - ${pi.title}` : (pi.name || 'Portfolio');
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — document.title is set by SEOOptimizer.applyToDocument (updatePageSEO)
+        console.debug('[App] header updated, name =', pi.name, 'headline =', pi.headline);
     }
 
     /**
@@ -277,7 +285,8 @@ class App {
                 await this.waitForGlobal('PDFGenerator');
             }
             if (!this.atoms.pdfGenerator) {
-                this.atoms.pdfGenerator = new PDFGenerator();
+                // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Inject ResumeDataLoader (declared dependency)
+                this.atoms.pdfGenerator = new PDFGenerator(this.atoms.resumeDataLoader);
             }
 
             // Load blog renderer atom
@@ -950,40 +959,14 @@ class App {
     /**
      * +++===+++ 2025-11-26 UTC — Hasan Alizada — Update page SEO dynamically
      */
+    // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — All SEO values come from resume data via SEOOptimizer (no hardcode)
     updatePageSEO(sectionId) {
-        if (!this.atoms.seoOptimizer) return;
-
-        // Generate optimized page title
-        const titleResult = this.atoms.seoOptimizer.generatePageTitle(sectionId, {}, {
-            author: 'Hasan Alizada'
-        });
-        if (titleResult) {
-            document.title = titleResult;
+        if (!this.atoms.seoOptimizer) {
+            console.debug('[App] updatePageSEO skipped: seoOptimizer not ready');
+            return;
         }
-
-        // Update meta description
-        const descResult = this.atoms.seoOptimizer.generatePageDescription(sectionId, {}, {
-            author: 'Hasan Alizada',
-            siteDescription: 'Technology Principal with extensive experience in scalable and fault-tolerant architectures'
-        });
-        if (descResult) {
-            const metaDesc = document.querySelector('meta[name="description"]');
-            if (metaDesc) {
-                metaDesc.setAttribute('content', descResult);
-            }
-        }
-
-        // Update canonical URL
-        const canonicalUrl = this.atoms.seoOptimizer.generateCanonicalUrl(sectionId, {}, {
-            siteUrl: 'https://hasanfalizada.github.io'
-        });
-        let canonical = document.querySelector('link[rel="canonical"]');
-        if (!canonical) {
-            canonical = document.createElement('link');
-            canonical.setAttribute('rel', 'canonical');
-            document.head.appendChild(canonical);
-        }
-        canonical.setAttribute('href', canonicalUrl);
+        const result = this.atoms.seoOptimizer.applyToDocument(sectionId);
+        console.debug('[App] updatePageSEO', sectionId, result);
     }
 
     /**
@@ -1073,8 +1056,8 @@ class App {
             });
 
             // Use the generateAndDownload method which handles everything
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — filename removed: PDFGenerator builds "<Name>_Resume.pdf" from resume data
             const result = await this.atoms.pdfGenerator.generateAndDownload(null, {
-                filename: 'Hasan_Alizada_Resume.pdf',
                 margin: [5, 5, 5, 5],
                 image: {type: 'jpeg', quality: 0.95}
             });

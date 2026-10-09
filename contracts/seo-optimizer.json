@@ -435,7 +435,8 @@
             "createStructuredData",
             "setSocialMediaTags",
             "optimizePageTitles",
-            "generateSitemap"
+            "generateSitemap",
+            "applyToDocument"
         ],
         "dependencies": [
             "resume-data-loader"
@@ -447,6 +448,7 @@
             "google_search_optimization": true,
             "static_generation": true
         },
+        "seo_targets_note": "Documentation only. Authoritative keywords are site_config.keywords in data/resume.json",
         "seo_targets": {
             "primary_keywords": [
                 "enterprise architect",
@@ -468,6 +470,6 @@
                 "blog": "Technical articles and insights"
             }
         },
-        "notes": "+++===+++ 2025-08-26 15:35 UTC — Hasan Alizada — Contract for SEO optimizer atom with comprehensive metadata and structured data support"
+        "notes": "+++===+++ 2025-08-26 15:35 UTC — Hasan Alizada — Contract for SEO optimizer atom with comprehensive metadata and structured data support | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added applyToDocument(pageType): writes title, meta, OG, Twitter, Person JSON-LD from resume data; no hardcoded personal values"
     }
 }

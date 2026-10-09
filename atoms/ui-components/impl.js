@@ -108,7 +108,8 @@ class UIComponents {
             const socialLinksHtml = footerOptions.showSocialIcons ?
                 this.renderSocialLinks(socialLinks, 'horizontal', false).htmlContent : '';
 
-            const copyrightText = footerText || `© ${new Date().getFullYear()} Hasan Alizada. All rights reserved.`;
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Removed hardcoded name; caller passes footerText built from resume data
+            const copyrightText = footerText || `© ${new Date().getFullYear()}. All rights reserved.`;
 
             const htmlContent = `
                 <footer class="footer">

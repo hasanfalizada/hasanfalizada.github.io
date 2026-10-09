@@ -11,6 +11,7 @@
             "contract": "contracts/resume-data-loader.json",
             "capabilities": [
                 "loadResumeData",
+                "filterRenderable",
                 "validateResumeStructure",
                 "getPersonalInfo",
                 "getExperience",
@@ -19,8 +20,8 @@
             "deps": [],
             "impl_ref": "atoms/resume-data-loader/impl.js",
             "tests_ref": "atoms/resume-data-loader/tests.js",
-            "hash": "b3:001a",
-            "notes": "Pure static data loading, no external dependencies"
+            "hash": "b3:001c",
+            "notes": "Pure static data loading, no external dependencies. Single source of truth: the only atom that knows the resume data source"
         },
         "pdf-generator": {
             "id": "atom_002",
@@ -36,8 +37,8 @@
             ],
             "impl_ref": "atoms/pdf-generator/impl.js",
             "tests_ref": "atoms/pdf-generator/tests.js",
-            "hash": "b3:002a",
-            "notes": "Uses jsPDF library, works entirely in browser"
+            "hash": "b3:002b",
+            "notes": "Uses local pdfmake 0.2.10, works entirely in browser; receives ResumeDataLoader via constructor"
         },
         "blog-renderer": {
             "id": "atom_003",
@@ -63,14 +64,15 @@
                 "generateMetaTags",
                 "createStructuredData",
                 "setSocialMediaTags",
-                "optimizePageTitles"
+                "optimizePageTitles",
+                "applyToDocument"
             ],
             "deps": [
                 "resume-data-loader"
             ],
             "impl_ref": "atoms/seo-optimizer/impl.js",
             "tests_ref": "atoms/seo-optimizer/tests.js",
-            "hash": "b3:004a",
+            "hash": "b3:004c",
             "notes": "Schema.org markup for professional profile, Open Graph tags"
         },
         "ui-components": {
@@ -87,7 +89,7 @@
             "deps": [],
             "impl_ref": "atoms/ui-components/impl.js",
             "tests_ref": "atoms/ui-components/tests.js",
-            "hash": "b3:005a",
+            "hash": "b3:005b",
             "notes": "Apple-inspired minimalistic design, white background, black fonts"
         },
         "navigation-handler": {
@@ -114,8 +116,12 @@
     },
     "dependencies": {
         "external_libs": [
-            "assets/js/jspdf.min.js",
+            "assets/js/pdfmake.min.js",
+            "assets/js/vfs_fonts.js",
             "assets/js/marked.min.js"
+        ],
+        "unused_libs": [
+            "assets/js/jspdf.min.js"
         ],
         "lib_notes": "All external libraries are vendored locally (not CDN)"
     },
@@ -127,5 +133,5 @@
     "contracts_dir": "contracts/",
     "atoms_dir": "atoms/",
     "tests_dir": "tests/",
-    "notes": "+++===+++ 2025-08-26 15:30 UTC — Hasan Alizada — Initial project manifest with atomic architecture for personal portfolio website"
+    "notes": "+++===+++ 2025-08-26 15:30 UTC — Hasan Alizada — Initial project manifest with atomic architecture for personal portfolio website | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Single source of truth for resume data via resume-data-loader; pdfmake vendored; jsPDF unused"
 }

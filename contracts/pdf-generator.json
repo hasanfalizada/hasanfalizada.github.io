@@ -3,7 +3,7 @@
         "id": "pdf-generator.v1",
         "name": "PDF Generator",
         "version": "1.0.0",
-        "description": "Atomic module for generating PDF resume from loaded data using client-side jsPDF library",
+        "description": "Atomic module for generating PDF resume from loaded data using client-side pdfmake library (vendored locally). Constructor receives ResumeDataLoader; entry point used by App is generateAndDownload(_unused, {filename?, compact?})",
         "interface": {
             "generatePDF": {
                 "input": {
@@ -307,7 +307,7 @@
             "resume-data-loader"
         ],
         "external_dependencies": [
-            "jsPDF"
+            "pdfmake 0.2.10 (assets/js/pdfmake.min.js, assets/js/vfs_fonts.js)"
         ],
         "constraints": {
             "browser_compatibility": "ES6+",
@@ -317,6 +317,6 @@
             ],
             "client_side_only": true
         },
-        "notes": "+++===+++ 2025-08-26 15:35 UTC — Hasan Alizada — Contract for PDF generator atom using jsPDF library for client-side PDF generation"
+        "notes": "+++===+++ 2025-08-26 15:35 UTC — Hasan Alizada — Contract for PDF generator atom using jsPDF library for client-side PDF generation | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Switched to local pdfmake; data via injected ResumeDataLoader"
     }
 }

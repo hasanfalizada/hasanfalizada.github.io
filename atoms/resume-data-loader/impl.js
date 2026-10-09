@@ -1,20 +1,31 @@
 // +++===+++ 2025-08-26 16:00 UTC — Hasan Alizada — Resume data loader atom implementation
 
+// +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — This atom is the ONLY place that knows where resume data comes from.
+// All consumers (page, header, SEO, PDF) must get resume data through it. To switch the source, change only `sourceUrl`.
+
 class ResumeDataLoader {
-    constructor() {
+    /**
+     * @param {string} sourceUrl - Location of resume data (single source of truth)
+     */
+    constructor(sourceUrl = 'data/resume.json') {
+        this.sourceUrl = sourceUrl;
         this.dataCache = null;
         this.isLoading = false;
+        console.debug('[ResumeDataLoader] created, sourceUrl =', this.sourceUrl);
     }
 
     /**
      * Loads complete resume data from JSON file
      * @returns {Promise<{success: boolean, data: object, error: string|null}>}
      */
+    // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Returns RENDERABLE data (to_render:false items removed); raw stays in dataCache
     async loadResumeData() {
         if (this.dataCache) {
+            const renderable = this.filterRenderable(this.dataCache);
+            console.debug('[ResumeDataLoader] returning renderable data from cache');
             return {
                 success: true,
-                data: this.dataCache,
+                data: renderable,
                 error: null
             };
         }
@@ -35,30 +46,37 @@ class ResumeDataLoader {
         this.isLoading = true;
 
         try {
-            const response = await fetch('data/resume.json');
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Fetch from configurable sourceUrl, no-store to always get fresh data
+            console.debug('[ResumeDataLoader] fetching', this.sourceUrl);
+            const response = await fetch(this.sourceUrl, {cache: 'no-store'});
+            console.debug('[ResumeDataLoader] response status =', response.status);
 
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: Failed to fetch resume data`);
             }
 
             const data = await response.json();
+            console.debug('[ResumeDataLoader] parsed top-level keys =', Object.keys(data || {}));
 
             const validation = this.validateResumeStructure(data);
+            console.debug('[ResumeDataLoader] validation =', validation);
             if (!validation.valid) {
                 throw new Error(`Resume data validation failed: ${validation.errors.join(', ')}`);
             }
 
             this.dataCache = data;
             this.isLoading = false;
+            console.debug('[ResumeDataLoader] data cached');
 
             return {
                 success: true,
-                data: this.dataCache,
+                data: this.filterRenderable(this.dataCache),
                 error: null
             };
 
         } catch (error) {
             this.isLoading = false;
+            console.error('[ResumeDataLoader] load failed:', error.message);
 
             return {
                 success: false,
@@ -86,7 +104,8 @@ class ResumeDataLoader {
 
         // Validate personal_info structure
         if (data.personal_info) {
-            const personalRequiredProps = ['name', 'title', 'summary', 'contact', 'social_links'];
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — headline is required (used by header, SEO, structured data)
+            const personalRequiredProps = ['name', 'title', 'headline', 'summary', 'contact', 'social_links'];
             for (const prop of personalRequiredProps) {
                 if (!data.personal_info[prop]) {
                     errors.push(`Missing required personal_info property: ${prop}`);
@@ -134,12 +153,63 @@ class ResumeDataLoader {
             });
         }
 
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — to_render, when present, must be boolean (anywhere in the tree)
+        const checkToRender = (node, path) => {
+            if (Array.isArray(node)) {
+                node.forEach((item, i) => checkToRender(item, `${path}[${i}]`));
+            } else if (node && typeof node === 'object') {
+                if ('to_render' in node && typeof node.to_render !== 'boolean') {
+                    errors.push(`${path}.to_render must be boolean`);
+                }
+                Object.keys(node).forEach(k => checkToRender(node[k], path ? `${path}.${k}` : k));
+            }
+        };
+        checkToRender(data, '');
+
         const isValid = errors.length === 0;
 
         return {
             valid: isValid,
             errors: errors
         };
+    }
+
+    /**
+     * +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Visibility filter (single place for to_render logic)
+     * Rules (applied recursively, input is not mutated):
+     *  - array item that is an object with to_render === false → removed
+     *  - array item of shape {text, to_render} → replaced by its text string
+     *  - missing to_render → treated as true (backward compatible)
+     *  - to_render key is stripped from output objects
+     * @param {*} node - raw resume data (or any subtree)
+     * @returns {*} renderable copy
+     */
+    filterRenderable(node) {
+        if (Array.isArray(node)) {
+            const before = node.length;
+            const result = node
+                .filter(item => !(item && typeof item === 'object' && !Array.isArray(item) && item.to_render === false))
+                .map(item => {
+                    const isTextItem = item && typeof item === 'object' && !Array.isArray(item)
+                        && typeof item.text === 'string'
+                        && Object.keys(item).every(k => k === 'text' || k === 'to_render');
+                    return isTextItem ? item.text : this.filterRenderable(item);
+                });
+            if (result.length !== before) {
+                console.debug(`[ResumeDataLoader] filterRenderable: hidden ${before - result.length} of ${before} items`);
+            }
+            return result;
+        }
+        if (node && typeof node === 'object') {
+            const out = {};
+            Object.keys(node).forEach(k => {
+                if (k !== 'to_render') {
+                    out[k] = this.filterRenderable(node[k]);
+                }
+            });
+            return out;
+        }
+        return node;
     }
 
     /**
