@@ -560,16 +560,33 @@ class PDFGenerator {
                 const colA = items.slice(0, half);
                 const colB = items.slice(half);
 
-                const renderCol = (col) => col.map(i => ({
-                    columns: [
+                // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — accent design: small vector icon before each contact label
+                // (paths from main.js: Email/Website/Twitter from generateResumeHTML, LinkedIn/GitHub from renderHeaderSocialLinks; 24x24 viewBox, grey fill)
+                const ICON_PATHS = {
+                    Email: 'M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5L4 8V6l8 5 8-5v2z',
+                    Website: 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1 17.9A8 8 0 0 1 4.1 13H11v6.9zM4.1 11A8 8 0 0 1 11 4.1V11H4.1zM13 4.1A8 8 0 0 1 19.9 11H13V4.1zM13 13h6.9A8 8 0 0 1 13 19.9V13z',
+                    LinkedIn: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z',
+                    Twitter: 'M4 3l7.5 9.4L4.7 21H8l5-6.3L17.8 21H21l-7.4-9.9L20.5 3H17.2l-4.8 6-4.6-6H4z',
+                    GitHub: 'M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.374-12-12-12z'
+                };
+                const iconCell = (label) => {
+                    const d = ICON_PATHS[label];
+                    if (!d) return {width: 13, text: ''};
+                    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="${GREY}" d="${d}"/></svg>`;
+                    return {width: 13, stack: [{svg, width: 9, height: 9, margin: [0, 1.5, 0, 0]}]};
+                };
+
+                const renderCol = (col) => col.map(i => {
+                    const label = labelFor(i.url || i.node?.text);
+                    const cols = [
                         // fixed-width label column (black)
-                        {width: 64, text: labelFor(i.url || i.node?.text), style: 'contactText'},
+                        {width: 64, text: label, style: 'contactText'},
                         // value (blue if link, else black)
                         {width: '*', ...(i.node || {text: ''})}
-                    ],
-                    columnGap: 8,
-                    margin: [0, 1, 0, 1]
-                }));
+                    ];
+                    if (ACCENT_DESIGN) cols.unshift(iconCell(label));
+                    return {columns: cols, columnGap: ACCENT_DESIGN ? 4 : 8, margin: [0, 1, 0, 1]};
+                });
 
                 content.push({
                     columns: [
