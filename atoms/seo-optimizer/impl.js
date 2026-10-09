@@ -120,7 +120,15 @@ class SEOOptimizer {
                 ld.id = 'structured-data-person';
                 document.head.appendChild(ld);
             }
-            ld.textContent = JSON.stringify(this.createPersonSchema(config.person, 'https://schema.org'), null, 2);
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Drop empty fields (e.g. telephone when phone is absent in data)
+            const person = this.createPersonSchema(config.person, 'https://schema.org');
+            Object.keys(person).forEach(k => {
+                if (person[k] === '' || (Array.isArray(person[k]) && person[k].length === 0)) {
+                    console.debug('[SEOOptimizer] JSON-LD: dropping empty field', k);
+                    delete person[k];
+                }
+            });
+            ld.textContent = JSON.stringify(person, null, 2);
 
             console.debug('[SEOOptimizer] document updated');
             return {success: true, error: null};

@@ -61,8 +61,14 @@
                 "description": "Validates resume data structure integrity"
             },
             "filterRenderable": {
-                "input": {"type": "any", "description": "Raw resume data or subtree"},
-                "output": {"type": "any", "description": "Copy without hidden items"},
+                "input": {
+                    "type": "any",
+                    "description": "Raw resume data or subtree"
+                },
+                "output": {
+                    "type": "any",
+                    "description": "Copy without hidden items"
+                },
                 "description": "Visibility rules: array item object with to_render=false is removed; {text, to_render} item becomes its text string; missing to_render means true; to_render key is stripped"
             },
             "getPersonalInfo": {
@@ -174,6 +180,31 @@
                     },
                     "metadata": {
                         "$ref": "#/schemas/Metadata"
+                    },
+                    "projects": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/schemas/Project"
+                        }
+                    },
+                    "memberships": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/schemas/Membership"
+                        }
+                    },
+                    "courses": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/schemas/Course"
+                        }
+                    },
+                    "publications": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/schemas/Publication"
+                        },
+                        "description": "Stored, not rendered by any consumer"
                     }
                 },
                 "required": [
@@ -193,7 +224,7 @@
                     },
                     "title": {
                         "type": "string",
-                        "description": "Credentials line, e.g. AWS® SA, TOGAF® 10"
+                        "description": "Credentials line; rendered as \"headline | title\" under the name (site hero and PDF)"
                     },
                     "headline": {
                         "type": "string",
@@ -226,7 +257,8 @@
                         "format": "email"
                     },
                     "phone": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Optional. Intentionally removed from data (privacy)"
                     },
                     "location": {
                         "type": "string"
@@ -237,7 +269,6 @@
                 },
                 "required": [
                     "email",
-                    "phone",
                     "location",
                     "website"
                 ]
@@ -282,6 +313,13 @@
                     },
                     "technical": {
                         "$ref": "#/schemas/TechnicalSkills"
+                    },
+                    "technical_labels": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Display name per skills.technical key; used by site and PDF"
                     }
                 },
                 "required": [
@@ -403,6 +441,17 @@
                     },
                     "period": {
                         "type": "string"
+                    },
+                    "authority": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "Verification link; rendered as link on site and PDF"
+                    },
+                    "license_number": {
+                        "type": "string",
+                        "description": "Stored only, not rendered"
                     }
                 },
                 "required": [
@@ -438,6 +487,84 @@
                         "type": "string"
                     }
                 }
+            },
+            "Project": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "period": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "description_az": {
+                        "type": "string",
+                        "description": "Original Azerbaijani text, not rendered"
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            },
+            "Membership": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "position": {
+                        "type": "string"
+                    },
+                    "period": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            },
+            "Course": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            },
+            "Publication": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "publisher": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "title"
+                ]
             }
         },
         "capabilities": [
@@ -456,6 +583,6 @@
             "browser_compatibility": "ES6+",
             "no_external_apis": true
         },
-        "notes": "+++===+++ 2025-08-26 15:30 UTC — Hasan Alizada — Contract for resume data loader atom with complete JSON schema validation | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.headline; sourceUrl constructor param; single source of truth constraint | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added to_render visibility flag and filterRenderable"
+        "notes": "+++===+++ 2025-08-26 15:30 UTC — Hasan Alizada — Contract for resume data loader atom with complete JSON schema validation | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.headline; sourceUrl constructor param; single source of truth constraint | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added to_render visibility flag and filterRenderable | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Phone optional (removed from data); added Project, Membership, Course, Publication schemas; certificate url/authority/license_number | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added skills.technical_labels"
     }
 }

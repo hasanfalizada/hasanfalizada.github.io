@@ -1,5 +1,15 @@
 // +++===+++ 2025-11-26 UTC — Hasan Alizada — Fixed syntax errors, integrated all atoms, added dynamic SEO
 
+// +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — App version = "v" param of this script's URL in index.html (single place to bump)
+const APP_VERSION = (() => {
+    try {
+        return new URL(document.currentScript.src).searchParams.get('v') || '';
+    } catch (e) {
+        return '';
+    }
+})();
+console.debug('[App] APP_VERSION =', APP_VERSION);
+
 /**
  * Main Application Class - Orchestrates all atomic modules
  */
@@ -578,15 +588,118 @@ class App {
      * @param {number} idx
      * @returns {string}
      */
+    // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Name links to verification URL when present (cert.url)
     renderCertificateItem(cert, idx) {
         const name = cert?.name ? String(cert.name) : '';
         const period = cert?.period ? String(cert.period) : '';
+        const url = cert?.url ? String(cert.url).trim() : '';
+        console.debug('[App] renderCertificateItem', idx, {name, period, hasUrl: !!url});
+
+        const nameHtml = url
+            ? `<a class="cert-name" href="${url}" target="_blank" rel="noopener">${name}</a>`
+            : `<span class="cert-name">${name}</span>`;
 
         return `
     <li class="cert-row">
-      <span class="cert-name">${name}</span>
+      ${nameHtml}
       ${period ? `<span class="cert-period">(${period})</span>` : ''}
     </li>
+  `;
+    }
+
+    /**
+     * +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — PROJECTS section (data.projects; reuses cert-list styles)
+     * @param {Array<object>} projects
+     * @returns {string}
+     */
+    renderProjectsSection(projects) {
+        const list = Array.isArray(projects) ? projects : [];
+        console.debug('[App] renderProjectsSection, items =', list.length);
+        if (!list.length) return '';
+
+        const items = list.map(pr => {
+            const name = pr?.name ? String(pr.name) : '';
+            const period = pr?.period ? String(pr.period) : '';
+            const url = pr?.url ? String(pr.url).trim() : '';
+            const description = pr?.description ? String(pr.description).trim() : '';
+            const nameHtml = url
+                ? `<a class="cert-name" href="${url}" target="_blank" rel="noopener">${name}</a>`
+                : `<span class="cert-name">${name}</span>`;
+            return `
+    <li class="cert-row">
+      ${nameHtml}
+      ${period ? `<span class="cert-period">(${period})</span>` : ''}
+      ${description ? `<div class="experience-description">${description}</div>` : ''}
+    </li>
+  `;
+        }).join('');
+
+        return `
+    <div class="resume-section">
+      <h3 class="resume-section__title">PROJECTS</h3>
+      <ul class="cert-list">${items}</ul>
+    </div>
+  `;
+    }
+
+    /**
+     * +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — COURSES section (data.courses; reuses cert-list styles)
+     * @param {Array<object>} courses
+     * @returns {string}
+     */
+    renderCoursesSection(courses) {
+        const list = Array.isArray(courses) ? courses : [];
+        console.debug('[App] renderCoursesSection, items =', list.length);
+        if (!list.length) return '';
+
+        const items = list.map(c => {
+            const name = c?.name ? String(c.name) : '';
+            return `
+    <li class="cert-row">
+      <span class="cert-name">${name}</span>
+    </li>
+  `;
+        }).join('');
+
+        return `
+    <div class="resume-section">
+      <h3 class="resume-section__title">COURSES</h3>
+      <ul class="cert-list">${items}</ul>
+    </div>
+  `;
+    }
+
+    /**
+     * +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — MEMBERSHIPS section (data.memberships; reuses cert-list styles)
+     * @param {Array<object>} memberships
+     * @returns {string}
+     */
+    renderMembershipsSection(memberships) {
+        const list = Array.isArray(memberships) ? memberships : [];
+        console.debug('[App] renderMembershipsSection, items =', list.length);
+        if (!list.length) return '';
+
+        const items = list.map(mb => {
+            const name = mb?.name ? String(mb.name) : '';
+            const position = mb?.position ? String(mb.position) : '';
+            const period = mb?.period ? String(mb.period) : '';
+            const url = mb?.url ? String(mb.url).trim() : '';
+            const nameHtml = url
+                ? `<a class="cert-name" href="${url}" target="_blank" rel="noopener">${name}</a>`
+                : `<span class="cert-name">${name}</span>`;
+            return `
+    <li class="cert-row">
+      ${nameHtml}${position ? ` — ${position}` : ''}
+      ${period ? `<span class="cert-period">(${period})</span>` : ''}
+    </li>
+  `;
+        }).join('');
+
+        return `
+    <div class="resume-section">
+      <h3 class="resume-section__title">MEMBERSHIPS</h3>
+      <ul class="cert-list">${items}</ul>
+    </div>
   `;
     }
 
@@ -690,7 +803,7 @@ class App {
       ${photoUrl ? `<img class="resume-photo" src="${photoUrl}" alt="${p.name || ''}">` : ''}
       <div class="resume-hero__text">
         <h1 class="resume-header__name">${p.name || ''}</h1>
-        <div class="resume-header__title">${p.title || ''}</div>
+        <div class="resume-header__title">${[p.headline, p.title].filter(Boolean).join(' | ')}</div>
         <div class="resume-header__summary">${summaryHtml || ''}</div>
       </div>
     </div>
@@ -816,17 +929,21 @@ class App {
         const t = data.skills?.technical || {};
         const langList = [...(t.languages?.primary || []), ...(t.languages?.additional || [])];
 
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Group labels from data (skills.technical_labels); key used as fallback
+        const tl = data.skills?.technical_labels || {};
+        const lbl = (key) => tl[key] || key;
+        console.debug('[App] technical_labels =', tl);
         const leftPairs = [
-            {label: 'Languages', items: langList},
-            {label: 'Architecture & Design', items: t.architecture_design || []},
-            {label: 'Messaging & APIs', items: t.messaging_apis || []},
-            {label: 'Cloud & Infrastructure', items: t.cloud_infrastructure || []},
+            {label: lbl('languages'), items: langList},
+            {label: lbl('architecture_design'), items: t.architecture_design || []},
+            {label: lbl('messaging_apis'), items: t.messaging_apis || []},
+            {label: lbl('cloud_infrastructure'), items: t.cloud_infrastructure || []},
         ];
         const rightPairs = [
-            {label: 'Backend & Frameworks', items: t.backend_frameworks || []},
-            {label: 'Databases', items: t.databases || []},
-            {label: 'DevOps & CI/CD', items: t.devops_cicd || []},
-            {label: 'Monitoring & Observability', items: t.monitoring_observability || []},
+            {label: lbl('backend_frameworks'), items: t.backend_frameworks || []},
+            {label: lbl('databases'), items: t.databases || []},
+            {label: lbl('devops_cicd'), items: t.devops_cicd || []},
+            {label: lbl('monitoring_observability'), items: t.monitoring_observability || []},
         ];
 
         const renderTechRow = (pair, idx, side) => {
@@ -856,6 +973,9 @@ class App {
         const experiences = Array.isArray(data.work_experience) ? data.work_experience : [];
         html += this.renderWorkExperienceSection(experiences);
 
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — PROJECTS
+        html += this.renderProjectsSection(data.projects);
+
         // ===== EDUCATION =====
         const education = Array.isArray(data.education) ? data.education : [];
         html += this.renderEducationSection(education);
@@ -863,6 +983,10 @@ class App {
         // ===== CERTIFICATES =====
         const certs = Array.isArray(data.certificates) ? data.certificates : [];
         html += this.renderCertificatesSection(certs);
+
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — COURSES, MEMBERSHIPS
+        html += this.renderCoursesSection(data.courses);
+        html += this.renderMembershipsSection(data.memberships);
 
         // ===== LANGUAGES =====
         const languages = Array.isArray(data.languages) ? data.languages : [];
@@ -1142,17 +1266,22 @@ class App {
     /**
      * Load external script dynamically
      */
+    // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Cache busting: appends ?v=APP_VERSION (taken from main.js URL in index.html)
     loadScript(src) {
         return new Promise((resolve, reject) => {
+            const versionedSrc = APP_VERSION ? `${src}?v=${encodeURIComponent(APP_VERSION)}` : src;
+
             // Check if script already exists
-            const existingScript = document.querySelector(`script[src="${src}"]`);
+            const existingScript = document.querySelector(`script[src="${versionedSrc}"]`);
             if (existingScript) {
+                console.debug('[App] loadScript: already loaded', versionedSrc);
                 resolve(); // Script already loaded
                 return;
             }
 
+            console.debug('[App] loadScript:', versionedSrc);
             const script = document.createElement('script');
-            script.src = src;
+            script.src = versionedSrc;
             script.onload = resolve;
             script.onerror = reject;
             document.head.appendChild(script);

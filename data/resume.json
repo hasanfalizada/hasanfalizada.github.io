@@ -7,7 +7,6 @@
     "summary_html": "Enterprise and solution architect with extensive experience in <strong>scalable and fault–tolerant architectures</strong>. Passionate about <strong>optimizing enterprise IT landscapes</strong>, <strong>strengthening system resilience</strong>, and <strong>driving digital transformation</strong> to align technology with business goals.",
     "contact": {
       "email": "ha@hasanalizada.net",
-      "phone": "+994702011302",
       "location": "Baku, Azerbaijan",
       "website": "hasanfalizada.github.io"
     },
@@ -62,6 +61,202 @@
       },
       {
         "text": "Digital Transformation Strategy",
+        "to_render": false
+      },
+      {
+        "text": "Payments & Financial Services",
+        "to_render": false
+      },
+      {
+        "text": "Stakeholder Engagement & Leadership",
+        "to_render": false
+      },
+      {
+        "text": "IT architectures",
+        "to_render": false
+      },
+      {
+        "text": "Problem Solving",
+        "to_render": false
+      },
+      {
+        "text": "Communication",
+        "to_render": false
+      },
+      {
+        "text": "High-Level Design",
+        "to_render": false
+      },
+      {
+        "text": "Architecture Development",
+        "to_render": false
+      },
+      {
+        "text": "Computer Science",
+        "to_render": false
+      },
+      {
+        "text": "Innovation Development",
+        "to_render": false
+      },
+      {
+        "text": "Strategic Thinking",
+        "to_render": false
+      },
+      {
+        "text": "Conflict Management",
+        "to_render": false
+      },
+      {
+        "text": "Collaboration",
+        "to_render": false
+      },
+      {
+        "text": "Team Management",
+        "to_render": false
+      },
+      {
+        "text": "Coaching",
+        "to_render": false
+      },
+      {
+        "text": "Business Process Improvement",
+        "to_render": false
+      },
+      {
+        "text": "Analytical Skills",
+        "to_render": false
+      },
+      {
+        "text": "Banking",
+        "to_render": false
+      },
+      {
+        "text": "Enterprise Architecture",
+        "to_render": false
+      },
+      {
+        "text": "Microservices",
+        "to_render": false
+      },
+      {
+        "text": "Financial Services",
+        "to_render": false
+      },
+      {
+        "text": "Finance",
+        "to_render": false
+      },
+      {
+        "text": "Telecommunications",
+        "to_render": false
+      },
+      {
+        "text": "Management",
+        "to_render": false
+      },
+      {
+        "text": "IT Management",
+        "to_render": false
+      },
+      {
+        "text": "ITIL",
+        "to_render": false
+      },
+      {
+        "text": "Project management",
+        "to_render": false
+      },
+      {
+        "text": "Business Process Management",
+        "to_render": false
+      },
+      {
+        "text": "Oracle Database",
+        "to_render": false
+      },
+      {
+        "text": "GSM",
+        "to_render": false
+      },
+      {
+        "text": "Apache",
+        "to_render": false
+      },
+      {
+        "text": "Unix",
+        "to_render": false
+      },
+      {
+        "text": "Windows Server",
+        "to_render": false
+      },
+      {
+        "text": "PL/SQL",
+        "to_render": false
+      },
+      {
+        "text": "Java",
+        "to_render": false
+      },
+      {
+        "text": "Team Leadership",
+        "to_render": false
+      },
+      {
+        "text": "Leadership",
+        "to_render": false
+      },
+      {
+        "text": "Decision-making",
+        "to_render": false
+      },
+      {
+        "text": "Teamwork",
+        "to_render": false
+      },
+      {
+        "text": "Networking",
+        "to_render": false
+      },
+      {
+        "text": "Research/critical thinking",
+        "to_render": false
+      },
+      {
+        "text": "Planning and prioritizing",
+        "to_render": false
+      },
+      {
+        "text": "Development",
+        "to_render": false
+      },
+      {
+        "text": "Payment Card Processing",
+        "to_render": false
+      },
+      {
+        "text": "CBOSS",
+        "to_render": false
+      },
+      {
+        "text": "Database Development",
+        "to_render": false
+      },
+      {
+        "text": "TSYS Prime",
+        "to_render": false
+      },
+      {
+        "text": "Distributed Systems",
+        "to_render": false
+      },
+      {
+        "text": "Digital Transformation",
+        "to_render": false
+      },
+      {
+        "text": "Solution Architecture",
         "to_render": false
       }
     ],
@@ -129,6 +324,16 @@
         "Grafana",
         "ELK Stack"
       ]
+    },
+    "technical_labels": {
+      "languages": "Languages",
+      "backend_frameworks": "Backend & Frameworks",
+      "architecture_design": "Architecture & Design",
+      "databases": "Databases",
+      "messaging_apis": "Messaging & APIs",
+      "devops_cicd": "DevOps & CI/CD",
+      "cloud_infrastructure": "Cloud & Infrastructure",
+      "monitoring_observability": "Monitoring & Observability"
     }
   },
   "work_experience": [
@@ -397,46 +602,177 @@
   "certificates": [
     {
       "name": "AWS Certified Solutions Architect – Associate",
-      "period": "05/2025 – 05/2028"
+      "period": "05/2025 – 05/2028",
+      "authority": "Amazon Web Services (AWS)",
+      "url": "https://www.credly.com/badges/bc9879c7-74c2-495c-af43-c32cde0c997f/linked_in_profile"
     },
     {
       "name": "The Open Group Certified: TOGAF® Enterprise Architecture Practitioner",
-      "period": "03/2024 – Present"
+      "period": "03/2024 – Present",
+      "authority": "The Open Group",
+      "url": "https://www.credly.com/badges/50e166eb-f4e8-4b28-9cc3-485da324a1d3/linked_in_profile",
+      "license_number": "178525"
     },
     {
       "name": "Project Management Professional (PMP)®",
-      "period": "02/2025 – 02/2028"
+      "period": "02/2025 – 02/2028",
+      "authority": "Project Management Institute",
+      "url": "https://www.credly.com/badges/2bf63b56-a54f-4a2c-8303-2fa4940a5930/linked_in_profile",
+      "license_number": "4048059"
     },
     {
       "name": "ITIL® Foundation Certificate in IT Service Management",
-      "period": "02/2025 – 02/2028"
+      "period": "02/2025 – 02/2028",
+      "authority": "PeopleCert",
+      "url": "https://www.peoplecert.org/for-corporations/certificate-verification-service",
+      "license_number": "GR671746727HA"
     },
     {
       "name": "Oracle Cloud Infrastructure 2021 Certified Architect Professional",
-      "period": "02/2022 – Present"
+      "period": "02/2022 – Present",
+      "authority": "Oracle",
+      "url": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=D5809C541494A32D1CD23C6E0B032CAEEDC2F52A738F4E38B9CD950F9757464B",
+      "license_number": "244010733OCICAP2021OPN"
+    },
+    {
+      "name": "Oracle Cloud Infrastructure 2021 Certified Architect Associate",
+      "period": "02/2022 – Present",
+      "authority": "Oracle",
+      "url": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=F5F6690957BFAF40914DBDEE4D59232FC6AC2DBAC25CBD97BCDD2B1D1047FBAA",
+      "license_number": "244010733OCIAA2021CA"
+    },
+    {
+      "name": "Oracle Cloud Infrastructure 2023 AI Certified Foundations Associate",
+      "period": "09/2023 – Present",
+      "authority": "Oracle",
+      "url": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=7AF95EE1D4C8D8BEA13FECD61196454352809E6622A15001694C95600D67AEC2"
+    },
+    {
+      "name": "Oracle Database PL/SQL Developer Certified Professional",
+      "period": "07/2018 – Present",
+      "authority": "Oracle",
+      "url": "https://www.youracclaim.com/badges/707fb3ca-a5d4-435b-9142-30ad6e611dbf/linked_in_profile"
+    },
+    {
+      "name": "Oracle Database SQL Certified Expert",
+      "period": "04/2017 – Present",
+      "authority": "Oracle",
+      "url": "https://www.credly.com/earner/earned/badge/2be25256-a726-47c0-9f5b-d44ac688b90f"
+    },
+    {
+      "name": "Oracle Certified Associate, Java SE 8 Programmer",
+      "period": "02/2019 – Present",
+      "authority": "Oracle",
+      "url": "https://www.youracclaim.com/badges/11e5c343-f77c-4e0f-80c0-1c0378a41579/linked_in_profile"
     },
     {
       "name": "IBM Enterprise Design Thinking Practitioner",
-      "period": "01/2019 – Present"
+      "period": "01/2019 – Present",
+      "authority": "IBM",
+      "url": "https://www.youracclaim.com/badges/02e95406-7e60-41b4-998e-adf0189499aa/linked_in_profile"
     },
     {
-      "name": "Enterprise Design Thinking Co-Creator",
-      "period": "",
+      "name": "McKinsey Forward Program",
+      "period": "07/2024 – Present",
+      "authority": "McKinsey & Company",
+      "url": "https://www.credly.com/badges/7a7ceb1c-5617-4af6-adf1-911ab3c030a6/linked_in_profile",
       "to_render": false
     },
     {
-      "name": "CBOSSrtb MG Administration",
-      "period": "",
+      "name": "GridGain Developer Essentials: Apache Ignite",
+      "period": "11/2022 – Present",
+      "authority": "GridGain Systems",
+      "url": "https://www.credly.com/badges/59e79520-8321-41a2-b96a-b48d1480b761/linked_in_profile",
+      "to_render": false
+    },
+    {
+      "name": "Enterprise Design Thinking Co-Creator",
+      "period": "07/2019 – Present",
+      "authority": "IBM",
+      "url": "https://www.youracclaim.com/badges/4c9087f2-d46d-47d4-bcd8-a9e5e453d634/linked_in_profile",
+      "to_render": false
+    },
+    {
+      "name": "Enterprise Design Thinking - Team Essentials for AI",
+      "period": "07/2019 – Present",
+      "authority": "IBM",
+      "url": "https://www.youracclaim.com/badges/08c67e6f-3870-47c6-a6ed-faca3b243af5/linked_in_profile",
       "to_render": false
     },
     {
       "name": "z/OS Mainframe Practitioner",
-      "period": "",
+      "period": "10/2019 – Present",
+      "authority": "Coursera",
+      "url": "https://www.youracclaim.com/badges/2fc0d9fc-255c-4681-992a-98c5120f65ec/linked_in_profile",
       "to_render": false
     },
     {
-      "name": "McKinsey Forward Program",
+      "name": "Getting Started on Mainframe with z/OS Commands and Panels",
+      "period": "10/2019 – Present",
+      "authority": "Coursera",
+      "url": "https://www.youracclaim.com/badges/95171857-c6db-49bc-96ad-cad8aa42add0/linked_in_profile",
+      "to_render": false
+    },
+    {
+      "name": "Introduction to Enterprise Computing",
+      "period": "09/2019 – Present",
+      "authority": "Coursera",
+      "url": "https://www.youracclaim.com/badges/38cbe6d4-3215-4c88-9816-9e6854cc2763/linked_in_profile",
+      "to_render": false
+    },
+    {
+      "name": "Basic System Programming on IBM Z",
       "period": "",
+      "authority": "Coursera",
+      "url": "https://www.youracclaim.com/badges/4a8d17b6-0867-43cd-8bbf-19926d5c4e6b/linked_in_profile",
+      "to_render": false
+    },
+    {
+      "name": "TranzWare Online: Developing and applying Algorithmix functions",
+      "period": "09/2017 – 09/2020",
+      "authority": "Compass Plus",
+      "license_number": "0102-1709-2702",
+      "to_render": false
+    },
+    {
+      "name": "TranzWare Card Management System: System configuration and operation basics",
+      "period": "08/2016 – 08/2019",
+      "authority": "Compass Plus",
+      "license_number": "0201-1608-1901",
+      "to_render": false
+    },
+    {
+      "name": "CBOSSrtb MG Administration",
+      "period": "08/2010 – Present",
+      "authority": "CBOSS",
+      "license_number": "6225",
+      "to_render": false
+    },
+    {
+      "name": "CBOSSrtb Administration. TP. Part I.",
+      "period": "08/2010 – Present",
+      "authority": "CBOSS",
+      "license_number": "6215",
+      "to_render": false
+    },
+    {
+      "name": "Introduction to CBOSS.",
+      "period": "05/2010 – Present",
+      "authority": "CBOSS",
+      "license_number": "6054",
+      "to_render": false
+    },
+    {
+      "name": "Customer Care on the phone",
+      "period": "12/2009 – Present",
+      "authority": "Allianz Group",
+      "license_number": "1500",
+      "to_render": false
+    },
+    {
+      "name": "Global Business Ethics Program",
+      "period": "05/2005 – Present",
+      "authority": "Junior Achievement Azerbaijan",
       "to_render": false
     }
   ],
@@ -467,23 +803,115 @@
       "level_linkedin": "Elementary"
     }
   ],
-  "metadata": {
-    "last_updated": "2026-10-09",
-    "version": "1.4.2",
-    "notes": "+++===+++ 2025-08-27 16:20 Asia/Baku — Hasan Alizada — Filled work_experience, education, certificates, languages; preserved existing header/socials/skills | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.headline (job headline for header/SEO/PDF; TEMP value, to be finalized from LinkedIn export) | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Merged full LinkedIn export; added to_render visibility flags (missing = true); Visa added; ADY period closed | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — headline = Enterprise & Solution Architect; Visa logo; AWS SA Associate | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Replaced \"Technology principal\" with \"Enterprise and solution architect\"; AWS SA period"
-  },
   "publications": [
     {
       "title": "Выходим на уровень эксперта! 50 оттенков экзамена 1Z0-047 (Oracle Database SQL Certified Expert)",
+      "date": "2017-04-19",
+      "publisher": "YouTube",
+      "url": "https://www.youtube.com/watch?v=cWOXrDijqEc",
+      "to_render": false
+    },
+    {
+      "title": "Выходим на уровень эксперта! 50 оттенков экзамена 1Z0-047 (сертификация Oracle Database SQL Certified Expert)",
+      "date": "2017-04-19",
+      "publisher": "Habrahabr",
+      "url": "https://habrahabr.ru/post/327012/",
       "to_render": false
     },
     {
       "title": "Экспресс-установка ORACLE 12c на CentOS 7",
+      "date": "2016-11-07",
+      "publisher": "YouTube",
+      "url": "https://www.youtube.com/watch?v=ovvWi9cXJ8o",
       "to_render": false
     },
     {
       "title": "Укрощение ArchLinux + GNOME + DEEPIN",
+      "date": "2016-05-15",
+      "publisher": "YouTube",
+      "url": "https://www.youtube.com/watch?v=7kSasJCTcoE&t=760s",
       "to_render": false
     }
-  ]
+  ],
+  "projects": [
+    {
+      "name": "BirBank",
+      "period": "12/2021 – 09/2023",
+      "url": "https://birbank.az/",
+      "description": "Top 1 free finance on the App Store and Google Play."
+    },
+    {
+      "name": "MüştəriBank (now BirBank Business)",
+      "period": "01/2018 – 03/2020",
+      "url": "",
+      "description": "",
+      "description_az": "BirBank Business - Azərbaycanın ən iri rəqəmsal banklarından biri olan BirBank tərəfindən təqdim olunan bir korporativ mobil bankçılıq xidmətidir. Kiçik və orta müəssisələrə öz maliyyə əməliyyatlarını rahat və təhlükəsiz şəkildə idarə etmək imkanı yaradır. İstifadəçilər BirBank Business vasitəsilə ödənişləri həyata keçirə, pul köçürmələri edə, hesabatları izləyə və digər bank xidmətlərindən yararlana bilərlər."
+    },
+    {
+      "name": "TaxRefund (ƏDVGeriAl)",
+      "period": "12/2021 – Present",
+      "url": "https://edvgerial.kapitalbank.az/",
+      "description": "",
+      "description_az": "Fiziki şəxs olan istehlakçılar tərəfindən Azərbaycanda pərakəndə ticarət və ya ictimai iaşə fəaliyyəti göstərən şəxslərdən alınmış mallara (neft və qaz məhsulları istisna olmaqla) görə ödənilmiş ƏDV-nin qaytarılmalı olan hissəsi nağdsız ödənişlər üzrə 15%, nağd ödənişlər üzrə isə 10% həcmində müəyyən edilmişdir."
+    },
+    {
+      "name": "UmicoBank",
+      "period": "12/2021 – Present",
+      "url": "https://business.facebook.com/hashtag/umicobank?source=feed_text&epa=HASHTAG&__tn__=*NK-R",
+      "description": "",
+      "to_render": false
+    },
+    {
+      "name": "texbazar",
+      "period": "",
+      "url": "https://texbazar.xyz",
+      "description": "texbazar is an IT jobs desk (portfolio sample project). Backend: Spring Boot, PostgreSQL, CentOS 8 + Maven. Frontend: Angular 9 (with server-side rendering), Bootstrap 4, mobile-first, multi-language, infinite-scroll.",
+      "to_render": false
+    },
+    {
+      "name": "Haalendar",
+      "period": "06/2019 – Present",
+      "url": "http://haalendar.demo.alizada.xyz",
+      "description": "Simple light-weight self-hosted desktop web-calendar for single person.",
+      "to_render": false
+    },
+    {
+      "name": "KOPISTORE",
+      "period": "08/2016 – Present",
+      "url": "http://kopistore.net23.net/",
+      "description": "KOPISTORE - is a fast multiplatform files and text exchange service, allowing you simply to transfer files and text between your devices by code or QR. Frontend: HTML5 + JS + CSS3; Backend: PHP + MYSQL.",
+      "to_render": false
+    }
+  ],
+  "memberships": [
+    {
+      "name": "Association of Enterprise Architects (AEA)",
+      "position": "Individual Member",
+      "period": "03/2024 – Present",
+      "url": "https://www.globalaea.org/",
+      "description": "A global network of Enterprise Architecture professionals who are working together to advance Enterprise Architecture and promote professional excellence."
+    }
+  ],
+  "courses": [
+    {
+      "name": "Oracle Database 11g: Program with PL/SQL"
+    },
+    {
+      "name": "Oracle Database 11g: SQL Fundamentals I-II"
+    },
+    {
+      "name": "Oracle Database 11g: SQL Tuning Workshop"
+    },
+    {
+      "name": "Mastercard Academy - Authorization processing"
+    },
+    {
+      "name": "Data Analysis, Forecasting and Economic Policy Design"
+    }
+  ],
+  "metadata": {
+    "last_updated": "2026-10-09",
+    "version": "1.5.1",
+    "notes": "+++===+++ 2025-08-27 16:20 Asia/Baku — Hasan Alizada — Filled work_experience, education, certificates, languages; preserved existing header/socials/skills | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.headline (job headline for header/SEO/PDF; TEMP value, to be finalized from LinkedIn export) | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Merged full LinkedIn export; added to_render visibility flags (missing = true); Visa added; ADY period closed | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — headline = Enterprise & Solution Architect; Visa logo; AWS SA Associate | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Replaced \"Technology principal\" with \"Enterprise and solution architect\"; AWS SA period | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Phone removed; full LinkedIn data export merged: certificates (url/authority/license), projects, memberships, courses, skills, publications | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added skills.technical_labels (display names of technical skill groups, shared by site and PDF)"
+  }
 }

@@ -114,7 +114,8 @@ class ResumeDataLoader {
 
             // Validate contact info
             if (data.personal_info.contact) {
-                const contactRequiredProps = ['email', 'phone', 'location', 'website'];
+                // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — phone no longer required (removed from data on purpose)
+                const contactRequiredProps = ['email', 'location', 'website'];
                 for (const prop of contactRequiredProps) {
                     if (!data.personal_info.contact[prop]) {
                         errors.push(`Missing required contact property: ${prop}`);

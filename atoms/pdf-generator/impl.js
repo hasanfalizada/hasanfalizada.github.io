@@ -147,7 +147,8 @@ class PDFGenerator {
             firstName,
             lastName,
             name: fullName,
-            title: clean(pi.title || ''),                 // e.g., "AWS® SA, TOGAF® 10, PMP® ..."
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — "headline | credentials", same as site hero
+            title: [clean(pi.headline || ''), clean(pi.title || '')].filter(Boolean).join(' | '),
             credentials: '',                              // keep empty unless you add a dedicated field
         };
 
@@ -188,19 +189,25 @@ class PDFGenerator {
         // Convert each key in skills.technical to {label, value}
         const technical = [];
         const techObj = g(raw, 'skills.technical', {}) || {};
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Group labels from data (skills.technical_labels); auto-label only as fallback
+        const techLabels = g(raw, 'skills.technical_labels', {}) || {};
         Object.keys(techObj).forEach(key => {
             const val = techObj[key];
 
-            // normalize label
-            let cleanLabel = this._labelize(key)
-                .replace(/&/g, 'and')        // & → and
-                .replace(/\//g, ' ')         // / → space
-                .replace(/_/g, ' ')          // underscores → space
-                .replace(/\s+/g, ' ')        // collapse multiple spaces
-                .trim();
+            let cleanLabel = clean(techLabels[key] || '');
+            if (!cleanLabel) {
+                // normalize label
+                cleanLabel = this._labelize(key)
+                    .replace(/&/g, 'and')        // & → and
+                    .replace(/\//g, ' ')         // / → space
+                    .replace(/_/g, ' ')          // underscores → space
+                    .replace(/\s+/g, ' ')        // collapse multiple spaces
+                    .trim();
 
-            // enforce Title Case
-            cleanLabel = cleanLabel.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+                // enforce Title Case
+                cleanLabel = cleanLabel.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+            }
+            console.debug('[PDFGenerator] technical group', key, '→', cleanLabel);
 
             if (val && typeof val === 'object' && !Array.isArray(val)) {
                 const parts = [];
@@ -241,7 +248,28 @@ class PDFGenerator {
             name: clean(c.name || ''),
             issuer: '',                           // issuer not present in your schema
             year: clean(c.period || ''),        // show the period string
+            url: clean(c.url || ''),            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — verification link
         })).filter(x => x.name) : [];
+
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — PROJECTS, COURSES, MEMBERSHIPS
+        const projects = Array.isArray(g(raw, 'projects')) ? g(raw, 'projects').map(pr => ({
+            name: clean(pr.name || ''),
+            period: clean(pr.period || ''),
+            url: clean(pr.url || ''),
+            description: clean(pr.description || '')
+        })).filter(x => x.name) : [];
+
+        const courses = Array.isArray(g(raw, 'courses')) ? g(raw, 'courses').map(c => ({
+            name: clean(c.name || '')
+        })).filter(x => x.name) : [];
+
+        const memberships = Array.isArray(g(raw, 'memberships')) ? g(raw, 'memberships').map(mb => ({
+            name: clean(mb.name || ''),
+            position: clean(mb.position || ''),
+            period: clean(mb.period || ''),
+            url: clean(mb.url || '')
+        })).filter(x => x.name) : [];
+        console.debug('[PDFGenerator] _normalize new sections', {projects: projects.length, courses: courses.length, memberships: memberships.length});
 
         // ---- LANGUAGES (top-level array) ----
         const languages = Array.isArray(g(raw, 'languages')) ? g(raw, 'languages').map(l => ({
@@ -249,7 +277,7 @@ class PDFGenerator {
             level: clean(l.level || '')
         })).filter(x => x.name) : [];
 
-        return {profile, contact, summary, skills, technical, experience, education, certifications, languages};
+        return {profile, contact, summary, skills, technical, experience, education, certifications, languages, projects, courses, memberships};
     }
 
 
@@ -563,6 +591,18 @@ class PDFGenerator {
             });
         }
 
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — projects (name links to url)
+        if (m.projects && m.projects.length) {
+            content.push({text: 'Projects', style: 'h2'});
+            m.projects.forEach(pr => {
+                const line = [pr.url ? linkItem(pr.name, pr.url) : {text: pr.name, style: 'small'}];
+                if (pr.period) line.push({text: ` (${pr.period})`, style: 'small'});
+                const block = [{text: line, style: 'small'}];
+                if (pr.description) block.push({text: pr.description, style: 'small', margin: [0, 1, 0, 2]});
+                content.push(unbreakableCard(block));
+            });
+        }
+
         // ---------- education (no stray "—") ----------
         if (m.education && m.education.length) {
             content.push({text: 'Education', style: 'h2'});
@@ -579,12 +619,31 @@ class PDFGenerator {
         // ---------- certifications ----------
         if (m.certifications && m.certifications.length) {
             content.push({text: 'Certifications', style: 'h2'});
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — name links to verification url when present
             m.certifications.forEach(c => {
                 const parts = [];
                 if (c.name) parts.push(c.name);
                 if (c.issuer) parts.push('— ' + c.issuer);
                 const main = parts.join(' ');
-                const line = joinLine(main, c.year ? `(${c.year})` : '');
+                const line = [c.url ? linkItem(main, c.url) : {text: main, style: 'small'}];
+                if (c.year) line.push({text: ` (${c.year})`, style: 'small'});
+                content.push(unbreakableCard([{text: line, style: 'small'}]));
+            });
+        }
+
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — courses
+        if (m.courses && m.courses.length) {
+            content.push({text: 'Courses', style: 'h2'});
+            m.courses.forEach(c => content.push(unbreakableCard([{text: c.name, style: 'small'}])));
+        }
+
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — memberships
+        if (m.memberships && m.memberships.length) {
+            content.push({text: 'Memberships', style: 'h2'});
+            m.memberships.forEach(mb => {
+                const line = [mb.url ? linkItem(mb.name, mb.url) : {text: mb.name, style: 'small'}];
+                if (mb.position) line.push({text: ` — ${mb.position}`, style: 'small'});
+                if (mb.period) line.push({text: ` (${mb.period})`, style: 'small'});
                 content.push(unbreakableCard([{text: line, style: 'small'}]));
             });
         }
@@ -607,7 +666,8 @@ class PDFGenerator {
         return {
             pageSize: 'A4',
             pageMargins: compact ? [30, 34, 30, 40] : [36, 44, 36, 48],
-            defaultStyle: {fontSize: compact ? 9 : 10, lineHeight: 1.35, color: '#000000'},
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Ligatures off: "fi"/"ffi" glyphs broke text extraction (ATS, copy-paste)
+            defaultStyle: {fontSize: compact ? 9 : 10, lineHeight: 1.35, color: '#000000', fontFeatures: {liga: false, clig: false}},
             styles,
             content,
             footer: (current, total) => ({

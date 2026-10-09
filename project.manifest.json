@@ -20,7 +20,7 @@
             "deps": [],
             "impl_ref": "atoms/resume-data-loader/impl.js",
             "tests_ref": "atoms/resume-data-loader/tests.js",
-            "hash": "b3:001c",
+            "hash": "b3:001e",
             "notes": "Pure static data loading, no external dependencies. Single source of truth: the only atom that knows the resume data source"
         },
         "pdf-generator": {
@@ -37,7 +37,7 @@
             ],
             "impl_ref": "atoms/pdf-generator/impl.js",
             "tests_ref": "atoms/pdf-generator/tests.js",
-            "hash": "b3:002b",
+            "hash": "b3:002d",
             "notes": "Uses local pdfmake 0.2.10, works entirely in browser; receives ResumeDataLoader via constructor"
         },
         "blog-renderer": {
@@ -72,7 +72,7 @@
             ],
             "impl_ref": "atoms/seo-optimizer/impl.js",
             "tests_ref": "atoms/seo-optimizer/tests.js",
-            "hash": "b3:004c",
+            "hash": "b3:004d",
             "notes": "Schema.org markup for professional profile, Open Graph tags"
         },
         "ui-components": {
