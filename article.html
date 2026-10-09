@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
++++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Article page: article.html?slug=<slug>
+Renders articles/<slug>.md (listed in articles/index.json) via App.loadArticlePage (assets/js/main.js).
+Title, description and canonical are set at runtime by SEOOptimizer.applyToDocument('article', ...).
+Keep ?v= on main.css and main.js identical to index.html.
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article - Hasan Alizada</title>
+    <meta name="description" content="Article by Hasan Alizada">
+    <meta name="author" content="Hasan Alizada">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="assets/css/main.css?v=2026-10-09.23">
+
+    <!-- Local Libraries -->
+    <script src="assets/js/marked.min.js" defer></script>
+</head>
+
+<body data-page="article">
+
+<!-- Header Section -->
+<header id="header" class="header" role="banner">
+    <div class="container">
+        <nav class="navigation" role="navigation" aria-label="Main navigation">
+            <div class="nav-brand">
+                <h1 class="brand-name">Hasan Alizada</h1>
+                <p class="brand-title">Enterprise &amp; Solution Architect</p>
+            </div>
+
+            <div class="nav-center">
+                <div class="social-links">
+                    <!-- Social links will be dynamically loaded from resume.json via JavaScript -->
+                    <span class="social-links-loading" style="color: #666; font-size: 0.875rem;">Loading...</span>
+                </div>
+            </div>
+
+            <div class="nav-links">
+                <a href="./" class="nav-link active">Blog</a>
+                <a href="#" id="download-pdf-btn" class="nav-link" title="Download resume (PDF)">Resume</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main id="main-content" role="main">
+    <section id="article" class="section active">
+        <div class="container">
+            <article id="article-content" class="article-content">
+                <div class="loading">Loading article...</div>
+            </article>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer id="footer" class="footer" role="contentinfo">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-text">
+                <p>&copy; Hasan Alizada. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Main Application Script (same version as index.html) -->
+<script src="assets/js/main.js?v=2026-10-09.23" defer></script>
+
+<!-- Application Initialization (same as index.html) -->
+<script>
+    let appInitialized = false; // Prevent double initialization
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkAndInitialize = () => {
+            if (appInitialized) {
+                return;
+            }
+            if (typeof App !== 'undefined' && typeof window.App !== 'undefined') {
+                appInitialized = true;
+                window.App.initialize();
+            } else {
+                setTimeout(checkAndInitialize, 100);
+            }
+        };
+        checkAndInitialize();
+    });
+</script>
+
+</body>
+</html>

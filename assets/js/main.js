@@ -216,11 +216,23 @@ class App {
             // Setup event listeners
             this.setupEventListeners();
 
-            // Load initial content
-            await this.loadInitialContent();
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Article page (article.html, <body data-page="article">) renders one article;
+            // the main page keeps its sections and hash routing
+            this.page = (document.body && document.body.dataset.page) || 'home';
+            console.debug('[App] page =', this.page);
+            if (this.page === 'article') {
+                await this.loadArticlePage();
+            } else if (this.page === 'article-static') {
+                // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Pre-rendered article (articles/<slug>.html from tools/build-articles.js):
+                // text, title and SEO tags are already in the HTML; JS only fills header icons, footer year and the Resume button
+                console.debug('[App] static article page: nothing to render');
+            } else {
+                // Load initial content
+                await this.loadInitialContent();
 
-            // Handle initial route
-            this.handleInitialRoute();
+                // Handle initial route
+                this.handleInitialRoute();
+            }
 
             // Render header social links
             await this.renderHeaderSocialLinks();
@@ -363,7 +375,9 @@ class App {
      */
     setupNavigation() {
         // Use navigation-handler atom for consistent navigation behavior
-        const navLinks = document.querySelectorAll('.nav-link');
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Only section links (data-section) are intercepted; plain links
+        // (e.g. "Blog" → "./" on the article page) navigate normally; the Resume button has its own handler
+        const navLinks = document.querySelectorAll('.nav-link[data-section]');
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -392,13 +406,19 @@ class App {
         // PDF generation buttons
         const pdfButtons = document.querySelectorAll('#generate-pdf-btn, #download-pdf-btn, #fab-pdf');
         pdfButtons.forEach(button => {
-            button.addEventListener('click', () => {
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — preventDefault: href="#" must not change the URL hash
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
                 this.generatePDF();
             });
         });
 
         // Blog article clicks
         document.addEventListener('click', (e) => {
+            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — a real <a> inside the card (article title) handles itself
+            if (e.target.closest('a')) {
+                return;
+            }
             if (e.target.closest('.article-card')) {
                 const articleCard = e.target.closest('.article-card');
                 const articleUrl = articleCard.getAttribute('data-url');
@@ -1055,6 +1075,78 @@ class App {
     /**
      * Load blog content using blog renderer atom
      */
+    /**
+     * +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Article page: article.html?slug=<slug>
+     * Finds the article in articles/index.json (via BlogRenderer), renders its Markdown into #article-content,
+     * inserts date · reading time and tags under the article's own H1, and sets title/description/canonical via SEOOptimizer.
+     */
+    async loadArticlePage() {
+        const container = document.getElementById('article-content');
+        if (!container) {
+            console.error('[App] loadArticlePage: #article-content not found');
+            return;
+        }
+        const slug = new URLSearchParams(window.location.search).get('slug') || '';
+        console.debug('[App] loadArticlePage slug =', slug);
+
+        const notFound = (reason) => {
+            console.error('[App] loadArticlePage:', reason);
+            container.innerHTML = `
+                <p>Article not found.</p>
+                <p><a href="./">← All articles</a></p>
+            `;
+        };
+
+        if (!/^[a-z0-9-]+$/i.test(slug)) {
+            notFound(`invalid slug "${slug}"`);
+            return;
+        }
+
+        const list = await this.atoms.blogRenderer.loadArticleList();
+        const article = (list.articles || []).find(a => a.slug === slug);
+        if (!article) {
+            notFound(`slug "${slug}" is not in articles/index.json`);
+            return;
+        }
+
+        const result = await this.atoms.blogRenderer.loadArticleContent(article.path);
+        console.debug('[App] loadArticlePage content loaded =', result.success, result.error);
+        if (!result.success) {
+            notFound(`cannot load ${article.path}: ${result.error}`);
+            return;
+        }
+
+        container.innerHTML = `<a class="article-back" href="./">← All articles</a>${result.content}`;
+
+        // Meta line (date · reading time) and tags right under the article's own H1
+        const meta = document.createElement('div');
+        meta.className = 'article-meta';
+        meta.innerHTML = `
+            <span class="article-date">${this.atoms.blogRenderer.formatDate(article.date)}</span>
+            ${article.readingTime ? `<span class="article-reading-time">${article.readingTime} min read</span>` : ''}
+            ${(article.tags || []).length ? `<div class="article-tags">${article.tags.map(t => `<span class="article-tag">${t}</span>`).join('')}</div>` : ''}
+        `;
+        const h1 = container.querySelector('h1');
+        if (h1) {
+            h1.insertAdjacentElement('afterend', meta);
+        } else {
+            container.querySelector('.article-back').insertAdjacentElement('afterend', meta);
+        }
+
+        // SEO for this article: absolute canonical built from site url + relative permalink
+        if (this.atoms.seoOptimizer) {
+            const siteUrl = String((this.atoms.seoOptimizer.defaultConfig || {}).siteUrl || '').replace(/\/+$/, '');
+            const pageData = {
+                title: article.title,
+                description: article.description,
+                tags: article.tags || [],
+                permalink: `${siteUrl}/${article.permalink}`
+            };
+            const seo = this.atoms.seoOptimizer.applyToDocument('article', pageData);
+            console.debug('[App] loadArticlePage SEO', pageData, seo);
+        }
+    }
+
     async loadBlogContent() {
         const blogContentContainer = document.getElementById('blog-content');
         if (!blogContentContainer) return;
@@ -1216,6 +1308,11 @@ class App {
      * Handle hash change events
      */
     handleHashChange() {
+        // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Article page has no sections: ignore hash changes there
+        if (this.page && this.page !== 'home') {
+            console.debug('[App] handleHashChange ignored on page', this.page);
+            return;
+        }
         // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Section resolved via resolveSectionFromHash (resume page may be disabled)
         const sectionId = this.resolveSectionFromHash();
 

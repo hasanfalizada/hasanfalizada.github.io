@@ -84,7 +84,9 @@ a:hover {
 .section {
     display: none;
     min-height: 100vh;
-    padding: 4rem 0;
+    /* +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Top padding = fixed header height (80px) + 2.5rem air
+       (was 4rem = 64px, smaller than the header, so the first card slid under it) */
+    padding: calc(80px + 2.5rem) 0 4rem;
 }
 
 .section.active {
@@ -478,6 +480,115 @@ a:hover {
     margin-bottom: 1rem;
 }
 
+/* +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Article page (article.html): readable typography for rendered Markdown */
+.article-content {
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.7;
+    color: #222222;
+}
+
+.article-content .article-back {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    color: #666666;
+    text-decoration: none;
+}
+
+.article-content .article-back:hover {
+    color: #000000;
+}
+
+.article-content h1 {
+    font-size: 2rem;
+    line-height: 1.25;
+    margin: 0 0 0.75rem;
+}
+
+.article-content h2 {
+    font-size: 1.4rem;
+    margin: 2rem 0 0.75rem;
+}
+
+.article-content h3 {
+    font-size: 1.15rem;
+    margin: 1.5rem 0 0.5rem;
+}
+
+.article-content p,
+.article-content ul,
+.article-content ol {
+    margin: 0 0 1rem;
+}
+
+.article-content ul,
+.article-content ol {
+    padding-left: 1.5rem;
+}
+
+.article-content a {
+    color: #0B57D0;
+}
+
+.article-content code {
+    font-size: 0.9em;
+    background-color: #f3f3f3;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+}
+
+.article-content pre {
+    background-color: #f6f6f6;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content blockquote {
+    margin: 0 0 1rem;
+    padding-left: 1rem;
+    border-left: 3px solid #e0e0e0;
+    color: #555555;
+}
+
+.article-content .article-meta {
+    margin-bottom: 2rem;
+}
+
+/* Card title is now a real link (crawlable); keep the card look */
+.article-title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Meta items and tags had no styles (tags were glued into one word) */
+.article-date + .article-reading-time::before {
+    content: "·";
+    margin: 0 0.5rem;
+}
+
+.article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.article-tag {
+    font-size: 0.75rem;
+    color: #444444;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+}
+
 .article-description {
     color: #333333;
     line-height: 1.6;
@@ -609,6 +720,11 @@ a:hover {
 @media (max-width: 480px) {
     .navigation {
         height: 60px;
+    }
+
+    /* +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — header is 60px here: top padding = 60px + 2rem */
+    .section {
+        padding-top: calc(60px + 2rem);
     }
 
     .section-header {

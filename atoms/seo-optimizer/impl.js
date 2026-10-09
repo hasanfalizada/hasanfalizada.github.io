@@ -82,17 +82,18 @@ class SEOOptimizer {
      * @param {string} pageType - Page type (resume, blog)
      * @returns {{success: boolean, error: string|null}}
      */
-    applyToDocument(pageType) {
+    // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — optional pageData (article page: title, description, tags, permalink)
+    applyToDocument(pageType, pageData = {}) {
         try {
             if (!this.isInitialized) {
                 throw new Error('SEOOptimizer is not initialized');
             }
             const config = this.defaultConfig;
 
-            const title = this.generatePageTitle(pageType, {}, config);
-            const description = this.generatePageDescription(pageType, {}, config);
-            const keywords = this.generatePageKeywords(pageType, {}, config);
-            const canonicalUrl = this.generateCanonicalUrl(pageType, {}, config);
+            const title = this.generatePageTitle(pageType, pageData, config);
+            const description = this.generatePageDescription(pageType, pageData, config);
+            const keywords = this.generatePageKeywords(pageType, pageData, config);
+            const canonicalUrl = this.generateCanonicalUrl(pageType, pageData, config);
             console.debug('[SEOOptimizer] applyToDocument', {pageType, title, description, canonicalUrl});
 
             // Upsert <meta> by attribute name/property
