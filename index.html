@@ -6,6 +6,67 @@ Architecture invented by Hasan Alizada in collaboration with AI :)
 This pattern is optimized for AI-friendly coding workflows
 -->
 <head>
+    <!-- +++===+++ 2026-10-13 Asia/Baku — Hasan Alizada — Google Analytics 4 (property "Hasan Alizada - GA4", stream 4837744098);
+         page views only, no custom events. Loaded ONLY after the visitor accepts cookies (banner below, choice in localStorage "ga-consent");
+         nothing is sent to Google before consent. "Cookie settings" link in the footer lets the visitor change the choice. -->
+    <script>
+        (function () {
+            var GA_ID = 'G-G542QZ48CY';
+            var KEY = 'ga-consent';
+            var getChoice = function () { try { return localStorage.getItem(KEY); } catch (e) { return null; } };
+            var setChoice = function (v) { try { localStorage.setItem(KEY, v); } catch (e) {} };
+
+            var loadGa = function () {
+                if (window.__gaLoaded) return;
+                window.__gaLoaded = true;
+                window.dataLayer = window.dataLayer || [];
+                window.gtag = function () { dataLayer.push(arguments); };
+                gtag('js', new Date());
+                gtag('config', GA_ID);
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+                document.head.appendChild(s);
+                console.debug('[Consent] GA4 loaded');
+            };
+
+            var showBanner = function () {
+                if (document.getElementById('cookie-banner')) return;
+                var b = document.createElement('div');
+                b.id = 'cookie-banner';
+                b.className = 'cookie-banner';
+                b.setAttribute('role', 'dialog');
+                b.setAttribute('aria-label', 'Cookie consent');
+                b.innerHTML = '<p class="cookie-banner__text">This site uses Google Analytics cookies to count visits. Nothing is collected unless you accept.</p>' +
+                    '<div class="cookie-banner__actions">' +
+                    '<button type="button" class="cookie-banner__btn" data-choice="denied">Decline</button>' +
+                    '<button type="button" class="cookie-banner__btn cookie-banner__btn--primary" data-choice="granted">Accept</button>' +
+                    '</div>';
+                b.addEventListener('click', function (e) {
+                    var choice = e.target.getAttribute && e.target.getAttribute('data-choice');
+                    if (!choice) return;
+                    setChoice(choice);
+                    console.debug('[Consent] choice =', choice);
+                    b.remove();
+                    if (choice === 'granted') {
+                        loadGa();
+                    } else if (window.__gaLoaded) {
+                        location.reload(); // withdraw: reload so GA4 is no longer running on this page
+                    }
+                });
+                document.body.appendChild(b);
+            };
+
+            window.openCookieSettings = showBanner;
+            var choice = getChoice();
+            console.debug('[Consent] stored choice =', choice);
+            if (choice === 'granted') {
+                loadGa();
+            } else if (choice !== 'denied') {
+                document.addEventListener('DOMContentLoaded', showBanner);
+            }
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hasan Alizada - Enterprise &amp; Solution Architect</title>
@@ -17,6 +78,8 @@ This pattern is optimized for AI-friendly coding workflows
     <meta name="keywords"
           content="enterprise and solution architect, TOGAF, hasan alizada, IT architecture, system design, java developer, spring boot, microservices, cloud architecture, digital transformation">
     <meta name="author" content="Hasan Alizada">
+    <!-- +++===+++ 2026-10-13 Asia/Baku — Hasan Alizada — Google Search Console verification (meta tag, restored from the old index.html; file method googlef59f83c169932802.html is kept too) -->
+    <meta name="google-site-verification" content="MBmbBl_k28RrQPyKSWrckKlZ5MFdYzlaDi-KIqLn3Vw" />
 
     <!-- +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Canonical: site root (blog is default; #resume is the same document) -->
     <link rel="canonical" href="https://hasanfalizada.github.io/">
@@ -136,7 +199,7 @@ This pattern is optimized for AI-friendly coding workflows
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="assets/css/main.css?v=2026-10-09.23">
+    <link rel="stylesheet" href="assets/css/main.css?v=2026-10-13.1">
 
     <!-- Local Libraries -->
     <!-- +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — jsPDF no longer loaded (unused); PDF uses local pdfmake, loaded on demand by PDFGenerator -->
@@ -205,6 +268,8 @@ This pattern is optimized for AI-friendly coding workflows
             <div class="footer-text">
                 <!-- +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — No year in static fallback (never goes stale); JS adds the current year at runtime -->
                 <p>&copy; Hasan Alizada. All rights reserved.</p>
+                <!-- +++===+++ 2026-10-13 Asia/Baku — Hasan Alizada — reopen the cookie banner to change consent -->
+                <p><a href="#" class="cookie-settings-link" onclick="window.openCookieSettings(); return false;">Cookie settings</a></p>
             </div>
         </div>
     </div>
@@ -212,7 +277,7 @@ This pattern is optimized for AI-friendly coding workflows
 
 <!-- Main Application Script -->
 <!-- +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Bump ?v= on main.css AND main.js on every deploy that changes CSS/JS; atoms inherit it -->
-<script src="assets/js/main.js?v=2026-10-09.23" defer></script>
+<script src="assets/js/main.js?v=2026-10-13.1" defer></script>
 
 <!-- Application Initialization -->
 <script>
