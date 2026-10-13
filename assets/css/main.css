@@ -1469,3 +1469,44 @@ a:hover {
         justify-content: flex-end;
     }
 }
+
+/* +++===+++ 2026-10-13 Asia/Baku — Hasan Alizada — Narrow screens: social icons move to a second header row
+   (row 1: name + Blog/Resume, row 2: icons centered). Before, the 4 icons did not fit and wrapped into two lines. */
+@media (max-width: 560px) {
+    .navigation {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 0.5rem 0;
+        row-gap: 0.4rem;
+    }
+
+    .nav-brand {
+        order: 1;
+    }
+
+    .nav-links {
+        order: 2;
+        gap: 1rem;
+    }
+
+    .nav-center {
+        order: 3;
+        flex-basis: 100%;
+    }
+
+    .nav-center .social-links {
+        justify-content: center;
+        flex-wrap: nowrap;
+        gap: 1.75rem;
+    }
+
+    .social-link svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* header is taller here (two rows, ~90px measured at 375px): keep ~30px air above the first card */
+    .section {
+        padding-top: calc(96px + 1.5rem);
+    }
+}
