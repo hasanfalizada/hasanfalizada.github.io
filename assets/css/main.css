@@ -1403,3 +1403,69 @@ a:hover {
     color: #6f6f6f; /* subtle grey dates */
     font-weight: 500;
 }
+
+/* +++===+++ 2026-10-13 Asia/Baku — Hasan Alizada — Cookie consent banner (index.html) + footer "Cookie settings" link */
+.cookie-banner {
+    position: fixed;
+    left: 50%;
+    bottom: 1rem;
+    transform: translateX(-50%);
+    z-index: 200;
+    width: calc(100% - 2rem);
+    max-width: 720px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.cookie-banner__text {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #333333;
+    line-height: 1.5;
+}
+
+.cookie-banner__actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.cookie-banner__btn {
+    font: inherit;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #d0d0d0;
+    background-color: #ffffff;
+    color: #000000;
+    cursor: pointer;
+}
+
+.cookie-banner__btn--primary {
+    background-color: #000000;
+    border-color: #000000;
+    color: #ffffff;
+}
+
+.cookie-settings-link {
+    font-size: 0.75rem;
+    color: #666666;
+}
+
+@media (max-width: 560px) {
+    .cookie-banner {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .cookie-banner__actions {
+        justify-content: flex-end;
+    }
+}
