@@ -391,7 +391,7 @@
   },
   "work_experience": [
     {
-      "position": "Senior Client Consulting Manager, Visa Consulting & Analytics",
+      "position": "Senior Client Consulting Manager, VCA Implementation Services",
       "position_full": "Sr. Client Consulting Manager, Visa Consulting & Analytics (VCA) Implementation Services (VIS) CEMEA",
       "company": "Visa",
       "location": {
@@ -1308,7 +1308,7 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-09",
-    "version": "1.8.9"
+    "last_updated": "2026-10-18",
+    "version": "1.9.0"
   }
 }

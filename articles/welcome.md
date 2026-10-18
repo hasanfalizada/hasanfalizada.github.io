@@ -13,7 +13,7 @@ I'm Hasan Alizada, an enterprise and solution architect. I have been in IT since
 
 ## Now
 
-I work at Visa as a Senior Client Consulting Manager in Visa Consulting & Analytics. I lead implementation projects for banks in CEMEA end-to-end, from concept and architecture to delivery, building solutions from scratch with a cross-functional team.
+I work at Visa as a Senior Client Consulting Manager in VCA Implementation Services. I lead implementation projects for banks in CEMEA end-to-end, from concept and architecture to delivery, building solutions from scratch with a cross-functional team.
 
 ## Before
 
