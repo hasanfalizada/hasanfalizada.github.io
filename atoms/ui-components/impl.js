@@ -463,7 +463,7 @@ class UIComponents {
             Object.entries(skillsData.technical).forEach(([category, skills]) => {
                 const categoryTitle = category.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
                 let skillsArray = Array.isArray(skills) ? skills :
-                    (skills.primary || []).concat(skills.additional || []);
+                    Object.values(skills).filter(Array.isArray).flat(); // +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — any sub-lists (primary, working_knowledge, ...)
 
                 skillsHtml += this.renderSkillTags(skillsArray, categoryTitle).htmlContent;
             });

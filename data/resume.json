@@ -1,26 +1,17 @@
 {
   "personal_info": {
     "name": "Hasan Alizada",
-    "title": {
-      "text": "AWS® SA, TOGAF® 10, PMP®, ITIL®, OCP® (Oracle PL/SQL)",
-      "to_render": false
-    },
+    "title": "AWS® SA, TOGAF® 10, PMP®, ITIL®, OCP® (Oracle PL/SQL)",
     "headline": "Enterprise & Solution Architect",
     "positioning": "I design and build large-scale systems end to end — from enterprise strategy and architecture to production code and delivery.",
-    "summary": {
-      "text": "Enterprise and solution architect with a hands-on engineering background. Started in telecom and card processing (Oracle PL/SQL, ISO 8583, Compass Plus TranzWare), then led backend teams building Java/Spring microservices on Kafka, RabbitMQ and Redis for BirBank, the flagship app of Azerbaijan's largest private bank. Defined architecture for the national railway's digital transformation, and now leads implementation projects for banks across CEMEA at Visa.",
-      "to_render": false
-    },
-    "summary_html": {
-      "text": "Enterprise and solution architect with a <strong>hands-on engineering background</strong>. Started in telecom and <strong>card processing</strong> (Oracle PL/SQL, ISO 8583, Compass Plus TranzWare), then led backend teams building <strong>Java/Spring microservices</strong> on Kafka, RabbitMQ and Redis for BirBank, the flagship app of Azerbaijan's largest private bank. Defined architecture for the <strong>national railway's digital transformation</strong>, and now leads <strong>implementation projects for banks across CEMEA at Visa</strong>.",
+    "summary": "Enterprise and solution architect with a hands-on engineering background in banking, payments, telecom and the public sector. Takes initiatives from idea to production: concept and target architecture, technology and vendor choices, team setup, and architecture oversight through delivery. Built and led backend and card-processing engineering teams at Azerbaijan's largest private bank, delivering parts of BirBank, its leading digital bank app (3M+ users), and defined architecture for the national railway's digital transformation across 50+ systems and 10+ vendors. Currently provides regional technical advisory and solution architecture for banks across CEMEA at Visa.",
+    "summary_linkedin": {
+      "text": "I design and build large-scale systems end to end, from enterprise strategy and architecture to production code and delivery.\n\nMy background is engineering. I started in telecom and card processing, grew into leading backend and card-processing teams at Azerbaijan's largest private bank, and moved into architecture: the digital transformation programs of Azerbaijan's national railway, and today regional technical advisory for banks across CEMEA at Visa.\n\nWhat I do best:\n• Take an initiative from an idea to production: concept, target architecture, technology and vendor choices, team setup, delivery oversight\n• Design distributed, event-driven and integration-heavy systems for banking and payments\n• Align business strategy with technology: roadmaps, architecture principles, governance\n• Build and lead engineering teams that ship\n\nI choose languages and tools by what fits the problem, not by habit, and use AI-assisted development as a normal part of engineering work.\n\nDomains: banking, payments and card processing, telecom, public sector.\nCertifications: TOGAF Enterprise Architecture Practitioner, AWS Certified Solutions Architect – Associate, PMP, ITIL Foundation.",
       "to_render": false
     },
     "contact": {
       "email": "ha@hasanalizada.net",
-      "location": {
-        "text": "Baku, Azerbaijan",
-        "to_render": false
-      },
+      "location": "Baku, Azerbaijan",
       "availability": "Open to relocation and remote work",
       "website": "hasanfalizada.github.io"
     },
@@ -69,23 +60,43 @@
     "professional": [
       {
         "text": "TOGAF® Framework & ADM",
-        "to_render": false
+        "profiles": [
+          "default",
+          "solution-architect",
+          "enterprise-architect"
+        ]
       },
       {
         "text": "IT Strategy & Business Alignment",
-        "to_render": false
+        "profiles": [
+          "default",
+          "solution-architect",
+          "enterprise-architect"
+        ]
       },
       {
         "text": "Enterprise IT Governance",
-        "to_render": false
+        "profiles": [
+          "default",
+          "solution-architect",
+          "enterprise-architect"
+        ]
       },
       {
         "text": "Solution & Technology Architecture",
-        "to_render": false
+        "profiles": [
+          "default",
+          "solution-architect",
+          "enterprise-architect"
+        ]
       },
       {
         "text": "IT Project & Program Management",
-        "to_render": false
+        "profiles": [
+          "default",
+          "solution-architect",
+          "enterprise-architect"
+        ]
       },
       {
         "text": "Agile & Scrum Methodologies",
@@ -93,15 +104,23 @@
       },
       {
         "text": "Risk Management & Mitigation",
-        "to_render": false
+        "profiles": [
+          "enterprise-architect"
+        ]
       },
       {
         "text": "Budgeting & Cost Optimization",
-        "to_render": false
+        "profiles": [
+          "enterprise-architect"
+        ]
       },
       {
         "text": "Cross-Functional Team Leadership",
-        "to_render": false
+        "profiles": [
+          "default",
+          "solution-architect",
+          "enterprise-architect"
+        ]
       },
       {
         "text": "Client Consulting & Advisory",
@@ -113,15 +132,27 @@
       },
       {
         "text": "Digital Transformation Strategy",
-        "to_render": false
+        "profiles": [
+          "default",
+          "solution-architect",
+          "enterprise-architect"
+        ]
       },
       {
         "text": "Payments & Financial Services",
-        "to_render": false
+        "profiles": [
+          "default",
+          "solution-architect",
+          "enterprise-architect"
+        ]
       },
       {
         "text": "Stakeholder Engagement & Leadership",
-        "to_render": false
+        "profiles": [
+          "default",
+          "solution-architect",
+          "enterprise-architect"
+        ]
       },
       {
         "text": "High-Level Design",
@@ -130,16 +161,30 @@
       {
         "text": "Business Process Improvement",
         "to_render": false
+      },
+      {
+        "text": "Vendor Selection & RFP",
+        "profiles": [
+          "default",
+          "solution-architect",
+          "enterprise-architect"
+        ]
+      },
+      {
+        "text": "Architecture Review Board (ARB)",
+        "profiles": [
+          "enterprise-architect"
+        ]
       }
     ],
     "technical": {
       "languages": {
         "primary": [
           "Java (8–21)",
-          "PL/SQL",
-          "SQL"
+          "SQL",
+          "PL/SQL"
         ],
-        "additional": [
+        "working_knowledge": [
           "C#",
           "Rust"
         ]
@@ -151,10 +196,11 @@
       ],
       "architecture_design": [
         "TOGAF",
-        "ArchiMate",
         "C4 model",
         "Microservices",
+        "Monolith decomposition",
         "Event-driven architecture",
+        "Enterprise integration (ESB, asynchronous messaging)",
         "Distributed systems",
         "Capability mapping",
         "Technology roadmaps",
@@ -209,8 +255,7 @@
         "Prometheus",
         "Grafana",
         "ELK Stack"
-      ],
-      "to_render": false
+      ]
     },
     "technical_labels": {
       "languages": "Languages",
@@ -235,9 +280,31 @@
         "to_render": false
       },
       "period": "12/2025 – Present",
-      "company_description": "",
+      "company_description": {
+        "text": "Visa Consulting & Analytics (VCA), Implementation Services: turning consulting recommendations into delivered solutions for banks and fintechs",
+        "to_render": false
+      },
       "achievements": [
-        "Lead implementation projects for banks in CEMEA end-to-end, from concept and architecture to delivery, building solutions from scratch with a cross-functional team",
+        {
+          "text": "Regional technical advisor for banks and fintechs across CEMEA: shape solution concepts and target architecture for digital banking and payments initiatives"
+        },
+        {
+          "text": "Own initiatives end to end, from the initial idea through solution design, delivery planning and team staffing to implementation"
+        },
+        {
+          "text": "Provide architecture oversight during delivery: integration of Visa capabilities with client platforms (APIs, cloud, enterprise applications), technical risk and quality"
+        },
+        {
+          "text": "Translate technical complexity into decisions for executive and business stakeholders; coordinate architects, engineers and analysts across client and Visa teams",
+          "profiles": [
+            "solution-architect",
+            "enterprise-architect"
+          ]
+        },
+        {
+          "text": "Lead implementation projects for banks in CEMEA end-to-end, from concept and architecture to delivery, building solutions from scratch with a cross-functional team",
+          "to_render": false
+        },
         {
           "text": "Lead implementation of digital banking and payment transformations for banks in CEMEA.",
           "to_render": false
@@ -253,14 +320,82 @@
         "to_render": false
       },
       "period": "09/2023 – 12/2025",
-      "company_description": {
-        "text": "National rail transport operator in Azerbaijan",
-        "to_render": false
-      },
+      "company_description": "National railway operator of Azerbaijan (state-owned)",
       "company_logo": "assets/img/logos/ady_square.png",
       "achievements": [
-        "Architecture for the company's digital transformation strategy and its multi-million IT programs",
-        "Re-architecture of the existing nationwide passenger mobile app",
+        {
+          "text": "Translated the digital transformation roadmap into target architecture for the company's multi-million IT programs"
+        },
+        {
+          "text": "Defined target architecture, principles and governance for a landscape of 50+ systems, from small legacy applications to large enterprise platforms, delivered by 10+ vendors"
+        },
+        {
+          "text": "Designed integrations across the landscape with patterns from an enterprise service bus to asynchronous messaging",
+          "profiles": [
+            "default",
+            "solution-architect",
+            "software-engineer"
+          ]
+        },
+        {
+          "text": "Re-architected the nationwide passenger mobile app (ADY Mobile, 250K+ users by 2025)"
+        },
+        {
+          "text": "Built the business capability map used to align IT programs with business priorities",
+          "profiles": [
+            "default",
+            "enterprise-architect"
+          ]
+        },
+        {
+          "text": "Reviewed and approved solution designs at the architecture review board (ARB)",
+          "profiles": [
+            "solution-architect",
+            "enterprise-architect"
+          ]
+        },
+        {
+          "text": "Ran vendor selection and RFPs: technical requirements, solution evaluation and vendor recommendations",
+          "profiles": [
+            "default",
+            "solution-architect",
+            "enterprise-architect"
+          ]
+        },
+        {
+          "text": "Aligned IT strategy with business goals together with department heads, vendors and government agencies; ensured compliance with industry and government standards",
+          "profiles": [
+            "enterprise-architect"
+          ]
+        },
+        {
+          "text": "Architecture for the company's digital transformation strategy and its multi-million IT programs",
+          "to_render": false
+        },
+        {
+          "text": "Defined target architecture, architecture principles and governance across a heterogeneous, vendor-based state-enterprise IT landscape",
+          "to_render": false
+        },
+        {
+          "text": "Re-architected the nationwide passenger mobile app",
+          "to_render": false
+        },
+        {
+          "text": "Aligned IT strategy with business goals together with department heads, vendors and government agencies; ensured compliance with industry and government standards",
+          "to_render": false
+        },
+        {
+          "text": "Led cost-saving initiatives through process optimization and technology implementation; supported the transition to cloud-based systems",
+          "to_render": false
+        },
+        {
+          "text": "Architecture for the company's digital transformation strategy and its multi-million IT programs",
+          "to_render": false
+        },
+        {
+          "text": "Re-architecture of the existing nationwide passenger mobile app",
+          "to_render": false
+        },
         {
           "text": "Led cost-saving projects reducing operational expenses through process optimization and technology implementation.",
           "to_render": false
@@ -301,9 +436,11 @@
       },
       "company_logo": "assets/img/logos/kb_square.png",
       "achievements": [
-        "Led a team of 12 backend engineers",
         {
-          "text": "Architecture, backend development and delivery of BirBank modules (Cashback, Statements) and TaxRefund (ƏDVGeriAl)",
+          "text": "Led a backend chapter of 12 engineers across 3 product teams"
+        },
+        {
+          "text": "Architecture, backend development and delivery of BirBank modules (Cashback, Statements) and TaxRefund (ƏDVGeriAl); BirBank is Azerbaijan's leading digital bank with 3M+ users",
           "links": [
             {
               "text": "BirBank",
@@ -314,6 +451,37 @@
               "url": "https://edvgerial.kapitalbank.az/"
             }
           ]
+        },
+        {
+          "text": "Led the decomposition of a monolithic Java + Oracle PL/SQL backend into microservices"
+        },
+        {
+          "text": "Built Java/Spring Boot microservices with event-driven integration on Apache Kafka and RabbitMQ, and Redis caching to reduce response times"
+        },
+        {
+          "text": "Introduced Keycloak-based identity and access management (OAuth 2.0 / OpenID Connect) for backend services",
+          "profiles": [
+            "default",
+            "solution-architect",
+            "software-engineer"
+          ]
+        },
+        {
+          "text": "Optimized Oracle PL/SQL performance; introduced PostgreSQL and MongoDB for targeted use cases",
+          "profiles": [
+            "solution-architect",
+            "software-engineer"
+          ]
+        },
+        {
+          "text": "Mentored engineers and aligned the backend roadmap with product and business teams",
+          "profiles": [
+            "enterprise-architect"
+          ]
+        },
+        {
+          "text": "Led a team of 12 backend engineers",
+          "to_render": false
         },
         {
           "text": "Implemented Apache Kafka for real-time data processing, increasing throughput and reducing latency.",
@@ -363,7 +531,24 @@
       },
       "company_logo": "assets/img/logos/kb_square.png",
       "achievements": [
-        "Led a team of 10 developers for card processing (Compass Plus TranzWare CMS / TWO)",
+        {
+          "text": "Led a team of 10 developers for card processing (Compass Plus TranzWare CMS / TWO)"
+        },
+        {
+          "text": "Integrated internal banking systems with the card processing platform for reliable transaction processing"
+        },
+        {
+          "text": "Optimized Oracle PL/SQL for card processing; managed platform upgrades with high availability and standards compliance",
+          "profiles": [
+            "default",
+            "solution-architect",
+            "software-engineer"
+          ]
+        },
+        {
+          "text": "Led a team of 10 developers for card processing (Compass Plus TranzWare CMS / TWO)",
+          "to_render": false
+        },
         {
           "text": "Led development of Compass Plus CMS and TWO platforms, improving card management capabilities.",
           "to_render": false
@@ -401,12 +586,23 @@
       "company_logo": "assets/img/logos/kb_square.png",
       "achievements": [
         {
-          "text": "Tech lead of MüştəriBank (now BirBank Business)",
+          "text": "Tech lead of MüştəriBank (now BirBank Business), corporate internet and mobile banking for SMEs on a Java + Oracle PL/SQL backend",
           "links": [
             {
               "text": "MüştəriBank (now BirBank Business)",
               "url": "https://birbank.business/"
             }
+          ]
+        },
+        {
+          "text": "Core banking and card processing integration via Compass Plus TranzWare CMS and TranzWare Online APIs"
+        },
+        {
+          "text": "Improved straight-through processing performance by tuning database applications; Oracle PL/SQL backend development",
+          "profiles": [
+            "default",
+            "solution-architect",
+            "software-engineer"
           ]
         },
         {
@@ -460,7 +656,11 @@
         "to_render": false
       },
       "company_logo": "assets/img/logos/kb_square.png",
-      "achievements": []
+      "achievements": [
+        {
+          "text": "Card processing business solutions and bank services on Compass Plus TranzWare (certified in TranzWare CMS and TranzWare Online)"
+        }
+      ]
     },
     {
       "position": "Earlier Career",
@@ -648,8 +848,7 @@
       "name": "Oracle Database PL/SQL Developer Certified Professional",
       "period": "07/2018",
       "authority": "Oracle",
-      "url": "https://www.youracclaim.com/badges/707fb3ca-a5d4-435b-9142-30ad6e611dbf/linked_in_profile",
-      "to_render": false
+      "url": "https://www.youracclaim.com/badges/707fb3ca-a5d4-435b-9142-30ad6e611dbf/linked_in_profile"
     },
     {
       "name": "Oracle Database SQL Certified Expert",
@@ -866,7 +1065,10 @@
       "name": "Haalendar",
       "period": "06/2019 – Present",
       "url": "https://github.com/hasanfalizada/Haalendar",
-      "description": "Simple light-weight self-hosted desktop web-calendar for single person.",
+      "description": "Lightweight self-hosted web calendar for a single user (personal open-source project)",
+      "profiles": [
+        "software-engineer"
+      ],
       "to_render": false
     }
   ],
@@ -877,7 +1079,10 @@
       "period": "03/2024 – Present",
       "url": "https://www.globalaea.org/",
       "description": "A global network of Enterprise Architecture professionals who are working together to advance Enterprise Architecture and promote professional excellence.",
-      "to_render": false
+      "profiles": [
+        "default",
+        "enterprise-architect"
+      ]
     }
   ],
   "courses": [
@@ -904,6 +1109,82 @@
   ],
   "metadata": {
     "last_updated": "2026-11-05",
-    "version": "2.0.0"
+    "version": "2.3.0"
+  },
+  "cv_profiles": {
+    "default": {
+      "label": "Resume",
+      "technical_groups": [
+        "architecture_design",
+        "languages",
+        "backend_frameworks",
+        "messaging_apis",
+        "databases",
+        "cloud_infrastructure",
+        "security_iam",
+        "payments",
+        "devops_cicd",
+        "monitoring_observability"
+      ]
+    },
+    "solution-architect": {
+      "label": "Solution Architect",
+      "personal_info": {
+        "headline": "Solution Architect",
+        "positioning": "I turn business problems into working systems: concept, architecture, integration and delivery oversight for complex, high-load platforms.",
+        "summary": "Solution architect with a hands-on engineering background in banking, payments, telecom and the public sector. Designs solutions from concept to production: target architecture, integration design, technology and vendor choices, and architecture oversight through delivery. Designed dozens of integrations with patterns from an enterprise service bus to asynchronous messaging, led the decomposition of a monolith into microservices for BirBank (3M+ users), and defined architecture for a national railway landscape of 50+ systems and 10+ vendors. Currently the regional technical advisor and solution architect for bank implementations across CEMEA at Visa."
+      },
+      "technical_groups": [
+        "architecture_design",
+        "messaging_apis",
+        "security_iam",
+        "backend_frameworks",
+        "languages",
+        "databases",
+        "cloud_infrastructure",
+        "payments",
+        "devops_cicd",
+        "monitoring_observability"
+      ]
+    },
+    "enterprise-architect": {
+      "label": "Enterprise Architect",
+      "personal_info": {
+        "headline": "Enterprise Architect",
+        "positioning": "I align business strategy and technology: target architecture, roadmaps and governance that turn transformation plans into delivered systems.",
+        "summary": "TOGAF-certified enterprise architect with a hands-on engineering background in banking, payments, telecom and the public sector. At Azerbaijan's national railway turned the digital transformation roadmap into target architecture for multi-million IT programs across 50+ systems and 10+ vendors: business capability map, architecture review board, vendor selection and RFPs. Earlier built and led engineering teams at Azerbaijan's largest private bank, so architecture decisions stay grounded in delivery. Currently provides regional technical advisory for banks across CEMEA at Visa."
+      },
+      "technical_groups": [
+        "architecture_design",
+        "payments",
+        "cloud_infrastructure",
+        "security_iam",
+        "messaging_apis",
+        "languages",
+        "backend_frameworks",
+        "databases"
+      ]
+    },
+    "software-engineer": {
+      "label": "Software Engineer",
+      "personal_info": {
+        "headline": "Backend Software Engineer & Architect",
+        "title": "AWS® Certified Solutions Architect, OCP® (Oracle PL/SQL), TOGAF® 10",
+        "positioning": "I build and lead the building of reliable backend systems, from architecture and code to production.",
+        "summary": "Backend engineer and architect who builds and runs systems in banking and payments. Led a backend chapter of 12 engineers across 3 teams that decomposed a Java + Oracle PL/SQL monolith into event-driven microservices for BirBank, Azerbaijan's leading digital bank (3M+ users), and a team of 10 developers on card processing. Combines code-level depth with architecture ownership: system design, integration, security and delivery. Chooses languages and tools by fit to the problem and uses AI-assisted development as part of everyday engineering."
+      },
+      "technical_groups": [
+        "languages",
+        "backend_frameworks",
+        "messaging_apis",
+        "databases",
+        "security_iam",
+        "devops_cicd",
+        "cloud_infrastructure",
+        "monitoring_observability",
+        "architecture_design",
+        "payments"
+      ]
+    }
   }
 }

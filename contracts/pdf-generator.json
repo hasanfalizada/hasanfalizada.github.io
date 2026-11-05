@@ -2,8 +2,8 @@
     "contract": {
         "id": "pdf-generator.v1",
         "name": "PDF Generator",
-        "version": "1.0.0",
-        "description": "Atomic module for generating PDF resume from loaded data using client-side pdfmake library (vendored locally). Constructor receives ResumeDataLoader; entry point used by App is generateAndDownload(_unused, {filename?, compact?})",
+        "version": "1.1.0",
+        "description": "Atomic module for generating PDF resume from loaded data using client-side pdfmake library (vendored locally). Constructor receives ResumeDataLoader; entry point used by App and cv/<profile>/ pages is generateAndDownload(_unused, {profile?, filename?})",
         "interface": {
             "generatePDF": {
                 "input": {
@@ -112,6 +112,44 @@
                     ]
                 },
                 "description": "Triggers PDF download in browser with specified filename"
+            },
+            "generateAndDownload": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "profile": {
+                            "type": "string",
+                            "description": "CV profile id (cv_profiles key); default \"default\""
+                        },
+                        "filename": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    }
+                },
+                "description": "Loads the profile's renderable data via ResumeDataLoader, builds the PDF and downloads <Name>[_<Profile Label>]_Resume.pdf"
+            },
+            "buildDocDefinition": {
+                "input": {
+                    "type": "object",
+                    "description": "Renderable resume data (loader output)"
+                },
+                "output": {
+                    "type": "object",
+                    "description": "pdfmake document definition"
+                },
+                "description": "Pure (no DOM): usable in Node for tests and builds"
             }
         },
         "schemas": {
@@ -301,7 +339,9 @@
         "capabilities": [
             "generatePDF",
             "formatResumeLayout",
-            "downloadPDF"
+            "downloadPDF",
+            "generateAndDownload",
+            "buildDocDefinition"
         ],
         "dependencies": [
             "resume-data-loader"
@@ -315,8 +355,9 @@
             "supported_formats": [
                 "PDF"
             ],
-            "client_side_only": true
+            "client_side_only": true,
+            "ats_layout": "Single column; no tables, columns or images; one text line per logical item (contact line, 'Label: values' skill lines, 'Company | Location | Period'); standard section headings; selectable text, ligatures off; job header + first bullet unbreakable, every bullet unbreakable"
         },
-        "notes": "+++===+++ 2025-08-26 15:35 UTC — Hasan Alizada — Contract for PDF generator atom using jsPDF library for client-side PDF generation | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Switched to local pdfmake; data via injected ResumeDataLoader"
+        "notes": "+++===+++ 2025-08-26 15:35 UTC — Hasan Alizada — Contract for PDF generator atom using jsPDF library for client-side PDF generation | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Switched to local pdfmake; data via injected ResumeDataLoader | +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — ATS single-column layout, logos/icons removed, CV profiles (opts.profile), Node-buildable document definition"
     }
 }

@@ -2,11 +2,20 @@
     "contract": {
         "id": "resume-data-loader.v1",
         "name": "Resume Data Loader",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "description": "Atomic module for loading and managing resume data from JSON storage",
         "interface": {
             "loadResumeData": {
-                "input": {},
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "profileId": {
+                            "type": "string",
+                            "default": "default",
+                            "description": "Key of cv_profiles; unknown id falls back to default"
+                        }
+                    }
+                },
                 "output": {
                     "type": "object",
                     "properties": {
@@ -26,7 +35,7 @@
                         "data"
                     ]
                 },
-                "description": "Loads resume data from source and returns RENDERABLE data (filterRenderable applied). Raw data stays in dataCache"
+                "description": "Loads resume data and returns RENDERABLE data of the CV profile: filterRenderable(applyProfile(raw, profileId)). Raw data stays in dataCache"
             },
             "validateResumeStructure": {
                 "input": {
@@ -142,6 +151,28 @@
                     ]
                 },
                 "description": "Returns skills section"
+            },
+            "applyProfile": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "data": {
+                            "$ref": "#/schemas/ResumeData"
+                        },
+                        "profileId": {
+                            "type": "string",
+                            "default": "default"
+                        }
+                    },
+                    "required": [
+                        "data"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "description": "Copy for the profile; cv_profiles removed, cv_profile = {id, label, ...} added"
+                },
+                "description": "CV variant per target role, applied before filterRenderable: array items with profiles:[ids] are kept only for listed profiles (key stripped); cv_profiles[id].personal_info overrides personal_info fields; cv_profiles[id].technical_groups orders/subsets skills.technical"
             }
         },
         "schemas": {
@@ -619,7 +650,8 @@
             "validateResumeStructure",
             "getPersonalInfo",
             "getExperience",
-            "getSkills"
+            "getSkills",
+            "applyProfile"
         ],
         "dependencies": [],
         "constraints": {
@@ -627,8 +659,9 @@
             "single_source_of_truth": "All consumers must obtain resume data only through this atom",
             "visibility_flag": "to_render (boolean, optional, default true). Any object with to_render=false is hidden: array item removed, or object field removed. Any value (array item or field) may be {text, to_render}. Nothing is deleted from source; hiding only in filterRenderable",
             "browser_compatibility": "ES6+",
-            "no_external_apis": true
+            "no_external_apis": true,
+            "cv_profiles": "cv_profiles (object, optional) must contain \"default\". Each profile: label, optional personal_info overrides, optional technical_groups. Any array item may carry profiles: [ids]; every id must exist in cv_profiles (validated)"
         },
-        "notes": "+++===+++ 2025-08-26 15:30 UTC — Hasan Alizada — Contract for resume data loader atom with complete JSON schema validation | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.headline; sourceUrl constructor param; single source of truth constraint | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added to_render visibility flag and filterRenderable | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Phone optional (removed from data); added Project, Membership, Course, Publication schemas; certificate url/authority/license_number | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added skills.technical_labels | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — to_render now applies to object fields too (e.g. contact.location, social_links.*) | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.positioning and work_experience[].position_full | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — achievements items may carry links[{text,url}]"
+        "notes": "+++===+++ 2025-08-26 15:30 UTC — Hasan Alizada — Contract for resume data loader atom with complete JSON schema validation | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.headline; sourceUrl constructor param; single source of truth constraint | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added to_render visibility flag and filterRenderable | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Phone optional (removed from data); added Project, Membership, Course, Publication schemas; certificate url/authority/license_number | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added skills.technical_labels | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — to_render now applies to object fields too (e.g. contact.location, social_links.*) | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added personal_info.positioning and work_experience[].position_full | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — achievements items may carry links[{text,url}] | +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — CV profiles (variants per target role): applyProfile, loadResumeData(profileId), profiles tag validation"
     }
 }

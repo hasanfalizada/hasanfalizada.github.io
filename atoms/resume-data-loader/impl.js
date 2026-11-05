@@ -19,9 +19,13 @@ class ResumeDataLoader {
      * @returns {Promise<{success: boolean, data: object, error: string|null}>}
      */
     // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Returns RENDERABLE data (to_render:false items removed); raw stays in dataCache
-    async loadResumeData() {
+    // +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — profileId selects a CV variant (cv_profiles in resume.json); default = 'default'
+    /**
+     * @param {string} [profileId='default'] - CV profile id (key of cv_profiles)
+     */
+    async loadResumeData(profileId = ResumeDataLoader.DEFAULT_PROFILE) {
         if (this.dataCache) {
-            const renderable = this.filterRenderable(this.dataCache);
+            const renderable = this.filterRenderable(this.applyProfile(this.dataCache, profileId));
             console.debug('[ResumeDataLoader] returning renderable data from cache');
             return {
                 success: true,
@@ -34,7 +38,7 @@ class ResumeDataLoader {
             return new Promise(resolve => {
                 const checkLoaded = () => {
                     if (!this.isLoading) {
-                        resolve(this.loadResumeData());
+                        resolve(this.loadResumeData(profileId));
                     } else {
                         setTimeout(checkLoaded, 100);
                     }
@@ -70,7 +74,7 @@ class ResumeDataLoader {
 
             return {
                 success: true,
-                data: this.filterRenderable(this.dataCache),
+                data: this.filterRenderable(this.applyProfile(this.dataCache, profileId)),
                 error: null
             };
 
@@ -167,6 +171,24 @@ class ResumeDataLoader {
         };
         checkToRender(data, '');
 
+        // +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — CV profiles: every "profiles" tag must name an existing cv_profiles key
+        const profileIds = Object.keys(data.cv_profiles || {});
+        if (data.cv_profiles && !profileIds.includes(ResumeDataLoader.DEFAULT_PROFILE)) {
+            errors.push(`cv_profiles must contain "${ResumeDataLoader.DEFAULT_PROFILE}"`);
+        }
+        const checkProfiles = (node, path) => {
+            if (Array.isArray(node)) {
+                node.forEach((item, i) => checkProfiles(item, `${path}[${i}]`));
+            } else if (node && typeof node === 'object') {
+                if (Array.isArray(node.profiles)) {
+                    node.profiles.filter(p => !profileIds.includes(p))
+                        .forEach(p => errors.push(`${path}.profiles: unknown profile "${p}"`));
+                }
+                Object.keys(node).forEach(k => k !== 'cv_profiles' && checkProfiles(node[k], path ? `${path}.${k}` : k));
+            }
+        };
+        checkProfiles(data, '');
+
         const isValid = errors.length === 0;
 
         return {
@@ -224,6 +246,65 @@ class ResumeDataLoader {
             return out;
         }
         return node;
+    }
+
+    /**
+     * +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — CV profile (variant per target role), applied BEFORE filterRenderable.
+     * Rules (input is not mutated):
+     *  - array item with "profiles": [ids] → kept only if the list contains profileId; the "profiles" key is stripped
+     *  - items without "profiles" → kept in every profile
+     *  - cv_profiles[profileId].personal_info → shallow override of personal_info (headline, positioning, summary, ...)
+     *  - cv_profiles[profileId].technical_groups → order and subset of skills.technical groups
+     *  - output gets cv_profile = {id, label, ...}; cv_profiles is removed
+     * @param {object} data - raw resume data
+     * @param {string} [profileId='default']
+     * @returns {object}
+     */
+    applyProfile(data, profileId = ResumeDataLoader.DEFAULT_PROFILE) {
+        const profiles = (data && data.cv_profiles) || {};
+        if (!(profileId in profiles)) {
+            console.debug('[ResumeDataLoader] applyProfile: unknown profile', profileId, '→', ResumeDataLoader.DEFAULT_PROFILE);
+            profileId = ResumeDataLoader.DEFAULT_PROFILE;
+        }
+        const profile = profiles[profileId] || {};
+        const isPlainObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+        const walk = (node) => {
+            if (Array.isArray(node)) {
+                return node
+                    .filter(item => !(isPlainObject(item) && Array.isArray(item.profiles)) || item.profiles.includes(profileId))
+                    .map(walk);
+            }
+            if (isPlainObject(node)) {
+                const out = {};
+                Object.keys(node).forEach(k => {
+                    if (k === 'profiles' && Array.isArray(node[k])) return;
+                    if (k === 'cv_profiles') return;
+                    out[k] = walk(node[k]);
+                });
+                return out;
+            }
+            return node;
+        };
+        const out = walk(data || {});
+
+        if (isPlainObject(profile.personal_info)) {
+            out.personal_info = {...(out.personal_info || {}), ...walk(profile.personal_info)};
+        }
+        const tech = out.skills && out.skills.technical;
+        if (Array.isArray(profile.technical_groups) && isPlainObject(tech)) {
+            const ordered = {};
+            profile.technical_groups.forEach(k => {
+                if (k in tech) ordered[k] = tech[k];
+            });
+            if ('to_render' in tech) ordered.to_render = tech.to_render;
+            out.skills = {...out.skills, technical: ordered};
+        }
+        const meta = {...profile};
+        delete meta.personal_info;
+        delete meta.technical_groups;
+        out.cv_profile = {id: profileId, ...meta};
+        console.debug('[ResumeDataLoader] applyProfile', profileId);
+        return out;
     }
 
     /**
@@ -351,6 +432,8 @@ class ResumeDataLoader {
         this.dataCache = null;
     }
 }
+
+ResumeDataLoader.DEFAULT_PROFILE = 'default';
 
 // Export for use in main application
 if (typeof module !== 'undefined' && module.exports) {
