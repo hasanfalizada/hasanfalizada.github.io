@@ -2,7 +2,7 @@
     "contract": {
         "id": "seo-optimizer.v1",
         "name": "SEO Optimizer",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "description": "Atomic module for managing SEO metadata, structured data, and social media optimization",
         "interface": {
             "generateMetaTags": {
@@ -215,6 +215,29 @@
                     ]
                 },
                 "description": "Generates XML sitemap for search engine crawling"
+            },
+            "getPageSeo": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "pageType": {
+                            "type": "string",
+                            "enum": [
+                                "blog",
+                                "resume",
+                                "article"
+                            ]
+                        },
+                        "pageData": {
+                            "type": "object"
+                        }
+                    }
+                },
+                "output": {
+                    "type": "object",
+                    "description": "{title, description, keywords[], author, headline, siteName, canonicalUrl, twitterHandle, person (Person JSON-LD, empty fields dropped)}"
+                },
+                "description": "Pure (no DOM) SEO values of a page. applyToDocument (runtime) and tools/build-static.js (static fallback in index.html/article.html) both use it, so static and runtime tags match"
             }
         },
         "schemas": {
@@ -436,7 +459,8 @@
             "setSocialMediaTags",
             "optimizePageTitles",
             "generateSitemap",
-            "applyToDocument"
+            "applyToDocument",
+            "getPageSeo"
         ],
         "dependencies": [
             "resume-data-loader"
@@ -446,7 +470,8 @@
             "open_graph_support": true,
             "twitter_cards_support": true,
             "google_search_optimization": true,
-            "static_generation": true
+            "static_generation": true,
+            "single_source": "Site root (blog): title 'Name - Headline', description = personal_info.positioning; no hardcoded texts"
         },
         "seo_targets_note": "Documentation only. Authoritative keywords are site_config.keywords in data/resume.json",
         "seo_targets": {
@@ -470,6 +495,6 @@
                 "blog": "Technical articles and insights"
             }
         },
-        "notes": "+++===+++ 2025-08-26 15:35 UTC — Hasan Alizada — Contract for SEO optimizer atom with comprehensive metadata and structured data support | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added applyToDocument(pageType): writes title, meta, OG, Twitter, Person JSON-LD from resume data; no hardcoded personal values | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Person JSON-LD extended: worksFor (current job), alumniOf, hasCredential, knowsLanguage; empty fields/objects dropped"
+        "notes": "+++===+++ 2025-08-26 15:35 UTC — Hasan Alizada — Contract for SEO optimizer atom with comprehensive metadata and structured data support | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Added applyToDocument(pageType): writes title, meta, OG, Twitter, Person JSON-LD from resume data; no hardcoded personal values | +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Person JSON-LD extended: worksFor (current job), alumniOf, hasCredential, knowsLanguage; empty fields/objects dropped | +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — getPageSeo shared by runtime and static build; root title/description from resume data (was 'Blog - Name' + hardcoded text)"
     }
 }

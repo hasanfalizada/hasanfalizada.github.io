@@ -32,6 +32,7 @@ class SEOOptimizer {
             siteDescription: pi.summary || '',
             author: pi.name || '',
             headline: pi.headline || '',
+            positioning: pi.positioning || '', // +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — home page description
             twitterHandle: twitterHandle,
             keywords: sc.keywords || [],
             language: sc.language || 'en',
@@ -88,12 +89,10 @@ class SEOOptimizer {
             if (!this.isInitialized) {
                 throw new Error('SEOOptimizer is not initialized');
             }
+            // +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — values come from getPageSeo (same source as the static HTML built by tools/build-static.js)
+            const seo = this.getPageSeo(pageType, pageData);
             const config = this.defaultConfig;
-
-            const title = this.generatePageTitle(pageType, pageData, config);
-            const description = this.generatePageDescription(pageType, pageData, config);
-            const keywords = this.generatePageKeywords(pageType, pageData, config);
-            const canonicalUrl = this.generateCanonicalUrl(pageType, pageData, config);
+            const {title, description, keywords, canonicalUrl} = seo;
             console.debug('[SEOOptimizer] applyToDocument', {pageType, title, description, canonicalUrl});
 
             // Upsert <meta> by attribute name/property
@@ -139,19 +138,7 @@ class SEOOptimizer {
                 ld.id = 'structured-data-person';
                 document.head.appendChild(ld);
             }
-            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Drop empty fields (e.g. telephone when phone is absent in data)
-            // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Also drops objects whose all non-"@" values are empty (e.g. address when location is hidden)
-            const isEmpty = (v) => v === '' || v == null
-                || (Array.isArray(v) && v.length === 0)
-                || (typeof v === 'object' && !Array.isArray(v) && Object.keys(v).filter(x => !x.startsWith('@')).every(x => isEmpty(v[x])));
-            const person = this.createPersonSchema(config.person, 'https://schema.org');
-            Object.keys(person).forEach(k => {
-                if (!k.startsWith('@') && isEmpty(person[k])) {
-                    console.debug('[SEOOptimizer] JSON-LD: dropping empty field', k);
-                    delete person[k];
-                }
-            });
-            ld.textContent = JSON.stringify(person, null, 2);
+            ld.textContent = JSON.stringify(seo.person, null, 2);
 
             console.debug('[SEOOptimizer] document updated');
             return {success: true, error: null};
@@ -159,6 +146,37 @@ class SEOOptimizer {
             console.error('[SEOOptimizer] applyToDocument failed:', error.message);
             return {success: false, error: error.message};
         }
+    }
+
+    /**
+     * +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — All SEO values of a page as plain data (no DOM). Used by applyToDocument at runtime
+     * and by tools/build-static.js for the static fallback in index.html / article.html, so both always match.
+     * @param {string} pageType - blog (site root), resume, article
+     * @param {object} pageData - article page data (title, description, tags, permalink)
+     * @returns {{title, description, keywords: string[], author, siteName, canonicalUrl, twitterHandle, person: object}}
+     */
+    getPageSeo(pageType, pageData = {}) {
+        if (!this.isInitialized) throw new Error('SEOOptimizer is not initialized');
+        const config = this.defaultConfig;
+        // Drop empty fields (e.g. telephone when phone is absent in data) and objects whose all non-"@" values are empty
+        const isEmpty = (v) => v === '' || v == null
+            || (Array.isArray(v) && v.length === 0)
+            || (typeof v === 'object' && !Array.isArray(v) && Object.keys(v).filter(x => !x.startsWith('@')).every(x => isEmpty(v[x])));
+        const person = this.createPersonSchema(config.person, 'https://schema.org');
+        Object.keys(person).forEach(k => {
+            if (!k.startsWith('@') && isEmpty(person[k])) delete person[k];
+        });
+        return {
+            title: this.generatePageTitle(pageType, pageData, config),
+            description: this.generatePageDescription(pageType, pageData, config),
+            keywords: this.generatePageKeywords(pageType, pageData, config),
+            author: config.author,
+            headline: config.headline,
+            siteName: config.siteName,
+            canonicalUrl: this.generateCanonicalUrl(pageType, pageData, config),
+            twitterHandle: config.twitterHandle,
+            person
+        };
     }
 
     /**
@@ -263,7 +281,8 @@ class SEOOptimizer {
                 // Format: "Resume - Name" (similar to blog)
                 return `Resume - ${config.author}`;
             case 'blog':
-                return `Blog - ${config.author}`;
+                // +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — site root: "Name - Headline" (who the site is about), not "Blog - Name"
+                return config.headline ? `${config.author} - ${config.headline}` : config.author;
             case 'article':
                 return pageData.title ? `${pageData.title} - ${config.author}` : `Article - ${config.author}`;
             default:
@@ -285,7 +304,8 @@ class SEOOptimizer {
                 // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — headline from resume data instead of hardcoded text
                 return `Professional resume of ${config.author}${config.headline ? `, ${config.headline}` : ''}. ${config.siteDescription}`.trim();
             case 'blog':
-                return `Blog by ${config.author} covering enterprise architecture, system design, and modern development practices.`;
+                // +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — site root: positioning from resume data (was hardcoded text)
+                return config.positioning || config.siteDescription;
             case 'article':
                 return pageData.description || pageData.summary || config.siteDescription;
             default:

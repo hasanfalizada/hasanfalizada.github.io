@@ -332,7 +332,8 @@ class App {
                 await this.waitForGlobal('BlogRenderer');
             }
             if (!this.atoms.blogRenderer) {
-                this.atoms.blogRenderer = new BlogRenderer();
+                // +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — default article author from resume data
+                this.atoms.blogRenderer = new BlogRenderer({defaultAuthor: (resumeData.personal_info || {}).name});
             }
 
             // +++===+++ Load SEO optimizer atom and initialize with resume data
@@ -1463,9 +1464,11 @@ class App {
     /**
      * +++===+++ 2025-11-26 UTC — Hasan Alizada — Display cool console message
      */
+    // +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — name from resume data (no hardcode)
     displayConsoleWelcome() {
+        const name = ((this.resumeData || {}).personal_info || {}).name;
         console.log(`
-     Thanks for checking the console! - Hasan Alizada :)
+     Thanks for checking the console!${name ? ` - ${name}` : ''} :)
         `);
     }
 

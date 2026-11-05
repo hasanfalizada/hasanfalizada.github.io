@@ -26,7 +26,7 @@ const BlogRenderer = require(rel('atoms/blog-renderer/impl.js'));
 const ResumeDataLoader = require(rel('atoms/resume-data-loader/impl.js'));
 console.debug = () => {}; // silence atoms' debug logging in CLI output
 
-const renderer = new BlogRenderer();
+const renderer = new BlogRenderer({defaultAuthor: (JSON.parse(fs.readFileSync(rel('data/resume.json'), 'utf8')).personal_info || {}).name});
 // +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — default CV profile applied first (same data as the site)
 const loader = new ResumeDataLoader();
 const resume = loader.filterRenderable(loader.applyProfile(JSON.parse(fs.readFileSync(rel('data/resume.json'), 'utf8'))));
