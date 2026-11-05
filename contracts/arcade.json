@@ -1,0 +1,53 @@
+{
+    "contract": {
+        "id": "arcade.v1",
+        "name": "Arcade",
+        "version": "1.0.0",
+        "description": "Five architecture-themed canvas mini games shown on the blog page while there are no articles: Monolith Breaker, Load Balancer, Circuit Breaker, Merge to Platform, Uptime Runner",
+        "interface": {
+            "mount": {
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "root": {
+                            "type": "object",
+                            "description": "HTMLElement container"
+                        }
+                    },
+                    "required": [
+                        "root"
+                    ]
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "success": {
+                            "type": "boolean"
+                        },
+                        "error": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "success"
+                    ]
+                },
+                "description": "Builds tabs, canvas and description inside root and starts the render loop"
+            }
+        },
+        "capabilities": [
+            "mount"
+        ],
+        "dependencies": [],
+        "constraints": {
+            "no_external_dependencies": "Canvas 2D only; no libraries, fonts or network requests",
+            "start_policy": "Games start only on click / tap / space; nothing autoplays",
+            "performance": "Render loop pauses when the arcade is off screen (IntersectionObserver) or the tab is hidden",
+            "routing": "Does not touch location.hash (the site uses hash routing for sections)",
+            "storage": "Best score per game in localStorage arcade-best-<id>; every access wrapped in try/catch",
+            "theming": "Canvas colors from CSS custom properties --arcade-bg/fg/muted/line/stage on .arcade"
+        },
+        "notes": "+++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — Created; loaded on demand by App.mountArcade when articles/index.json is empty"
+    }
+}

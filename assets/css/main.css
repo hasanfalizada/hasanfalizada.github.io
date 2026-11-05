@@ -443,6 +443,82 @@ a:hover {
     font-weight: 400;
 }
 
+/* +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — Blog without articles: one semi-transparent line + the arcade (atoms/arcade) */
+.blog-empty {
+    padding: 3rem 0 2rem;
+    text-align: center;
+    font-size: 1.125rem;
+    color: #000000;
+    opacity: 0.35;
+}
+
+.arcade {
+    /* colors read by the canvas games */
+    --arcade-bg: #ffffff;
+    --arcade-fg: #000000;
+    --arcade-muted: #8a8a8a;
+    --arcade-line: #e0e0e0;
+    --arcade-stage: #fafafa;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.arcade__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.arcade__tabs button {
+    font: 500 0.8125rem ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    background: transparent;
+    color: #000000;
+    border: 1px solid #e0e0e0;
+    border-radius: 50px;
+    padding: 0.5rem 0.875rem;
+    cursor: pointer;
+}
+
+.arcade__tabs button[aria-selected="true"] {
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
+}
+
+.arcade__tabs button:focus-visible,
+.arcade canvas:focus-visible {
+    outline: 2px solid #000000;
+    outline-offset: 3px;
+}
+
+.arcade__stage {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.arcade canvas {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    touch-action: none;
+    cursor: pointer;
+}
+
+.arcade__about {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #333333;
+}
+
+.arcade__keys {
+    font: 0.8125rem ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    color: #8a8a8a;
+}
+
 /* Blog Section */
 .blog-content {
     max-width: 800px;

@@ -1166,34 +1166,19 @@ class App {
                 throw new Error(linksResult.error);
             }
 
-            blogContentContainer.innerHTML = linksResult.htmlLinks;
+            // +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — no articles yet: a quiet line + the architecture arcade (atoms/arcade)
+            if (articlesResult.articles.length) {
+                blogContentContainer.innerHTML = linksResult.htmlLinks;
+            } else {
+                blogContentContainer.innerHTML = '<p class="blog-empty">No blog posts yet. Meanwhile, have a round of the architecture arcade.</p>'
+                    + '<div class="blog-arcade"></div>';
+                await this.mountArcade(blogContentContainer.querySelector('.blog-arcade'));
+            }
 
         } catch (error) {
             console.error('Failed to load blog content:', error);
-            // Fallback content
-            const fallbackHtml = `
-                <div class="articles-list">
-                    <div class="article-card" data-url="articles/welcome.html">
-                        <h3 class="article-title">Welcome to My Technical Blog</h3>
-                        <div class="article-meta">
-                            <span class="article-date">August 26, 2025</span>
-                            <span class="article-reading-time">2 min read</span>
-                            <div class="article-tags">
-                                <span class="article-tag">welcome</span>
-                                <span class="article-tag">introduction</span>
-                            </div>
-                        </div>
-                        <p class="article-description">
-                            Welcome to my technical blog where I share insights about enterprise architecture,
-                            system design, and modern development practices.
-                        </p>
-                    </div>
-                    <div class="error-notice">
-                        <p>Some articles may not be available. Error: ${error.message}</p>
-                    </div>
-                </div>
-            `;
-
+            // +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — no hardcoded article copy: show a short notice only
+            const fallbackHtml = `<div class="articles-list"><div class="error-notice"><p>Articles are temporarily unavailable.</p></div></div>`;
             blogContentContainer.innerHTML = fallbackHtml;
         }
     }
@@ -1440,6 +1425,24 @@ class App {
      * Load external script dynamically
      */
     // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Cache busting: appends ?v=APP_VERSION (taken from main.js URL in index.html)
+    /**
+     * +++===+++ 2026-11-05 Asia/Baku — Hasan Alizada — Loads the arcade atom on demand (only when the blog has no articles) and mounts it
+     * @param {HTMLElement} container
+     */
+    async mountArcade(container) {
+        try {
+            if (typeof Arcade === 'undefined') {
+                await this.loadScript('atoms/arcade/impl.js');
+                await this.waitForGlobal('Arcade');
+            }
+            const result = new Arcade().mount(container);
+            console.debug('[App] arcade mounted =', result.success, result.error);
+        } catch (error) {
+            console.error('[App] arcade failed to load:', error.message);
+            container.remove();
+        }
+    }
+
     loadScript(src) {
         return new Promise((resolve, reject) => {
             const versionedSrc = APP_VERSION ? `${src}?v=${encodeURIComponent(APP_VERSION)}` : src;
