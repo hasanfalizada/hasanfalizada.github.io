@@ -59,6 +59,24 @@
   "skills": {
     "professional": [
       {
+        "text": "Engineering Leadership & People Management",
+        "profiles": [
+          "engineering-leader"
+        ]
+      },
+      {
+        "text": "Hiring & Team Building",
+        "profiles": [
+          "engineering-leader"
+        ]
+      },
+      {
+        "text": "Engineering Metrics & Capacity Planning",
+        "profiles": [
+          "engineering-leader"
+        ]
+      },
+      {
         "text": "TOGAF® Framework & ADM",
         "profiles": [
           "default",
@@ -87,7 +105,8 @@
         "profiles": [
           "default",
           "solution-architect",
-          "enterprise-architect"
+          "enterprise-architect",
+          "engineering-leader"
         ]
       },
       {
@@ -95,23 +114,28 @@
         "profiles": [
           "default",
           "solution-architect",
-          "enterprise-architect"
+          "enterprise-architect",
+          "engineering-leader"
         ]
       },
       {
         "text": "Agile & Scrum Methodologies",
-        "to_render": false
+        "profiles": [
+          "engineering-leader"
+        ]
       },
       {
         "text": "Risk Management & Mitigation",
         "profiles": [
-          "enterprise-architect"
+          "enterprise-architect",
+          "engineering-leader"
         ]
       },
       {
         "text": "Budgeting & Cost Optimization",
         "profiles": [
-          "enterprise-architect"
+          "enterprise-architect",
+          "engineering-leader"
         ]
       },
       {
@@ -119,7 +143,8 @@
         "profiles": [
           "default",
           "solution-architect",
-          "enterprise-architect"
+          "enterprise-architect",
+          "engineering-leader"
         ]
       },
       {
@@ -135,7 +160,8 @@
         "profiles": [
           "default",
           "solution-architect",
-          "enterprise-architect"
+          "enterprise-architect",
+          "engineering-leader"
         ]
       },
       {
@@ -143,7 +169,8 @@
         "profiles": [
           "default",
           "solution-architect",
-          "enterprise-architect"
+          "enterprise-architect",
+          "engineering-leader"
         ]
       },
       {
@@ -151,7 +178,8 @@
         "profiles": [
           "default",
           "solution-architect",
-          "enterprise-architect"
+          "enterprise-architect",
+          "engineering-leader"
         ]
       },
       {
@@ -167,7 +195,8 @@
         "profiles": [
           "default",
           "solution-architect",
-          "enterprise-architect"
+          "enterprise-architect",
+          "engineering-leader"
         ]
       },
       {
@@ -255,6 +284,15 @@
         "Prometheus",
         "Grafana",
         "ELK Stack"
+      ],
+      "engineering_practices": [
+        "Scrum",
+        "CI/CD",
+        "Code review",
+        "Automated testing",
+        "Release management",
+        "Observability",
+        "Delivery metrics (lead time, release frequency, velocity, incidents)"
       ]
     },
     "technical_labels": {
@@ -267,7 +305,8 @@
       "security_iam": "Security & IAM",
       "devops_cicd": "DevOps & CI/CD",
       "cloud_infrastructure": "Cloud & Infrastructure",
-      "monitoring_observability": "Monitoring & Observability"
+      "monitoring_observability": "Monitoring & Observability",
+      "engineering_practices": "Engineering Practices"
     }
   },
   "work_experience": [
@@ -298,7 +337,8 @@
           "text": "Translate technical complexity into decisions for executive and business stakeholders; coordinate architects, engineers and analysts across client and Visa teams",
           "profiles": [
             "solution-architect",
-            "enterprise-architect"
+            "enterprise-architect",
+            "engineering-leader"
           ]
         },
         {
@@ -330,6 +370,13 @@
           "text": "Defined target architecture, principles and governance for a landscape of 50+ systems, from small legacy applications to large enterprise platforms, delivered by 10+ vendors"
         },
         {
+          "text": "Coordinated delivery across vendors, including international engineering companies (Andersen, ScienceSoft) working across countries and time zones",
+          "profiles": [
+            "enterprise-architect",
+            "engineering-leader"
+          ]
+        },
+        {
           "text": "Designed integrations across the landscape with patterns from an enterprise service bus to asynchronous messaging",
           "profiles": [
             "default",
@@ -359,7 +406,8 @@
           "profiles": [
             "default",
             "solution-architect",
-            "enterprise-architect"
+            "enterprise-architect",
+            "engineering-leader"
           ]
         },
         {
@@ -437,7 +485,27 @@
       "company_logo": "assets/img/logos/kb_square.png",
       "achievements": [
         {
-          "text": "Led a backend chapter of 12 engineers across 3 product teams"
+          "text": "Led a backend chapter of 12 engineers across 3 squads, managed through the squads' tech leads"
+        },
+        {
+          "text": "Full people management: hiring, 1:1s, performance reviews, career growth, compensation, leave and offboarding",
+          "profiles": [
+            "engineering-leader",
+            "default"
+          ]
+        },
+        {
+          "text": "Introduced engineering practices across the squads: Scrum, CI/CD, code review, automated testing, release management and monitoring",
+          "profiles": [
+            "engineering-leader",
+            "software-engineer"
+          ]
+        },
+        {
+          "text": "Tracked delivery with the bank's Agile office (lead time, release frequency, velocity, incidents) and owned capacity planning for the chapter",
+          "profiles": [
+            "engineering-leader"
+          ]
         },
         {
           "text": "Architecture, backend development and delivery of BirBank modules (Cashback, Statements) and TaxRefund (ƏDVGeriAl); BirBank is Azerbaijan's leading digital bank with 3M+ users",
@@ -456,12 +524,17 @@
           "text": "Led the decomposition of a monolithic Java + Oracle PL/SQL backend into microservices"
         },
         {
-          "text": "Built Java/Spring Boot microservices with event-driven integration on Apache Kafka and RabbitMQ, and Redis caching to reduce response times"
+          "text": "Built Java/Spring Boot microservices with event-driven integration on Apache Kafka and RabbitMQ, and Redis caching to reduce response times",
+          "profiles": [
+            "default",
+            "solution-architect",
+            "enterprise-architect",
+            "software-engineer"
+          ]
         },
         {
           "text": "Introduced Keycloak-based identity and access management (OAuth 2.0 / OpenID Connect) for backend services",
           "profiles": [
-            "default",
             "solution-architect",
             "software-engineer"
           ]
@@ -1109,7 +1182,7 @@
   ],
   "metadata": {
     "last_updated": "2026-11-05",
-    "version": "2.3.0"
+    "version": "2.4.0"
   },
   "cv_profiles": {
     "default": {
@@ -1180,10 +1253,33 @@
         "databases",
         "security_iam",
         "devops_cicd",
+        "engineering_practices",
         "cloud_infrastructure",
         "monitoring_observability",
         "architecture_design",
         "payments"
+      ]
+    },
+    "engineering-leader": {
+      "label": "Engineering Leader",
+      "personal_info": {
+        "headline": "Engineering Leader & Software Architect",
+        "title": "PMP®, AWS® SA, TOGAF® 10, ITIL®, OCP® (Oracle PL/SQL)",
+        "positioning": "I build and lead engineering teams that deliver large-scale systems, from architecture and code to production.",
+        "summary": "Engineering leader and software architect in payments, banking, telecom and the public sector. Led a backend chapter of 12 engineers across 3 squads through their tech leads at Azerbaijan's largest private bank, with full people management (hiring, performance reviews, career growth) and engineering practices from Scrum and CI/CD to code review, testing, release management, delivery metrics and capacity planning. The chapter decomposed a Java + Oracle PL/SQL monolith into event-driven microservices for BirBank (3M+ users). Later set the architecture for 50+ systems delivered by 10+ vendors, including international teams, at the national railway; now leads bank implementations across CEMEA at Visa from idea to delivery."
+      },
+      "technical_groups": [
+        "engineering_practices",
+        "architecture_design",
+        "devops_cicd",
+        "cloud_infrastructure",
+        "messaging_apis",
+        "backend_frameworks",
+        "languages",
+        "databases",
+        "security_iam",
+        "payments",
+        "monitoring_observability"
       ]
     }
   }
