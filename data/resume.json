@@ -2,17 +2,17 @@
   "personal_info": {
     "name": "Hasan Alizada",
     "title": {
-      "text": "AWS® SA, TOGAF® 10, PMP®, ITIL®, OCP®",
+      "text": "AWS® SA, TOGAF® 10, PMP®, ITIL®, OCP® (Oracle PL/SQL)",
       "to_render": false
     },
     "headline": "Enterprise & Solution Architect",
-    "positioning": "In IT since 2008: telecom, banking, payments and national-scale systems",
+    "positioning": "I design and build large-scale systems end to end — from enterprise strategy and architecture to production code and delivery.",
     "summary": {
-      "text": "Enterprise and solution architect with extensive experience in scalable and fault–tolerant architectures. Passionate about optimizing enterprise IT landscapes, strengthening system resilience, and driving digital transformation to align technology with business goals.",
+      "text": "Enterprise and solution architect with a hands-on engineering background. Started in telecom and card processing (Oracle PL/SQL, ISO 8583, Compass Plus TranzWare), then led backend teams building Java/Spring microservices on Kafka, RabbitMQ and Redis for BirBank, the flagship app of Azerbaijan's largest private bank. Defined architecture for the national railway's digital transformation, and now leads implementation projects for banks across CEMEA at Visa.",
       "to_render": false
     },
     "summary_html": {
-      "text": "Enterprise and solution architect with extensive experience in <strong>scalable and fault–tolerant architectures</strong>. Passionate about <strong>optimizing enterprise IT landscapes</strong>, <strong>strengthening system resilience</strong>, and <strong>driving digital transformation</strong> to align technology with business goals.",
+      "text": "Enterprise and solution architect with a <strong>hands-on engineering background</strong>. Started in telecom and <strong>card processing</strong> (Oracle PL/SQL, ISO 8583, Compass Plus TranzWare), then led backend teams building <strong>Java/Spring microservices</strong> on Kafka, RabbitMQ and Redis for BirBank, the flagship app of Azerbaijan's largest private bank. Defined architecture for the <strong>national railway's digital transformation</strong>, and now leads <strong>implementation projects for banks across CEMEA at Visa</strong>.",
       "to_render": false
     },
     "contact": {
@@ -21,6 +21,7 @@
         "text": "Baku, Azerbaijan",
         "to_render": false
       },
+      "availability": "Open to relocation and remote work",
       "website": "hasanfalizada.github.io"
     },
     "social_links": {
@@ -44,8 +45,7 @@
         "to_render": false
       }
     },
-    "photo_url": "assets/img/profile.jpg",
-    "summary_linkedin": "As a strategist, I support organizations across CEMEA in leveraging data, analytics, and payment innovation to achieve sustainable growth. My work focuses on bridging business strategy with technology execution to deliver scalable, secure, and customer-centric solutions. I bring strong experience in enterprise architecture and digital transformation, having led large-scale modernization programs that improved system resilience, operational efficiency, and speed-to-market. I apply a consultative, analytical, and execution-oriented approach to create measurable client impact."
+    "photo_url": "assets/img/profile.jpg"
   },
   "site_config": {
     "url": "https://hasanfalizada.github.io",
@@ -124,198 +124,18 @@
         "to_render": false
       },
       {
-        "text": "IT architectures",
-        "to_render": false
-      },
-      {
-        "text": "Problem Solving",
-        "to_render": false
-      },
-      {
-        "text": "Communication",
-        "to_render": false
-      },
-      {
         "text": "High-Level Design",
         "to_render": false
       },
       {
-        "text": "Architecture Development",
-        "to_render": false
-      },
-      {
-        "text": "Computer Science",
-        "to_render": false
-      },
-      {
-        "text": "Innovation Development",
-        "to_render": false
-      },
-      {
-        "text": "Strategic Thinking",
-        "to_render": false
-      },
-      {
-        "text": "Conflict Management",
-        "to_render": false
-      },
-      {
-        "text": "Collaboration",
-        "to_render": false
-      },
-      {
-        "text": "Team Management",
-        "to_render": false
-      },
-      {
-        "text": "Coaching",
-        "to_render": false
-      },
-      {
         "text": "Business Process Improvement",
-        "to_render": false
-      },
-      {
-        "text": "Analytical Skills",
-        "to_render": false
-      },
-      {
-        "text": "Banking",
-        "to_render": false
-      },
-      {
-        "text": "Enterprise Architecture",
-        "to_render": false
-      },
-      {
-        "text": "Microservices",
-        "to_render": false
-      },
-      {
-        "text": "Financial Services",
-        "to_render": false
-      },
-      {
-        "text": "Finance",
-        "to_render": false
-      },
-      {
-        "text": "Telecommunications",
-        "to_render": false
-      },
-      {
-        "text": "Management",
-        "to_render": false
-      },
-      {
-        "text": "IT Management",
-        "to_render": false
-      },
-      {
-        "text": "ITIL",
-        "to_render": false
-      },
-      {
-        "text": "Project management",
-        "to_render": false
-      },
-      {
-        "text": "Business Process Management",
-        "to_render": false
-      },
-      {
-        "text": "Oracle Database",
-        "to_render": false
-      },
-      {
-        "text": "GSM",
-        "to_render": false
-      },
-      {
-        "text": "Apache",
-        "to_render": false
-      },
-      {
-        "text": "Unix",
-        "to_render": false
-      },
-      {
-        "text": "Windows Server",
-        "to_render": false
-      },
-      {
-        "text": "PL/SQL",
-        "to_render": false
-      },
-      {
-        "text": "Java",
-        "to_render": false
-      },
-      {
-        "text": "Team Leadership",
-        "to_render": false
-      },
-      {
-        "text": "Leadership",
-        "to_render": false
-      },
-      {
-        "text": "Decision-making",
-        "to_render": false
-      },
-      {
-        "text": "Teamwork",
-        "to_render": false
-      },
-      {
-        "text": "Networking",
-        "to_render": false
-      },
-      {
-        "text": "Research/critical thinking",
-        "to_render": false
-      },
-      {
-        "text": "Planning and prioritizing",
-        "to_render": false
-      },
-      {
-        "text": "Development",
-        "to_render": false
-      },
-      {
-        "text": "Payment Card Processing",
-        "to_render": false
-      },
-      {
-        "text": "CBOSS",
-        "to_render": false
-      },
-      {
-        "text": "Database Development",
-        "to_render": false
-      },
-      {
-        "text": "TSYS Prime",
-        "to_render": false
-      },
-      {
-        "text": "Distributed Systems",
-        "to_render": false
-      },
-      {
-        "text": "Digital Transformation",
-        "to_render": false
-      },
-      {
-        "text": "Solution Architecture",
         "to_render": false
       }
     ],
     "technical": {
       "languages": {
         "primary": [
-          "Java (8–17)",
+          "Java (8–21)",
           "PL/SQL",
           "SQL"
         ],
@@ -325,11 +145,9 @@
         ]
       },
       "backend_frameworks": [
-        "Spring Boot",
+        "Spring Boot (2.x/3.x)",
         "Spring Security",
-        "Spring Data",
-        "Maven",
-        "Gradle"
+        "Spring Data"
       ],
       "architecture_design": [
         "TOGAF",
@@ -337,12 +155,22 @@
         "C4 model",
         "Microservices",
         "Event-driven architecture",
-        "REST",
-        "SOAP",
-        "gRPC"
+        "Distributed systems",
+        "Capability mapping",
+        "Technology roadmaps",
+        "Architecture governance"
+      ],
+      "payments": [
+        "ISO 8583",
+        "Visa BASE II / CTF",
+        "Mastercard IPM",
+        "Clearing & settlement",
+        "Compass Plus TranzWare CMS / TWO",
+        "TSYS Prime",
+        "CBOSS"
       ],
       "databases": [
-        "Oracle DB (PL/SQL)",
+        "Oracle Database",
         "PostgreSQL",
         "MongoDB",
         "Redis",
@@ -355,6 +183,11 @@
         "OpenAPI/Swagger",
         "gRPC"
       ],
+      "security_iam": [
+        "Keycloak",
+        "OAuth 2.0 / OpenID Connect",
+        "IAM"
+      ],
       "devops_cicd": [
         "Git",
         "GitLab CI/CD",
@@ -362,7 +195,8 @@
         "Docker",
         "Kubernetes",
         "Helm",
-        "Keycloak"
+        "Maven",
+        "Gradle"
       ],
       "cloud_infrastructure": [
         "Oracle Cloud",
@@ -382,8 +216,10 @@
       "languages": "Languages",
       "backend_frameworks": "Backend & Frameworks",
       "architecture_design": "Architecture & Design",
+      "payments": "Payments & Card Processing",
       "databases": "Databases",
       "messaging_apis": "Messaging & APIs",
+      "security_iam": "Security & IAM",
       "devops_cicd": "DevOps & CI/CD",
       "cloud_infrastructure": "Cloud & Infrastructure",
       "monitoring_observability": "Monitoring & Observability"
@@ -401,37 +237,9 @@
       "period": "12/2025 – Present",
       "company_description": "",
       "achievements": [
-        "Led implementation projects for banks in CEMEA end-to-end, from concept and architecture to delivery, building solutions from scratch with a cross-functional team",
-        {
-          "text": "Lead AI-related implementation projects for banks in CEMEA, building solutions from scratch with a cross-functional team",
-          "to_render": false
-        },
+        "Lead implementation projects for banks in CEMEA end-to-end, from concept and architecture to delivery, building solutions from scratch with a cross-functional team",
         {
           "text": "Lead implementation of digital banking and payment transformations for banks in CEMEA.",
-          "to_render": false
-        },
-        {
-          "text": "Lead regional delivery of complex, multi-stakeholder technical transformations across CEMEA, driving high-quality execution and measurable business outcomes.",
-          "to_render": false
-        },
-        {
-          "text": "Build and maintain trusted client relationships to understand business priorities, technical requirements, and strategic objectives.",
-          "to_render": false
-        },
-        {
-          "text": "Oversee integration of digital banking and payments technologies, including APIs, cloud platforms, and enterprise applications.",
-          "to_render": false
-        },
-        {
-          "text": "Coordinate cross-functional teams—architects, engineers, UX practitioners, and business analysts—to deliver scalable, seamless solutions.",
-          "to_render": false
-        },
-        {
-          "text": "Provide subject matter expertise across payments, digital banking, software engineering, and financial services technology, translating complexity into actionable insights for stakeholders.",
-          "to_render": false
-        },
-        {
-          "text": "Mentor and guide technical delivery teams, fostering a culture of excellence, accountability, and continuous learning.",
           "to_render": false
         }
       ],
@@ -451,22 +259,10 @@
       },
       "company_logo": "assets/img/logos/ady_square.png",
       "achievements": [
-        "Took part in implementing the company's digital transformation strategy",
-        {
-          "text": "Took part in implementing the company's digital transformation strategy; multi-million IT programs",
-          "to_render": false
-        },
-        {
-          "text": "Architecture for the implementation of the company's digital transformation strategy; multi-million IT programs.",
-          "to_render": false
-        },
+        "Architecture for the company's digital transformation strategy and its multi-million IT programs",
         "Re-architecture of the existing nationwide passenger mobile app",
         {
-          "text": "Architecture of the new nationwide passenger mobile app.",
-          "to_render": false
-        },
-        {
-          "text": "Led cost-saving projects resulting in a 30% reduction in operational expenses through process optimization and technology implementation.",
+          "text": "Led cost-saving projects reducing operational expenses through process optimization and technology implementation.",
           "to_render": false
         },
         {
@@ -507,10 +303,6 @@
       "achievements": [
         "Led a team of 12 backend engineers",
         {
-          "text": "Led a team of 12 backend engineers.",
-          "to_render": false
-        },
-        {
           "text": "Architecture, backend development and delivery of BirBank modules (Cashback, Statements) and TaxRefund (ƏDVGeriAl)",
           "links": [
             {
@@ -524,10 +316,6 @@
           ]
         },
         {
-          "text": "Architecture, backend development and delivery of BirBank, the bank's flagship mobile app, and TaxRefund (ƏDVGeriAl).",
-          "to_render": false
-        },
-        {
           "text": "Implemented Apache Kafka for real-time data processing, increasing throughput and reducing latency.",
           "to_render": false
         },
@@ -536,7 +324,7 @@
           "to_render": false
         },
         {
-          "text": "Implemented Redis for caching, reducing average response times by 20% and enhancing user experience.",
+          "text": "Implemented Redis for caching, reducing response times and enhancing user experience.",
           "to_render": false
         },
         {
@@ -558,88 +346,6 @@
         {
           "text": "Aligned backend development with business goals through cross-functional collaboration.",
           "to_render": false
-        },
-        {
-          "text": "Implemented Apache Kafka for real-time data processing, resulting in an increase in data throughput and reduced latency. Optimized message queuing by incorporating RabbitMQ, improving system reliability and scalability. Implemented Redis for caching, reducing average response times by 20% and enhancing user experience.",
-          "to_render": false
-        },
-        {
-          "text": "Enhanced system security by integrating Keycloak for identity and access management, reducing unauthorized access incidents.",
-          "to_render": false
-        },
-        {
-          "text": "Developed and deployed microservices using Java and Spring, achieving a huge reduction in service downtime.",
-          "to_render": false
-        },
-        {
-          "text": "Optimized Oracle database stored PL/SQL code performance, achieving faster response times.",
-          "to_render": false
-        },
-        {
-          "text": "Also implemented MongoDB and PostgreSQL for specific use cases, enhancing data storage efficiency and cost savings.",
-          "to_render": false
-        },
-        {
-          "text": "Successfully led a team of backend developers, fostering a collaborative environment and mentoring team members.",
-          "to_render": false
-        },
-        {
-          "text": "Collaborated with cross-functional teams to align backend development with overall business goals, resulting in improved system alignment with business needs.",
-          "to_render": false
-        }
-      ]
-    },
-    {
-      "position": "Chapter Lead of System Development",
-      "company": "Kapital Bank OJSC",
-      "location": {
-        "text": "Baku, Azerbaijan",
-        "to_render": false
-      },
-      "period": "06/2016 – 04/2022",
-      "company_description": {
-        "text": "Largest private bank in Azerbaijan",
-        "to_render": false
-      },
-      "company_logo": "assets/img/logos/kb_square.png",
-      "achievements": [
-        "Led a team of 10 developers for card processing (Compass Plus TranzWare CMS / TWO)",
-        {
-          "text": "Led a team of 10 developers for card processing (Compass Plus TranzWare CMS / TWO).",
-          "to_render": false
-        },
-        {
-          "text": "Tech lead of MüştəriBank (now BirBank Business)",
-          "links": [
-            {
-              "text": "MüştəriBank (now BirBank Business)",
-              "url": "https://birbank.business/"
-            }
-          ]
-        },
-        {
-          "text": "Delivered MüştəriBank (now BirBank Business).",
-          "to_render": false
-        },
-        {
-          "text": "Led development of Compass Plus CMS and TWO platforms, improving card management capabilities.",
-          "to_render": false
-        },
-        {
-          "text": "Integrated internal systems with the cards processing platform, enabling reliable transactions.",
-          "to_render": false
-        },
-        {
-          "text": "Optimized Oracle PL/SQL for card processing, reducing processing time by ~20% and improving data integrity.",
-          "to_render": false
-        },
-        {
-          "text": "Managed upgrades and maintenance, ensuring high availability and standards compliance.",
-          "to_render": false
-        },
-        {
-          "text": "Led a system development team, driving successful outcomes and collaboration.",
-          "to_render": false
         }
       ]
     },
@@ -657,28 +363,28 @@
       },
       "company_logo": "assets/img/logos/kb_square.png",
       "achievements": [
+        "Led a team of 10 developers for card processing (Compass Plus TranzWare CMS / TWO)",
         {
-          "text": "Led the successful development of Compass Plus's CMS and TWO platforms enhancing card management capabilities and improving operational efficiency.",
+          "text": "Led development of Compass Plus CMS and TWO platforms, improving card management capabilities.",
           "to_render": false
         },
         {
-          "text": "Spearheaded the integration of the internal systems with the cards processing platform, facilitating seamless transaction processing and bolstering system reliability.",
+          "text": "Integrated internal systems with the cards processing platform, enabling reliable transactions.",
           "to_render": false
         },
         {
-          "text": "Oversaw the optimization of Oracle databases stored PL/SQL software for card processing, resulting in a significant reduction in processing time by 20% and improved data integrity.",
+          "text": "Optimized Oracle PL/SQL for card processing, reducing processing time and improving data integrity.",
           "to_render": false
         },
         {
-          "text": "Managed regular system upgrades and maintenance, ensuring high system availability and compliance with the standards.",
+          "text": "Managed upgrades and maintenance, ensuring high availability and standards compliance.",
           "to_render": false
         },
         {
-          "text": "Led a team of system developers fostering a collaborative environment and driving successful project outcomes.",
+          "text": "Led a system development team, driving successful outcomes and collaboration.",
           "to_render": false
         }
-      ],
-      "to_render": false
+      ]
     },
     {
       "position": "Software Engineer",
@@ -694,6 +400,15 @@
       },
       "company_logo": "assets/img/logos/kb_square.png",
       "achievements": [
+        {
+          "text": "Tech lead of MüştəriBank (now BirBank Business)",
+          "links": [
+            {
+              "text": "MüştəriBank (now BirBank Business)",
+              "url": "https://birbank.business/"
+            }
+          ]
+        },
         {
           "text": "Full lifecycle software development with Scrum",
           "to_render": false
@@ -730,24 +445,7 @@
           "text": "3rd party API oriented development",
           "to_render": false
         }
-      ],
-      "to_render": false
-    },
-    {
-      "position": "Processing Business Solutions Leading Specialist",
-      "company": "Kapital Bank OJSC",
-      "location": {
-        "text": "Baku, Azerbaijan",
-        "to_render": false
-      },
-      "period": "07/2017 – 03/2018",
-      "company_description": {
-        "text": "Largest private bank in Azerbaijan",
-        "to_render": false
-      },
-      "company_logo": "assets/img/logos/kb_square.png",
-      "achievements": [],
-      "to_render": false
+      ]
     },
     {
       "position": "Processing and Bank Services Specialist",
@@ -756,62 +454,28 @@
         "text": "Azerbaijan",
         "to_render": false
       },
-      "period": "06/2016 – 07/2017",
+      "period": "06/2016 – 03/2018",
       "company_description": {
         "text": "Largest private bank in Azerbaijan",
         "to_render": false
       },
       "company_logo": "assets/img/logos/kb_square.png",
-      "achievements": [],
-      "to_render": false
+      "achievements": []
     },
     {
-      "position": "Various technical positions",
-      "company": "Azerfon LLC / British American Tobacco / Bank Standard OJSC",
+      "position": "Earlier Career",
+      "company": "Bank Standard OJSC · British American Tobacco · Azerfon LLC",
       "location": {
         "text": "Baku, Azerbaijan",
         "to_render": false
       },
       "period": "03/2008 – 06/2016",
       "company_description": "",
-      "company_logo": {
-        "text": "assets/img/logos/vp.webp",
-        "to_render": false
-      },
-      "achievements": [
-        {
-          "text": "Managed and monitored IT operations, ensuring 99.9% uptime.",
-          "to_render": false
-        },
-        {
-          "text": "Ran incident management, reducing average resolution time for critical issues.",
-          "to_render": false
-        },
-        {
-          "text": "Contributed to major system upgrades with minimal downtime during transitions.",
-          "to_render": false
-        },
-        {
-          "text": "Acted as liaison between IT, network, and database teams for efficient problem-solving.",
-          "to_render": false
-        },
-        {
-          "text": "Prepared reports on infrastructure performance to support strategic decisions.",
-          "to_render": false
-        }
-      ]
-    },
-    {
-      "position": "Backoffice Systems Administration Leading Specialist",
-      "company": "Bank Standard Azerbaijan",
-      "location": {
-        "text": "Baku, Azerbaijan",
-        "to_render": false
-      },
-      "period": "01/2016 – 06/2016",
-      "company_description": "",
       "company_logo": "",
       "achievements": [
+        "Bank Standard — Backoffice Systems Administration Leading Specialist (2016): card processing on TSYS Prime, Visa and Mastercard clearing (ISO 8583)",
+        "British American Tobacco — Trade Marketing Database Coordinator (2013–2015): field-force process automation, DWH administration",
+        "Azerfon — billing, intelligent network and performance monitoring roles (2008–2013): CBOSS, 24/7 infrastructure monitoring",
         {
           "text": "Payment cards processing systems administration: CMS, system customizations, monitoring and analyzing technical issues",
           "to_render": false
@@ -851,21 +515,7 @@
         {
           "text": "Ensuring successful development, testing and deployment of packages involving data fix, scheme compliance and regulations",
           "to_render": false
-        }
-      ],
-      "to_render": false
-    },
-    {
-      "position": "Trade Marketing Database Coordinator",
-      "company": "British American Tobacco",
-      "location": {
-        "text": "Azerbaijan",
-        "to_render": false
-      },
-      "period": "08/2013 – 08/2015",
-      "company_description": "",
-      "company_logo": "",
-      "achievements": [
+        },
         {
           "text": "Field force business processes automatization",
           "to_render": false
@@ -881,21 +531,7 @@
         {
           "text": "DWH administration",
           "to_render": false
-        }
-      ],
-      "to_render": false
-    },
-    {
-      "position": "Performance Improvement and Statistics Specialist",
-      "company": "Azerfon LLC",
-      "location": {
-        "text": "Azerbaijan",
-        "to_render": false
-      },
-      "period": "10/2012 – 08/2013",
-      "company_description": "",
-      "company_logo": "",
-      "achievements": [
+        },
         {
           "text": "Various positions including Billing Administrator and Performance Monitoring specialist",
           "to_render": false
@@ -911,53 +547,33 @@
         {
           "text": "24/7 IT infrastructure monitoring and support",
           "to_render": false
+        },
+        {
+          "text": "Managed and monitored IT operations for high availability.",
+          "to_render": false
+        },
+        {
+          "text": "Ran incident management, reducing average resolution time for critical issues.",
+          "to_render": false
+        },
+        {
+          "text": "Contributed to major system upgrades with minimal downtime during transitions.",
+          "to_render": false
+        },
+        {
+          "text": "Acted as liaison between IT, network, and database teams for efficient problem-solving.",
+          "to_render": false
+        },
+        {
+          "text": "Prepared reports on infrastructure performance to support strategic decisions.",
+          "to_render": false
         }
-      ],
-      "to_render": false
-    },
-    {
-      "position": "Intellectual Network Administrator",
-      "company": "Azerfon LLC",
-      "location": {
-        "text": "Azerbaijan",
-        "to_render": false
-      },
-      "period": "01/2011 – 10/2012",
-      "company_description": "",
-      "company_logo": "",
-      "achievements": [],
-      "to_render": false
-    },
-    {
-      "position": "Performance Monitoring Operator",
-      "company": "Azerfon LLC",
-      "location": {
-        "text": "Azerbaijan",
-        "to_render": false
-      },
-      "period": "04/2010 – 12/2010",
-      "company_description": "",
-      "company_logo": "",
-      "achievements": [],
-      "to_render": false
-    },
-    {
-      "position": "Subscription and Archive Specialist",
-      "company": "Azerfon LLC",
-      "location": {
-        "text": "Azerbaijan",
-        "to_render": false
-      },
-      "period": "03/2008 – 04/2010",
-      "company_description": "",
-      "company_logo": "",
-      "achievements": [],
-      "to_render": false
+      ]
     }
   ],
   "education": [
     {
-      "degree": "Applied Mathematics and Cybernetics",
+      "degree": "Bachelor's degree, Applied Mathematics and Cybernetics",
       "institution": "Baku State University",
       "location": {
         "text": "Baku, Azerbaijan",
@@ -1247,31 +863,10 @@
       "to_render": false
     },
     {
-      "name": "UmicoBank",
-      "period": "12/2021 – Present",
-      "url": "https://business.facebook.com/hashtag/umicobank?source=feed_text&epa=HASHTAG&__tn__=*NK-R",
-      "description": "",
-      "to_render": false
-    },
-    {
-      "name": "texbazar",
-      "period": "",
-      "url": "https://texbazar.xyz",
-      "description": "texbazar is an IT jobs desk (portfolio sample project). Backend: Spring Boot, PostgreSQL, CentOS 8 + Maven. Frontend: Angular 9 (with server-side rendering), Bootstrap 4, mobile-first, multi-language, infinite-scroll.",
-      "to_render": false
-    },
-    {
       "name": "Haalendar",
       "period": "06/2019 – Present",
-      "url": "http://haalendar.demo.alizada.xyz",
+      "url": "https://github.com/hasanfalizada/Haalendar",
       "description": "Simple light-weight self-hosted desktop web-calendar for single person.",
-      "to_render": false
-    },
-    {
-      "name": "KOPISTORE",
-      "period": "08/2016 – Present",
-      "url": "http://kopistore.net23.net/",
-      "description": "KOPISTORE - is a fast multiplatform files and text exchange service, allowing you simply to transfer files and text between your devices by code or QR. Frontend: HTML5 + JS + CSS3; Backend: PHP + MYSQL.",
       "to_render": false
     }
   ],
@@ -1308,7 +903,7 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-18",
-    "version": "1.9.0"
+    "last_updated": "2026-11-05",
+    "version": "2.0.0"
   }
 }
