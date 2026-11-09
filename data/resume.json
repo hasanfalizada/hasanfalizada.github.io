@@ -144,6 +144,7 @@
     }
   },
   "site_config": {
+    "cv_hub_passcode_sha256": "9f14e85c3003e3151bea26514d7ff70309052d17bd5685dca4286e6a9d09445d",
     "url": "https://hasanalizada.net",
     "language": "en",
     "favicon": "assets/favicon.svg",

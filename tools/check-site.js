@@ -103,6 +103,22 @@ check('JSON-LD on the home page is valid and has no phone', (() => {
     try { return JSON.parse(m[1]).telephone ? ['telephone present'] : []; } catch (e) { return [e.message]; }
 })());
 
+// ---------- CV page ----------
+{
+    const hub = exists('cv/index.html') ? read('cv/index.html') : '';
+    const hash = data.site_config.cv_hub_passcode_sha256 || '';
+    check('CV page: noindex, not in sitemap, lists every role, keeps role pages', [
+        ...(/noindex, nofollow/.test(hub) ? [] : ['no noindex']),
+        ...(locs.some(u => /\/cv\/$/.test(u)) ? ['in sitemap'] : []),
+        ...Object.keys(raw.cv_profiles).filter(id => !hub.includes(`"id":"${id}"`)).map(id => `missing ${id}`),
+        ...(/"phone"|tel:/.test(hub) ? ['phone'] : [])
+    ]);
+    check('CV page: stored passcode value is a SHA-256 hash or empty, and matches the page', [
+        ...(hash === '' || /^[0-9a-f]{64}$/.test(hash) ? [] : ['not a hash']),
+        ...(hub.includes(`var HASH = ${JSON.stringify(hash)};`) ? [] : ['page is out of date'])
+    ]);
+}
+
 // ---------- links ----------
 const stripTags = (html) => html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, '');
 const linkProblems = [];
