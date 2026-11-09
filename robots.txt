@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://hasanfalizada.github.io/sitemap.xml
+Sitemap: https://hasanalizada.net/sitemap.xml
 
 # Allow indexing of all content
 Allow: /assets/

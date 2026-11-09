@@ -3,7 +3,7 @@
 //
 // For every key of cv_profiles in data/resume.json (except "default", which is the site's "Resume" button) this script
 // generates cv/<profile>/index.html — an unlisted page that downloads the CV variant as PDF:
-//     https://hasanfalizada.github.io/cv/solution-architect/
+//     https://hasanalizada.net/cv/solution-architect/
 // The pages hold NO resume content: PDFGenerator renders it in the browser from data/resume.json (single source of truth).
 // Pages are noindex and are not added to sitemap.xml. Unlisted is not private: resume.json itself is public.
 // Pages of profiles removed from resume.json are deleted. Version (?v=) is read from index.html.
