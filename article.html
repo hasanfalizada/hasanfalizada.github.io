@@ -19,7 +19,10 @@ Keep ?v= on main.css and main.js identical to index.html.
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="assets/css/main.css?v=2026-11-05.3">
+    <link rel="stylesheet" href="assets/css/main.css?v=2026-11-09.4">
+
+    <!-- Cookie consent and GA4 loader, shared by all pages -->
+    <script src="assets/js/consent.js?v=2026-11-09.4"></script>
 
     <!-- Local Libraries -->
     <script src="assets/js/marked.min.js" defer></script>
@@ -33,8 +36,10 @@ Keep ?v= on main.css and main.js identical to index.html.
         <nav class="navigation" role="navigation" aria-label="Main navigation">
             <div class="nav-brand">
                 <!-- GENERATED:brand BEGIN — tools/build-static.js from data/resume.json; do not edit by hand -->
-                <h1 class="brand-name">Hasan Alizada</h1>
-                <p class="brand-title">Enterprise &amp; Solution Architect</p>
+                <a href="./" class="brand-link">
+                    <p class="brand-name">Hasan Alizada</p>
+                    <p class="brand-title">Enterprise &amp; Solution Architect</p>
+                </a>
                 <!-- GENERATED:brand END -->
             </div>
 
@@ -46,8 +51,11 @@ Keep ?v= on main.css and main.js identical to index.html.
             </div>
 
             <div class="nav-links">
+                <!-- GENERATED:nav BEGIN — tools/build-static.js from data/resume.json; do not edit by hand -->
                 <a href="./" class="nav-link active">Blog</a>
+                <a href="services/" class="nav-link">Services</a>
                 <a href="#" id="download-pdf-btn" class="nav-link" title="Download resume (PDF)">Resume</a>
+                <!-- GENERATED:nav END -->
             </div>
         </nav>
     </div>
@@ -71,6 +79,7 @@ Keep ?v= on main.css and main.js identical to index.html.
             <div class="footer-text">
                 <!-- GENERATED:footer BEGIN — tools/build-static.js from data/resume.json; do not edit by hand -->
                 <p>&copy; Hasan Alizada. All rights reserved.</p>
+                <p class="footer-links"><a href="mailto:ha@hasanalizada.net">ha@hasanalizada.net</a> · <a href="privacy/">Privacy</a> · <a href="#" class="cookie-settings-link" onclick="window.openCookieSettings(); return false;">Cookie settings</a></p>
                 <!-- GENERATED:footer END -->
             </div>
         </div>
@@ -78,7 +87,7 @@ Keep ?v= on main.css and main.js identical to index.html.
 </footer>
 
 <!-- Main Application Script (same version as index.html) -->
-<script src="assets/js/main.js?v=2026-11-05.3" defer></script>
+<script src="assets/js/main.js?v=2026-11-09.4" defer></script>
 
 <!-- Application Initialization (same as index.html) -->
 <script>

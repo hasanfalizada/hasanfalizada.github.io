@@ -38,6 +38,111 @@
     },
     "photo_url": "assets/img/profile.jpg"
   },
+  "site_pages": {
+    "updated": "2026-11-09",
+    "services": {
+      "to_render": true,
+      "title": "Services",
+      "description": "Architecture advisory, fractional technical leadership and end-to-end software development, directly with Hasan Alizada.",
+      "manifesto": "I don't deliver the latest in super-artificial-intelligence-fueled, cutting-edge innovations. Instead, I provide a fully functional, reliable and maintainable solution tailored precisely to your requirements. Vəssalam.",
+      "offers": [
+        {
+          "name": "Architecture Advisory",
+          "summary": "Know your risks and your target architecture before a large investment.",
+          "fit": "A fit if you are preparing a major build, a vendor decision or a modernization, or if outages and slow releases have become a business problem, and you do not need a full-time enterprise architect.",
+          "includes": [
+            "Architecture review with risks ranked by business impact",
+            "Security architecture review",
+            "Design of fault-tolerant core systems",
+            "Target architecture and a roadmap your team can execute"
+          ]
+        },
+        {
+          "name": "Fractional Technical Leadership",
+          "summary": "Senior technical judgment without a full-time executive hire.",
+          "fit": "A fit if technical decisions are piling up on a founder or CEO, if you depend on vendors you cannot fully assess, or if you are building your first engineering team.",
+          "includes": [
+            "Technology and architecture decisions",
+            "Vendor selection and evaluation",
+            "Technical hiring and team setup",
+            "Delivery oversight: quality, risk and timelines"
+          ]
+        },
+        {
+          "name": "End-to-End Development",
+          "summary": "From an idea to production and handover, built by the person who designed it.",
+          "fit": "A fit if you have a clear business need and want one accountable person rather than a vendor team.",
+          "includes": [
+            "Design, development and testing",
+            "Deployment into production with monitoring and a rollback plan",
+            "Documentation and handover, so your team owns the result"
+          ]
+        }
+      ],
+      "direct_title": "You work directly with me — from discovery to handover",
+      "direct": "No account managers and no hand-offs. The person you talk to is the person who does the work.",
+      "not_do_title": "What I don't do",
+      "not_do": [
+        "Penetration tests and security certification. These belong with an independent firm.",
+        "Large delivery teams. If you need fifteen people, you need a different kind of partner.",
+        "Staff augmentation: supplying developers to work under your management."
+      ],
+      "cta_text": "Tell me briefly what you are building and what worries you. Pricing follows once I understand the scope.",
+      "cta_label": "Discuss a project",
+      "cta_subject": "Project inquiry"
+    },
+    "work": {
+      "title": "Work",
+      "description": "Selected projects and work by Hasan Alizada, with the exact role in each.",
+      "groups": [
+        {
+          "id": "own",
+          "title": "Own projects and open source",
+          "items": []
+        },
+        {
+          "id": "organizations",
+          "title": "Inside organizations",
+          "items": []
+        },
+        {
+          "id": "clients",
+          "title": "Client work",
+          "items": []
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Privacy",
+      "description": "What this site collects and how to refuse it.",
+      "sections": [
+        {
+          "heading": "Who is responsible",
+          "text": "This is the personal website of Hasan Alizada, who is responsible for the data described here."
+        },
+        {
+          "heading": "Analytics",
+          "text": "If you press Accept in the cookie banner, the site loads Google Analytics 4 to count page views. It sets cookies, and Google processes this data under its own terms. If you press Decline, or make no choice, analytics does not load."
+        },
+        {
+          "heading": "Your choice",
+          "text": "Your choice is stored only in your browser, under the name ga-consent. You can change it at any time through the Cookie settings link at the bottom of every page."
+        },
+        {
+          "heading": "Email",
+          "text": "If you write to me, I keep your message and address to reply and to keep a record of our conversation. I do not sell this data or use it for mailing lists."
+        },
+        {
+          "heading": "Hosting",
+          "text": "The site is hosted on GitHub Pages. GitHub may process technical data, such as IP addresses, to serve and protect the site."
+        },
+        {
+          "heading": "Questions and requests",
+          "text": "To ask what I hold about you, or to have it corrected or deleted, write to the address below."
+        }
+      ]
+    }
+  },
   "site_config": {
     "url": "https://hasanalizada.net",
     "language": "en",

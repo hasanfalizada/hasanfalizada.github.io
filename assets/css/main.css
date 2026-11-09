@@ -83,7 +83,6 @@ a:hover {
 
 .section {
     display: none;
-    min-height: 100vh;
     /* +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Top padding = fixed header height (80px) + 2.5rem air
        (was 4rem = 64px, smaller than the header, so the first card slid under it) */
     padding: calc(80px + 2.5rem) 0 4rem;
@@ -126,6 +125,7 @@ a:hover {
 .brand-name {
     font-size: 1.25rem;
     font-weight: 600;
+    line-height: 1.2;
     margin: 0;
     color: #000000;
 }
@@ -675,7 +675,6 @@ a:hover {
     background-color: #fafafa;
     border-top: 1px solid #e0e0e0;
     padding: 3rem 0;
-    margin-top: 4rem;
 }
 
 .footer-content {
@@ -1531,7 +1530,6 @@ a:hover {
 }
 
 .cookie-settings-link {
-    font-size: 0.75rem;
     color: #666666;
 }
 
@@ -1586,3 +1584,95 @@ a:hover {
         padding-top: calc(96px + 1.5rem);
     }
 }
+
+/* +++===+++ 2026-11-09 Asia/Baku — Hasan Alizada — Site repositioning: brand link, home, static pages, footer links */
+/* Footer sits at the screen bottom on short pages and the page scrolls only when content needs it. CV pages have no #main-content and keep their layout. */
+body:has(> #main-content) {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#main-content {
+    flex: 1 0 auto;
+}
+
+.brand-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.footer-links {
+    margin-top: 0.5rem;
+}
+
+.footer-links a {
+    color: inherit;
+}
+
+.page-content {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.page-lead {
+    font-size: 1.125rem;
+    color: #333333;
+    margin-bottom: 0.75rem;
+}
+
+.page-content a {
+    color: #000000;
+    text-decoration: underline;
+}
+
+.page-content h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.page-block {
+    margin-top: 2.5rem;
+}
+
+.page-block h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.page-block p {
+    margin-bottom: 0.75rem;
+}
+
+.page-block__summary {
+    font-weight: 500;
+}
+
+.page-list {
+    margin: 0 0 0.75rem 1.25rem;
+}
+
+.page-note {
+    color: #666666;
+    font-size: 0.875rem;
+}
+
+.page-content .page-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.work-item {
+    margin-bottom: 1.5rem;
+}
+
+.work-item h3 {
+    font-size: 1.0625rem;
+    margin-bottom: 0.25rem;
+}
+

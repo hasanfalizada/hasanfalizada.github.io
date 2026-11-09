@@ -40,7 +40,8 @@ class SEOOptimizer {
             person: {
                 name: pi.name || '',
                 jobTitle: pi.headline || '',
-                description: pi.summary || '',
+                // +++===+++ 2026-11-09 Asia/Baku — Hasan Alizada — Decision: site pages name no employers, also for search engines: positioning instead of summary, no worksFor. The Resume PDF keeps them.
+                description: pi.positioning || '',
                 url: sc.url || '',
                 email: contact.email || '',
                 telephone: contact.phone || '',
@@ -52,9 +53,6 @@ class SEOOptimizer {
                 sameAs: Object.values(socials).filter(Boolean).map(toUrl),
                 knowsAbout: (resumeData.skills && Array.isArray(resumeData.skills.professional)) ? resumeData.skills.professional : [],
                 // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Career data for search engines (only visible items: data is already filtered by to_render)
-                worksFor: (Array.isArray(resumeData.work_experience) ? resumeData.work_experience : [])
-                    .filter(j => /present$/i.test(String(j.period || '').trim()))
-                    .map(j => ({'@type': 'Organization', 'name': j.company})),
                 alumniOf: (Array.isArray(resumeData.education) ? resumeData.education : [])
                     .filter(e => e.institution)
                     .map(e => ({'@type': 'CollegeOrUniversity', 'name': e.institution})),

@@ -5,7 +5,7 @@
 //   1) articles/<slug>.html — complete static page (text, title, description, canonical, Open Graph, JSON-LD) readable
 //      by every robot without JS; main.js on it only fills header icons, footer year and the Resume button
 //   2) articles/index.json  — article list for the blog page, built from the front matter of all .md files
-//   3) sitemap.xml          — site root + every article
+//   3) sitemap.xml          — site root + site pages + every article
 // Uses the project's own code: BlogRenderer (front matter parsing + Markdown rendering), local marked.js,
 // ResumeDataLoader.filterRenderable (name/headline from data/resume.json). Version (?v=) is read from index.html.
 //
@@ -24,6 +24,7 @@ const log = (...a) => console.log('[build-articles]', ...a);
 global.marked = require(rel('assets/js/marked.min.js'));
 const BlogRenderer = require(rel('atoms/blog-renderer/impl.js'));
 const ResumeDataLoader = require(rel('atoms/resume-data-loader/impl.js'));
+const site = require('./lib/site-pages.js');
 console.debug = () => {}; // silence atoms' debug logging in CLI output
 
 const renderer = new BlogRenderer({defaultAuthor: (JSON.parse(fs.readFileSync(rel('data/resume.json'), 'utf8')).personal_info || {}).name});
@@ -32,9 +33,8 @@ const loader = new ResumeDataLoader();
 const resume = loader.filterRenderable(loader.applyProfile(JSON.parse(fs.readFileSync(rel('data/resume.json'), 'utf8'))));
 const pi = resume.personal_info || {};
 const AUTHOR = pi.name || '';
-const HEADLINE = pi.headline || '';
 const SITE_URL = String((resume.site_config || {}).url || '').replace(/\/+$/, '');
-log('author =', AUTHOR, '| headline =', HEADLINE, '| site =', SITE_URL);
+log('author =', AUTHOR, '| site =', SITE_URL);
 
 // Version: ?v= of main.js in index.html (the single place it is bumped)
 const indexHtml = fs.readFileSync(rel('index.html'), 'utf8');
@@ -141,6 +141,7 @@ ${JSON.stringify(ld, null, 4).split('\n').map(l => '        ' + l).join('\n')}
 
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="stylesheet" href="assets/css/main.css${v}">
+    <script src="assets/js/consent.js${v}"></script>
 </head>
 
 <body data-page="article-static">
@@ -149,15 +150,13 @@ ${JSON.stringify(ld, null, 4).split('\n').map(l => '        ' + l).join('\n')}
     <div class="container">
         <nav class="navigation" role="navigation" aria-label="Main navigation">
             <div class="nav-brand">
-                <p class="brand-name">${esc(AUTHOR)}</p>
-                <p class="brand-title">${esc(HEADLINE)}</p>
+${site.brand(resume).map(l => '                ' + l).join('\n')}
             </div>
             <div class="nav-center">
                 <div class="social-links"></div>
             </div>
             <div class="nav-links">
-                <a href="./" class="nav-link active">Blog</a>
-                <a href="#" id="download-pdf-btn" class="nav-link" title="Download resume (PDF)">Resume</a>
+${site.nav(resume, 'blog').map(l => '                ' + l).join('\n')}
             </div>
         </nav>
     </div>
@@ -178,7 +177,7 @@ ${JSON.stringify(ld, null, 4).split('\n').map(l => '        ' + l).join('\n')}
     <div class="container">
         <div class="footer-content">
             <div class="footer-text">
-                <p>&copy; ${esc(AUTHOR)}. All rights reserved.</p>
+${site.footer(resume).map(l => '                ' + l).join('\n')}
             </div>
         </div>
     </div>
@@ -248,9 +247,8 @@ log('written articles/index.json:', list.length, 'article(s)', prevIndex.article
 
 // ---------- 3) sitemap.xml ----------
 const sitemapPath = rel('sitemap.xml');
-const prevSitemap = fs.existsSync(sitemapPath) ? fs.readFileSync(sitemapPath, 'utf8') : '';
-const rootLastmod = (prevSitemap.match(new RegExp(`<loc>${SITE_URL}/</loc>\\s*<lastmod>([^<]+)</lastmod>`)) || [])[1]
-    || new Date().toISOString().slice(0, 10);
+// +++===+++ 2026-11-09 Asia/Baku — Hasan Alizada — lastmod of the root and site pages = site_pages.updated in data/resume.json
+const pagesLastmod = (resume.site_pages || {}).updated || new Date().toISOString().slice(0, 10);
 const urlEntry = (loc, lastmod, changefreq, priority) => `    <url>
         <loc>${esc(loc)}</loc>
         <lastmod>${lastmod}</lastmod>
@@ -259,10 +257,11 @@ const urlEntry = (loc, lastmod, changefreq, priority) => `    <url>
     </url>`;
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[urlEntry(`${SITE_URL}/`, rootLastmod, 'monthly', '1.0'),
+${[urlEntry(`${SITE_URL}/`, pagesLastmod, 'monthly', '1.0'),
+   ...site.sitemapPages(resume).map(p => urlEntry(`${SITE_URL}/${p.path}`, pagesLastmod, 'monthly', p.priority)),
    ...list.map(a => urlEntry(`${SITE_URL}/${a.permalink}`, a.date, 'yearly', '0.6'))].join('\n')}
 </urlset>
 `;
 fs.writeFileSync(sitemapPath, sitemap, 'utf8');
-log('written sitemap.xml:', 1 + list.length, 'url(s)');
+log('written sitemap.xml:', (sitemap.match(/<loc>/g) || []).length, 'url(s)');
 log('done');

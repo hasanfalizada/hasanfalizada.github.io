@@ -222,7 +222,7 @@ class App {
             console.debug('[App] page =', this.page);
             if (this.page === 'article') {
                 await this.loadArticlePage();
-            } else if (this.page === 'article-static') {
+            } else if (this.page === 'article-static' || this.page === 'static') {
                 // +++===+++ 2026-10-09 Asia/Baku — Hasan Alizada — Pre-rendered article (articles/<slug>.html from tools/build-articles.js):
                 // text, title and SEO tags are already in the HTML; JS only fills header icons, footer year and the Resume button
                 console.debug('[App] static article page: nothing to render');
@@ -1272,6 +1272,12 @@ class App {
             sectionId = 'blog';
             history.replaceState(null, '', window.location.pathname + window.location.search);
             console.debug('[App] resolveSectionFromHash: resume page disabled → blog, hash cleared');
+        }
+        // +++===+++ 2026-11-09 Asia/Baku — Hasan Alizada — A hash that is not a section (/#abc, /#footer) is ignored as browsers ignore unknown anchors: blog stays visible, URL unchanged
+        const target = document.getElementById(sectionId);
+        if (!target || !target.classList.contains('section')) {
+            console.debug('[App] resolveSectionFromHash: not a section', sectionId, '→ blog');
+            sectionId = 'blog';
         }
         return sectionId;
     }

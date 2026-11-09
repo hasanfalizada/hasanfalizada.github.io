@@ -7,7 +7,8 @@
 //     seo    — <title>, description, keywords, author, canonical, Open Graph / Twitter texts, Person JSON-LD
 //              (values from SEOOptimizer.getPageSeo — the same method main.js uses at runtime, so static and runtime match)
 //     brand  — name and headline in the header
-//     footer — copyright line (JS adds the current year at runtime)
+//     footer — copyright line (JS adds the current year at runtime), email, privacy and cookie settings links
+//     nav    — menu (Work and Services appear only when switched on, see tools/lib/site-pages.js)
 // Everything else in these files is hand-written. Never edit inside the GENERATED blocks.
 //
 // Usage (from the repository root, after changing data/resume.json):
@@ -23,6 +24,7 @@ const log = (...a) => console.log('[build-static]', ...a);
 
 const ResumeDataLoader = require(rel('atoms/resume-data-loader/impl.js'));
 const SEOOptimizer = require(rel('atoms/seo-optimizer/impl.js'));
+const site = require('./lib/site-pages.js');
 console.debug = () => {}; // silence atoms' debug logging in CLI output
 
 const raw = JSON.parse(fs.readFileSync(rel('data/resume.json'), 'utf8'));
@@ -32,7 +34,6 @@ if (!validation.valid) throw new Error('resume.json is invalid: ' + validation.e
 const data = loader.filterRenderable(loader.applyProfile(raw));
 const seoAtom = new SEOOptimizer();
 seoAtom.initialize(data);
-const pi = data.personal_info || {};
 
 const esc = (s) => String(s == null ? '' : s)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -71,11 +72,7 @@ const articleSeo = () => {
     ];
 };
 
-const brand = () => [
-    `<h1 class="brand-name">${esc(pi.name)}</h1>`,
-    `<p class="brand-title">${esc(pi.headline)}</p>`
-];
-const footer = () => [`<p>&copy; ${esc(pi.name)}. All rights reserved.</p>`];
+const footer = () => site.footer(data);
 
 const fill = (file, blocks) => {
     let html = fs.readFileSync(rel(file), 'utf8');
@@ -91,6 +88,6 @@ const fill = (file, blocks) => {
     fs.writeFileSync(rel(file), html);
 };
 
-fill('index.html', {seo: homeSeo, brand, footer});
-fill('article.html', {seo: articleSeo, brand, footer});
+fill('index.html', {seo: homeSeo, brand: () => site.brand(data, 'h1'), nav: () => site.nav(data, 'blog-home'), footer});
+fill('article.html', {seo: articleSeo, brand: () => site.brand(data), nav: () => site.nav(data, 'blog'), footer});
 log('done');
