@@ -4,9 +4,9 @@
     "title": "AWS® SA, TOGAF® 10, PMP®, ITIL®, OCP® (Oracle PL/SQL)",
     "headline": "Enterprise & Solution Architect",
     "positioning": "I design and build large-scale systems end to end — from enterprise strategy and architecture to production code and delivery.",
-    "summary": "Enterprise and solution architect with a hands-on engineering background in banking, payments, telecom and the public sector. Takes initiatives from idea to production: concept and target architecture, technology and vendor choices, team setup, and architecture oversight through delivery. Built and led backend and card-processing engineering teams at Azerbaijan's largest private bank, delivering parts of BirBank, its leading digital bank app (3M+ users), and defined architecture for the national railway's digital transformation across 50+ systems and 10+ vendors. Currently provides regional technical advisory and solution architecture for banks across CEMEA at Visa.",
+    "summary": "Enterprise and solution architect with a hands-on engineering background in banking, payments, telecom and the public sector. Takes initiatives from idea to production: concept and target architecture, technology and vendor choices, team setup, and architecture oversight through delivery. Built and led backend and card-processing engineering teams that delivered parts of a leading digital bank app (3M+ users), and defined architecture for a state-owned enterprise's digital transformation across 50+ systems and 10+ vendors. Currently provides regional technical advisory and solution architecture for banks across CEMEA.",
     "summary_linkedin": {
-      "text": "I design and build large-scale systems end to end, from enterprise strategy and architecture to production code and delivery.\n\nMy background is engineering. I started in telecom and card processing, grew into leading backend and card-processing teams at Azerbaijan's largest private bank, and moved into architecture: the digital transformation programs of Azerbaijan's national railway, and today regional technical advisory for banks across CEMEA at Visa.\n\nWhat I do best:\n• Take an initiative from an idea to production: concept, target architecture, technology and vendor choices, team setup, delivery oversight\n• Design distributed, event-driven and integration-heavy systems for banking and payments\n• Align business strategy with technology: roadmaps, architecture principles, governance\n• Build and lead engineering teams that ship\n\nI choose languages and tools by what fits the problem, not by habit, and use AI-assisted development as a normal part of engineering work.\n\nDomains: banking, payments and card processing, telecom, public sector.\nCertifications: TOGAF Enterprise Architecture Practitioner, AWS Certified Solutions Architect – Associate, PMP, ITIL Foundation.",
+      "text": "I design and build large-scale systems end to end, from enterprise strategy and architecture to production code and delivery.\n\nMy background is engineering. I started in telecom and card processing, grew into leading backend and card-processing teams at Azerbaijan's largest private bank, and moved into architecture: the digital transformation programs of Azerbaijan's national railway, and today regional technical advisory for banks across CEMEA at Visa.\n\nWhat I do best:\n• Take an initiative from an idea to production: concept, target architecture, technology and vendor choices, team setup, delivery oversight\n• Design distributed, event-driven and integration-heavy systems for banking and payments\n• Align business strategy with technology: roadmaps, architecture principles, governance\n• Build and lead engineering teams that ship\n\nI choose languages and tools by what fits the problem, not by habit.\n\nDomains: banking, payments and card processing, telecom, public sector.\nCertifications: TOGAF Enterprise Architecture Practitioner, AWS Certified Solutions Architect – Associate, PMP, ITIL Foundation.",
       "to_render": false
     },
     "contact": {
@@ -165,6 +165,12 @@
   "skills": {
     "professional": [
       {
+        "text": "Infrastructure & Platform Architecture",
+        "profiles": [
+          "infrastructure-architect"
+        ]
+      },
+      {
         "text": "Engineering Leadership & People Management",
         "profiles": [
           "engineering-leader"
@@ -187,7 +193,8 @@
         "profiles": [
           "default",
           "solution-architect",
-          "enterprise-architect"
+          "enterprise-architect",
+          "infrastructure-architect"
         ]
       },
       {
@@ -203,7 +210,8 @@
         "profiles": [
           "default",
           "solution-architect",
-          "enterprise-architect"
+          "enterprise-architect",
+          "infrastructure-architect"
         ]
       },
       {
@@ -212,7 +220,8 @@
           "default",
           "solution-architect",
           "enterprise-architect",
-          "engineering-leader"
+          "engineering-leader",
+          "infrastructure-architect"
         ]
       },
       {
@@ -234,7 +243,8 @@
         "text": "Risk Management & Mitigation",
         "profiles": [
           "enterprise-architect",
-          "engineering-leader"
+          "engineering-leader",
+          "infrastructure-architect"
         ]
       },
       {
@@ -250,7 +260,8 @@
           "default",
           "solution-architect",
           "enterprise-architect",
-          "engineering-leader"
+          "engineering-leader",
+          "infrastructure-architect"
         ]
       },
       {
@@ -267,7 +278,8 @@
           "default",
           "solution-architect",
           "enterprise-architect",
-          "engineering-leader"
+          "engineering-leader",
+          "infrastructure-architect"
         ]
       },
       {
@@ -285,7 +297,8 @@
           "default",
           "solution-architect",
           "enterprise-architect",
-          "engineering-leader"
+          "engineering-leader",
+          "infrastructure-architect"
         ]
       },
       {
@@ -302,13 +315,15 @@
           "default",
           "solution-architect",
           "enterprise-architect",
-          "engineering-leader"
+          "engineering-leader",
+          "infrastructure-architect"
         ]
       },
       {
         "text": "Architecture Review Board (ARB)",
         "profiles": [
-          "enterprise-architect"
+          "enterprise-architect",
+          "infrastructure-architect"
         ]
       }
     ],
@@ -355,7 +370,8 @@
         "PostgreSQL",
         "MongoDB",
         "Redis",
-        "MS SQL"
+        "MS SQL",
+        "MySQL / MariaDB"
       ],
       "messaging_apis": [
         "Apache Kafka",
@@ -367,7 +383,9 @@
       "security_iam": [
         "Keycloak",
         "OAuth 2.0 / OpenID Connect",
-        "IAM"
+        "IAM",
+        "Linux hardening",
+        "PCI DSS"
       ],
       "devops_cicd": [
         "Git",
@@ -377,11 +395,14 @@
         "Kubernetes",
         "Helm",
         "Maven",
-        "Gradle"
+        "Gradle",
+        "OpenTofu",
+        "Bash"
       ],
       "cloud_infrastructure": [
         "Oracle Cloud",
-        "AWS"
+        "AWS",
+        "Scaleway"
       ],
       "monitoring_observability": [
         "Dynatrace",
@@ -389,7 +410,8 @@
         "Zabbix",
         "Prometheus",
         "Grafana",
-        "ELK Stack"
+        "ELK Stack",
+        "Beszel"
       ],
       "engineering_practices": [
         "Scrum",
@@ -399,6 +421,34 @@
         "Release management",
         "Observability",
         "Delivery metrics (lead time, release frequency, velocity, incidents)"
+      ],
+      "infrastructure_platform": [
+        "VMware Cloud Director",
+        "Proxmox VE",
+        "KVM",
+        "VirtualBox",
+        "LXC",
+        "cloud-init templates",
+        "Bacula (backup)",
+        "Linux server administration",
+        "Windows Server and Active Directory (basic)",
+        "Kubernetes persistent storage (CSI)",
+        "Mail server (Postfix, Dovecot)"
+      ],
+      "networking": [
+        "Network segmentation (VLAN, subnets, firewall rules)",
+        "NGINX",
+        "Caddy",
+        "Apache HTTP Server",
+        "Load balancing",
+        "Reverse proxy",
+        "DNS",
+        "TLS certificates",
+        "WAF",
+        "Unbound (split-horizon DNS)",
+        "OpenVPN (own PKI)",
+        "Squid",
+        "SoftEther VPN"
       ]
     },
     "technical_labels": {
@@ -412,7 +462,9 @@
       "devops_cicd": "DevOps & CI/CD",
       "cloud_infrastructure": "Cloud & Infrastructure",
       "monitoring_observability": "Monitoring & Observability",
-      "engineering_practices": "Engineering Practices"
+      "engineering_practices": "Engineering Practices",
+      "infrastructure_platform": "Infrastructure & Virtualization",
+      "networking": "Networking & Load Balancing"
     }
   },
   "work_experience": [
@@ -476,10 +528,35 @@
           "text": "Defined target architecture, principles and governance for a landscape of 50+ systems, from small legacy applications to large enterprise platforms, delivered by 10+ vendors"
         },
         {
+          "text": "Worked in the VMware Cloud Director tenant at a government cloud provider alongside the system administrators: 150+ servers in 3 clusters",
+          "profiles": [
+            "default",
+            "solution-architect",
+            "infrastructure-architect"
+          ]
+        },
+        {
+          "text": "Defined the architecture for load balancing and for the move to containers and Kubernetes",
+          "profiles": [
+            "default",
+            "solution-architect",
+            "infrastructure-architect"
+          ]
+        },
+        {
+          "text": "Integrated company systems with the government single sign-on",
+          "profiles": [
+            "solution-architect",
+            "enterprise-architect",
+            "infrastructure-architect"
+          ]
+        },
+        {
           "text": "Coordinated delivery across vendors, including international engineering companies (Andersen, ScienceSoft) working across countries and time zones",
           "profiles": [
             "enterprise-architect",
-            "engineering-leader"
+            "engineering-leader",
+            "infrastructure-architect"
           ]
         },
         {
@@ -487,7 +564,8 @@
           "profiles": [
             "default",
             "solution-architect",
-            "software-engineer"
+            "software-engineer",
+            "infrastructure-architect"
           ]
         },
         {
@@ -504,7 +582,8 @@
           "text": "Reviewed and approved solution designs at the architecture review board (ARB)",
           "profiles": [
             "solution-architect",
-            "enterprise-architect"
+            "enterprise-architect",
+            "infrastructure-architect"
           ]
         },
         {
@@ -513,13 +592,15 @@
             "default",
             "solution-architect",
             "enterprise-architect",
-            "engineering-leader"
+            "engineering-leader",
+            "infrastructure-architect"
           ]
         },
         {
           "text": "Aligned IT strategy with business goals together with department heads, vendors and government agencies; ensured compliance with industry and government standards",
           "profiles": [
-            "enterprise-architect"
+            "enterprise-architect",
+            "infrastructure-architect"
           ]
         },
         {
@@ -693,6 +774,15 @@
         {
           "text": "Aligned backend development with business goals through cross-functional collaboration.",
           "to_render": false
+        },
+        {
+          "text": "Deployed and ran test and pre-production environments on AWS",
+          "profiles": [
+            "default",
+            "solution-architect",
+            "software-engineer",
+            "infrastructure-architect"
+          ]
         }
       ]
     },
@@ -838,6 +928,12 @@
       "achievements": [
         {
           "text": "Card processing business solutions and bank services on Compass Plus TranzWare (certified in TranzWare CMS and TranzWare Online)"
+        },
+        {
+          "text": "Took part in regular disaster recovery switchovers of the card processing system to the backup site",
+          "profiles": [
+            "infrastructure-architect"
+          ]
         }
       ]
     },
@@ -854,7 +950,7 @@
       "achievements": [
         "Bank Standard — Backoffice Systems Administration Leading Specialist (2016): card processing on TSYS Prime, Visa and Mastercard clearing (ISO 8583)",
         "British American Tobacco — Trade Marketing Database Coordinator (2013–2015): field-force process automation, DWH administration",
-        "Azerfon — billing, intelligent network and performance monitoring roles (2008–2013): CBOSS, 24/7 infrastructure monitoring",
+        "Azerfon — billing, intelligent network and performance monitoring roles (2008–2013): CBOSS, 24/7 monitoring of infrastructure from billing to the mobile switching center",
         {
           "text": "Payment cards processing systems administration: CMS, system customizations, monitoring and analyzing technical issues",
           "to_render": false
@@ -952,7 +1048,7 @@
   ],
   "education": [
     {
-      "degree": "Bachelor's degree, Applied Mathematics and Cybernetics",
+      "degree": "Bachelor's degree, Applied Mathematics and Cybernetics (Economic Cybernetics)",
       "institution": "Baku State University",
       "location": {
         "text": "Baku, Azerbaijan",
@@ -1311,7 +1407,7 @@
       "personal_info": {
         "headline": "Solution Architect",
         "positioning": "I turn business problems into working systems: concept, architecture, integration and delivery oversight for complex, high-load platforms.",
-        "summary": "Solution architect with a hands-on engineering background in banking, payments, telecom and the public sector. Designs solutions from concept to production: target architecture, integration design, technology and vendor choices, and architecture oversight through delivery. Designed dozens of integrations with patterns from an enterprise service bus to asynchronous messaging, led the decomposition of a monolith into microservices for BirBank (3M+ users), and defined architecture for a national railway landscape of 50+ systems and 10+ vendors. Currently the regional technical advisor and solution architect for bank implementations across CEMEA at Visa."
+        "summary": "Solution architect with a hands-on engineering background in banking, payments, telecom and the public sector. Designs solutions from concept to production: target architecture, integration design, technology and vendor choices, and architecture oversight through delivery. Designed dozens of integrations with patterns from an enterprise service bus to asynchronous messaging, led the decomposition of a monolith into microservices for a leading digital bank app (3M+ users), and defined architecture for a state-owned enterprise landscape of 50+ systems and 10+ vendors. Currently the regional technical advisor and solution architect for bank implementations across CEMEA."
       },
       "technical_groups": [
         "architecture_design",
@@ -1331,7 +1427,7 @@
       "personal_info": {
         "headline": "Enterprise Architect",
         "positioning": "I align business strategy and technology: target architecture, roadmaps and governance that turn transformation plans into delivered systems.",
-        "summary": "TOGAF-certified enterprise architect with a hands-on engineering background in banking, payments, telecom and the public sector. At Azerbaijan's national railway turned the digital transformation roadmap into target architecture for multi-million IT programs across 50+ systems and 10+ vendors: business capability map, architecture review board, vendor selection and RFPs. Earlier built and led engineering teams at Azerbaijan's largest private bank, so architecture decisions stay grounded in delivery. Currently provides regional technical advisory for banks across CEMEA at Visa."
+        "summary": "TOGAF-certified enterprise architect with a hands-on engineering background in banking, payments, telecom and the public sector. At a state-owned enterprise turned the digital transformation roadmap into target architecture for multi-million IT programs across 50+ systems and 10+ vendors: business capability map, architecture review board, vendor selection and RFPs. Earlier built and led engineering teams in banking, so architecture decisions stay grounded in delivery. Currently provides regional technical advisory for banks across CEMEA."
       },
       "technical_groups": [
         "architecture_design",
@@ -1350,7 +1446,7 @@
         "headline": "Backend Software Engineer & Architect",
         "title": "AWS® Certified Solutions Architect, OCP® (Oracle PL/SQL), TOGAF® 10",
         "positioning": "I build and lead the building of reliable backend systems, from architecture and code to production.",
-        "summary": "Backend engineer and architect who builds and runs systems in banking and payments. Led a backend chapter of 12 engineers across 3 teams that decomposed a Java + Oracle PL/SQL monolith into event-driven microservices for BirBank, Azerbaijan's leading digital bank (3M+ users), and a team of 10 developers on card processing. Combines code-level depth with architecture ownership: system design, integration, security and delivery. Chooses languages and tools by fit to the problem and uses AI-assisted development as part of everyday engineering."
+        "summary": "Backend engineer and architect who builds and runs systems in banking and payments. Led a backend chapter of 12 engineers across 3 teams that decomposed a Java + Oracle PL/SQL monolith into event-driven microservices for a leading digital bank app (3M+ users), and a team of 10 developers on card processing. Combines code-level depth with architecture ownership: system design, integration, security and delivery. Chooses languages and tools by fit to the problem."
       },
       "technical_groups": [
         "languages",
@@ -1372,7 +1468,7 @@
         "headline": "Engineering Leader & Software Architect",
         "title": "PMP®, AWS® SA, TOGAF® 10, ITIL®, OCP® (Oracle PL/SQL)",
         "positioning": "I build and lead engineering teams that deliver large-scale systems, from architecture and code to production.",
-        "summary": "Engineering leader and software architect in payments, banking, telecom and the public sector. Led a backend chapter of 12 engineers across 3 squads through their tech leads at Azerbaijan's largest private bank, with full people management (hiring, performance reviews, career growth) and engineering practices from Scrum and CI/CD to code review, testing, release management, delivery metrics and capacity planning. The chapter decomposed a Java + Oracle PL/SQL monolith into event-driven microservices for BirBank (3M+ users). Later set the architecture for 50+ systems delivered by 10+ vendors, including international teams, at the national railway; now leads bank implementations across CEMEA at Visa from idea to delivery."
+        "summary": "Engineering leader and software architect in payments, banking, telecom and the public sector. Led a backend chapter of 12 engineers across 3 squads through their tech leads, with full people management (hiring, performance reviews, career growth) and engineering practices from Scrum and CI/CD to code review, testing, release management, delivery metrics and capacity planning. The chapter decomposed a Java + Oracle PL/SQL monolith into event-driven microservices for a leading digital bank app (3M+ users). Later set the architecture for 50+ systems delivered by 10+ vendors, including international teams, at a state-owned enterprise; now leads bank implementations across CEMEA from idea to delivery."
       },
       "technical_groups": [
         "engineering_practices",
@@ -1386,6 +1482,25 @@
         "security_iam",
         "payments",
         "monitoring_observability"
+      ]
+    },
+    "infrastructure-architect": {
+      "label": "Infrastructure Architect",
+      "personal_info": {
+        "headline": "Enterprise & Solution Architect · Infrastructure and Platforms",
+        "positioning": "I connect architecture to running infrastructure: virtualized and cloud platforms, networks, containers, security and monitoring.",
+        "summary": "Enterprise and solution architect with hands-on infrastructure experience in telecom, banking and the public sector. Worked in a VMware Cloud Director tenant of 150+ servers in 3 clusters at a government cloud provider alongside the system administrators, defined the architecture for load balancing and the move to containers and Kubernetes, integrated systems with the government single sign-on, and ran architecture review and vendor selection for 50+ systems and 10+ vendors. Hands-on with Linux, Proxmox VE, NGINX, Docker, Kubernetes, OpenTofu, GitLab CI/CD, Keycloak, Prometheus, Grafana and ELK. Took part in regular disaster recovery switchovers of card processing systems and started in 24/7 infrastructure monitoring."
+      },
+      "technical_groups": [
+        "infrastructure_platform",
+        "networking",
+        "cloud_infrastructure",
+        "devops_cicd",
+        "security_iam",
+        "monitoring_observability",
+        "databases",
+        "messaging_apis",
+        "architecture_design"
       ]
     }
   }
