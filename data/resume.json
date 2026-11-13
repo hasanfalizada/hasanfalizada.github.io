@@ -97,8 +97,27 @@
       "groups": [
         {
           "id": "own",
-          "title": "Own projects and open source",
-          "items": []
+          "title": "",
+          "items": [
+            {
+              "name": "Haalendar",
+              "url": "https://github.com/hasanfalizada/Haalendar",
+              "demo": "https://demo.staging.hasanalizada.net/",
+              "logo": "assets/img/projects/haalendar.svg",
+              "stack": [
+                {"name": "TypeScript", "icon": "typescript"},
+                {"name": "React", "icon": "react"},
+                {"name": "Vite", "icon": "vite"},
+                {"name": "Tailwind CSS", "icon": "tailwindcss"},
+                {"name": "Python", "icon": "python"},
+                {"name": "FastAPI", "icon": "fastapi"},
+                {"name": "PostgreSQL", "icon": "postgresql"},
+                {"name": "Docker", "icon": "docker"},
+                {"name": "Claude", "icon": "claude"}
+              ],
+              "context": "A self-hosted calendar, to-do list and kanban board in one app that keeps working offline. Open source under Apache 2.0. Version 1.0.0 was released in November 2026 and replaced the earlier single-user version from 2019."
+            }
+          ]
         },
         {
           "id": "organizations",
@@ -1340,11 +1359,7 @@
       "name": "Haalendar",
       "period": "06/2019 – Present",
       "url": "https://github.com/hasanfalizada/Haalendar",
-      "description": "Lightweight self-hosted web calendar for a single user (personal open-source project)",
-      "profiles": [
-        "software-engineer"
-      ],
-      "to_render": false
+      "description": "Self-hosted calendar, to-do list and kanban board that keeps working offline (open source, Apache 2.0)"
     }
   ],
   "memberships": [

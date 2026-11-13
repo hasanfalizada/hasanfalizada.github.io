@@ -183,8 +183,14 @@ if (on.services) {
     check('Services: one call to action', (read('services/index.html').match(/class="page-button"/g) || []).length === 1);
 }
 check('removed Services blocks stay removed', [...(/written record|What you can hold me to|\bStack\b|Background:/i.test(servicesText) ? ['found on Services'] : [])]);
-check('site does not mention LLM or AI tools in visible text', ['index.html', ...pagePaths]
-    .filter(f => /\b(LLM|AI agents?|Claude|ChatGPT)\b/.test(words(read(f)))));
+// +++===+++ 2026-11-13 21:20 Asia/Baku — Hasan Alizada — the "no LLM or AI tools on the site" check is removed: he lifted that rule (LLM use may be named openly)
+check('Work stack icons: every icon has a local file and a name', ((data.site_pages.work || {}).groups || [])
+    .flatMap(g => g.items || []).flatMap(i => (i.stack || []).map(t => ({...t, item: i.name})))
+    .filter(t => !t.name || !/^[a-z0-9-]+$/.test(String(t.icon)) || !exists(`assets/img/stack/${t.icon}.svg`))
+    .map(t => `${t.item}: ${t.name || '(no name)'} -> ${t.icon}`));
+check('Work logos are local files', ((data.site_pages.work || {}).groups || [])
+    .flatMap(g => g.items || []).filter(i => i.logo && (!/^assets\/img\/projects\/[a-z0-9-]+\.svg$/.test(i.logo) || !exists(i.logo)))
+    .map(i => `${i.name}: ${i.logo}`));
 
 // ---------- switches (on copies of the data, disk untouched) ----------
 {
@@ -210,6 +216,7 @@ check('site does not mention LLM or AI tools in visible text', ['index.html', ..
 }
 {
     const r = clone();
+    r.site_pages.work.groups[0].title = 'Own projects and open source';
     r.site_pages.work.groups[0].items = [{name: 'Test <project>', role: 'Author', url: 'https://example.com/', result: '10 users'}];
     const d = prepare(r);
     const pages = site.renderPages(d, version);
@@ -220,6 +227,33 @@ check('site does not mention LLM or AI tools in visible text', ['index.html', ..
         ...(work.includes('Own projects and open source') ? [] : ['group title missing']),
         ...(work.includes('Client work') ? ['empty group shown'] : []),
         ...(work.includes('Test &lt;project&gt;') ? [] : ['not escaped'])
+    ]);
+}
+{
+    const r = clone();
+    r.site_pages.work.groups[0].items = [
+        {name: 'With extras', role: 'Author', decisions: 'D', personal: 'P', result: 'R', logo: 'assets/img/projects/x.svg',
+            demo: 'https://demo.example.com/?a=1&b=2', stack: [{name: 'Type<Script>', icon: 'typescript'}]},
+        {name: 'Plain'}
+    ];
+    const work = ((site.renderPages(prepare(r), version).find(p => p.path === 'work/index.html') || {}).html) || '';
+    const plain = (work.split('Plain')[1] || '');
+    check('switch: Work card shows logo, demo button and icons without text; removed fields and empty parts stay out', [
+        ...(work.includes('href="https://demo.example.com/?a=1&amp;b=2" target="_blank" rel="noopener">Live demo</a>') ? [] : ['demo button missing']),
+        ...(work.includes('src="assets/img/projects/x.svg" alt="With extras"') ? [] : ['logo missing']),
+        ...(work.includes('src="assets/img/stack/typescript.svg" alt="Type&lt;Script&gt;" title="Type&lt;Script&gt;"') ? [] : ['icon missing or not escaped']),
+        ...(/<span>Type|Role:|Decisions:|What I did:|Result:/.test(work) ? ['removed text shown'] : []),
+        ...(/Live demo|Source code|work-stack|<img/.test(plain) ? ['shown on plain item'] : [])
+    ]);
+}
+{
+    const r = clone();
+    r.site_pages.work.groups[0].title = '';
+    r.site_pages.work.groups[0].items = [{name: 'No heading'}];
+    const work = ((site.renderPages(prepare(r), version).find(p => p.path === 'work/index.html') || {}).html) || '';
+    check('switch: Work group with an empty title shows the item and no group heading', [
+        ...(work.includes('No heading') ? [] : ['item missing']),
+        ...(/<h2>/.test(work) ? ['heading shown'] : [])
     ]);
 }
 {

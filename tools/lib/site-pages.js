@@ -5,9 +5,13 @@
 // Switches:
 //   Services — site_pages.services.to_render: false removes the page, its menu item and every link to it.
 //   Work     — appears by itself once any group in site_pages.work.groups has an item, hidden while all are empty.
-// Work item format (fields except name and role are optional; the role must be exact):
-//   {"name": "...", "url": "https://...", "role": "...", "context": "...", "decisions": "...",
-//    "personal": "what I did myself", "team": "what the team did", "result": "result in numbers"}
+// +++===+++ 2026-11-13 21:30 Asia/Baku — Hasan Alizada — Work items are cards; Role, Decisions, What I did and Result removed by his decision
+// Work item format (only name is required):
+//   {"name": "...", "url": "https://... (source)", "demo": "https://... (live demo)",
+//    "logo": "assets/img/projects/<name>.svg (shown instead of the name)", "context": "one or two sentences",
+//    "stack": [{"name": "TypeScript", "icon": "typescript"}, ...], "team": "what the team did"}
+//   icon = file name in assets/img/stack/ without .svg (Simple Icons 16.37.0, CC0, brand colour added as fill);
+//   icons show without text, the name is in alt and title
 
 'use strict';
 
@@ -92,17 +96,20 @@ const renderServices = (data) => {
 const renderWork = (data) => {
     const w = data.site_pages.work;
     const field = (label, value) => (value ? `<p><strong>${label}:</strong> ${esc(value)}</p>` : '');
-    const item = (i) => `<article class="work-item">
-                    <h3>${i.url ? `<a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.name)}</a>` : esc(i.name)}</h3>
-                    ${field('Role', i.role)}
-                    ${field('Context', i.context)}
-                    ${field('Decisions', i.decisions)}
-                    ${field('What I did', i.personal)}
+    const stack = (list) => ((list || []).length ? `<ul class="work-stack" aria-label="Technology stack">${list.map(t => `<li><img src="assets/img/stack/${esc(t.icon)}.svg" alt="${esc(t.name)}" title="${esc(t.name)}" width="36" height="36" loading="lazy"></li>`).join('')}</ul>` : '');
+    const title = (i) => (i.logo ? `<img class="work-card__logo" src="${esc(i.logo)}" alt="${esc(i.name)}" height="64">` : esc(i.name));
+    const link = (url, label, cls) => (url ? `<a class="work-card__button${cls}" href="${esc(url)}" target="_blank" rel="noopener">${label}</a>` : '');
+    const links = (i) => ((i.demo || i.url) ? `<p class="work-card__links">${link(i.demo, 'Live demo', ' work-card__button--primary')}${link(i.url, 'Source code', '')}</p>` : '');
+    const item = (i) => `<article class="work-card">
+                    <h3 class="work-card__title">${i.url ? `<a href="${esc(i.url)}" target="_blank" rel="noopener">${title(i)}</a>` : title(i)}</h3>
+                    ${i.context ? `<p class="work-card__context">${esc(i.context)}</p>` : ''}
+                    ${stack(i.stack)}
                     ${field('What the team did', i.team)}
-                    ${field('Result', i.result)}
+                    ${links(i)}
                 </article>`;
+    // +++===+++ 2026-11-13 21:40 Asia/Baku — Hasan Alizada — group title is optional: an empty title shows no heading
     const groups = (w.groups || []).filter(g => (g.items || []).length).map(g => `<section class="page-block">
-                <h2>${esc(g.title)}</h2>
+                ${g.title ? `<h2>${esc(g.title)}</h2>` : ''}
                 ${g.items.map(item).join('\n                ')}
             </section>`).join('\n            ');
     return `<h1>${esc(w.title)}</h1>

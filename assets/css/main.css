@@ -1667,12 +1667,101 @@ body:has(> #main-content) {
     text-decoration: none;
 }
 
-.work-item {
-    margin-bottom: 1.5rem;
+/* +++===+++ 2026-11-13 21:30 Asia/Baku — Hasan Alizada — Work items as cards: logo, short text, stack icons without text, two buttons */
+.work-card {
+    margin: 1.5rem 0 2rem;
+    padding: 2.5rem 2rem 2rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.work-item h3 {
+.work-card:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), 0 16px 40px rgba(0, 0, 0, 0.10);
+    transform: translateY(-2px);
+}
+
+.page-content .work-card__title {
+    font-size: 2rem;
+    margin: 0 0 1.25rem;
+}
+
+.page-content .work-card__title a {
+    text-decoration: none;
+}
+
+.work-card__logo {
+    display: inline-block;
+    height: 64px;
+    width: auto;
+    max-width: 100%;
+}
+
+.page-block .work-card__context {
+    max-width: 36rem;
+    margin: 0 auto 1.5rem;
     font-size: 1.0625rem;
-    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.work-stack {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 0 0 1.75rem;
+    padding: 0;
+}
+
+.work-stack img {
+    display: block;
+    width: 36px;
+    height: 36px;
+}
+
+.page-block .work-card__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 0;
+}
+
+.page-content .work-card__button {
+    display: inline-block;
+    padding: 0.625rem 1.25rem;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    color: #000000;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.page-content .work-card__button--primary {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+@media (max-width: 600px) {
+    .work-card {
+        padding: 1.75rem 1rem 1.5rem;
+    }
+
+    .work-card__logo {
+        height: 48px;
+    }
+
+    .work-stack {
+        gap: 1rem;
+    }
+
+    .work-stack img {
+        width: 30px;
+        height: 30px;
+    }
 }
 
