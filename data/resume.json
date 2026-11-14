@@ -449,8 +449,11 @@
         "LXC",
         "cloud-init templates",
         "Bacula (backup)",
+        "Rockstor (NAS)",
         "Linux server administration",
         "Windows Server and Active Directory (basic)",
+        "Hyper-V (basic)",
+        "Capacity planning",
         "Kubernetes persistent storage (CSI)",
         "Mail server (Postfix, Dovecot)"
       ],
@@ -559,6 +562,24 @@
           "profiles": [
             "default",
             "solution-architect",
+            "infrastructure-architect"
+          ]
+        },
+        {
+          "text": "Wrote high-level designs (HLD) at the enterprise architecture level",
+          "profiles": [
+            "infrastructure-architect"
+          ]
+        },
+        {
+          "text": "Planned infrastructure capacity and the infrastructure budget together with the infrastructure director",
+          "profiles": [
+            "infrastructure-architect"
+          ]
+        },
+        {
+          "text": "Took part in disaster recovery design at the architecture level",
+          "profiles": [
             "infrastructure-architect"
           ]
         },
@@ -800,6 +821,12 @@
             "default",
             "solution-architect",
             "software-engineer",
+            "infrastructure-architect"
+          ]
+        },
+        {
+          "text": "Planned capacity and budget for the chapter's systems from the development side",
+          "profiles": [
             "infrastructure-architect"
           ]
         }

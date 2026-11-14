@@ -142,6 +142,8 @@ const hubPage = () => {
 <script src="atoms/pdf-generator/impl.js${v}"></script>
 <script>
     (function () {
+        // Made it to this line? Nice work, you are clearly my kind of person.
+        // This is a polite curtain, not a lock, so there is no need to crack it: just ask me for the passcode.
         var HASH = ${json(hash)};
         var SALT = ${json(SALT)};
         var ROLES = ${json(roles)};
