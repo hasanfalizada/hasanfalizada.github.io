@@ -416,7 +416,8 @@
         "Maven",
         "Gradle",
         "OpenTofu",
-        "Bash"
+        "Bash",
+        "JMeter (load testing)"
       ],
       "cloud_infrastructure": [
         "Oracle Cloud",
@@ -430,7 +431,9 @@
         "Prometheus",
         "Grafana",
         "ELK Stack",
-        "Beszel"
+        "Beszel",
+        "Incident response and post-mortems",
+        "On-call production support"
       ],
       "engineering_practices": [
         "Scrum",
@@ -748,6 +751,32 @@
           ]
         },
         {
+          "text": "Owned production for the BirBank Cashback engine, Statements and TaxRefund, used nationwide: on call around the clock, night releases and night support",
+          "profiles": [
+            "default",
+            "solution-architect",
+            "software-engineer",
+            "engineering-leader",
+            "infrastructure-architect"
+          ]
+        },
+        {
+          "text": "Approved and merged releases to production several times a week and decided on rollbacks",
+          "profiles": [
+            "engineering-leader",
+            "infrastructure-architect"
+          ]
+        },
+        {
+          "text": "Led incident response for major failures, wrote the post-mortems and reported on the fixes weekly",
+          "profiles": [
+            "default",
+            "software-engineer",
+            "engineering-leader",
+            "infrastructure-architect"
+          ]
+        },
+        {
           "text": "Led the decomposition of a monolithic Java + Oracle PL/SQL backend into microservices"
         },
         {
@@ -757,6 +786,21 @@
             "solution-architect",
             "enterprise-architect",
             "software-engineer"
+          ]
+        },
+        {
+          "text": "Built CI/CD pipelines for production services running on Kubernetes, with Redis and RabbitMQ on the same platform",
+          "profiles": [
+            "solution-architect",
+            "software-engineer",
+            "infrastructure-architect"
+          ]
+        },
+        {
+          "text": "Set up monitoring and alerting with Prometheus, Grafana and Dynatrace; found performance bottlenecks with Dynatrace and ran load tests with JMeter",
+          "profiles": [
+            "software-engineer",
+            "infrastructure-architect"
           ]
         },
         {
@@ -851,6 +895,13 @@
         },
         {
           "text": "Integrated internal banking systems with the card processing platform for reliable transaction processing"
+        },
+        {
+          "text": "On call around the clock for the card processing platform in production",
+          "profiles": [
+            "engineering-leader",
+            "infrastructure-architect"
+          ]
         },
         {
           "text": "Optimized Oracle PL/SQL for card processing; managed platform upgrades with high availability and standards compliance",
@@ -976,7 +1027,7 @@
           "text": "Card processing business solutions and bank services on Compass Plus TranzWare (certified in TranzWare CMS and TranzWare Online)"
         },
         {
-          "text": "Took part in regular disaster recovery switchovers of the card processing system to the backup site",
+          "text": "Carried out regular disaster recovery switchovers of the card processing system to the backup site",
           "profiles": [
             "infrastructure-architect"
           ]
@@ -1531,7 +1582,7 @@
       "personal_info": {
         "headline": "Enterprise & Solution Architect · Infrastructure and Platforms",
         "positioning": "I connect architecture to running infrastructure: virtualized and cloud platforms, networks, containers, security and monitoring.",
-        "summary": "Enterprise and solution architect with hands-on infrastructure experience in telecom, banking and the public sector. Worked in a VMware Cloud Director tenant of 150+ servers in 3 clusters at a government cloud provider alongside the system administrators, defined the architecture for load balancing and the move to containers and Kubernetes, integrated systems with the government single sign-on, and ran architecture review and vendor selection for 50+ systems and 10+ vendors. Hands-on with Linux, Proxmox VE, NGINX, Docker, Kubernetes, OpenTofu, GitLab CI/CD, Keycloak, Prometheus, Grafana and ELK. Took part in regular disaster recovery switchovers of card processing systems and started in 24/7 infrastructure monitoring."
+        "summary": "Enterprise and solution architect with hands-on infrastructure experience in telecom, banking and the public sector. Worked in a VMware Cloud Director tenant of 150+ servers in 3 clusters at a government cloud provider alongside the system administrators, defined the architecture for load balancing and the move to containers and Kubernetes, integrated systems with the government single sign-on, and ran architecture review and vendor selection for 50+ systems and 10+ vendors. Hands-on with Linux, Proxmox VE, NGINX, Docker, Kubernetes, OpenTofu, GitLab CI/CD, Keycloak, Prometheus, Grafana and ELK. Carried out regular disaster recovery switchovers of card processing systems and started in 24/7 infrastructure monitoring."
       },
       "technical_groups": [
         "infrastructure_platform",
